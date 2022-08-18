@@ -221,3 +221,33 @@ wire 'b00.b/in.a[0-7]'
 wire 'b01.b/in.a[8-15]'
 wire 'b02.b/in.a[16-23]'
 wire 'b03.b/in.a[24-31]'
+
+-----------------------------------------------------------
+-- memory banks
+VMemoryBank 'm0'
+wire 'ce2.q[0]/m0.!ce'
+wire '!w/m0.!we'
+wire '!oe/m0.!oe'
+wire 'a0.s/m0.a'
+wire 'b00.a/m0.d'
+
+VMemoryBank 'm1'
+wire 'ce2.q[1]/m1.!ce'
+wire '!w/m1.!we'
+wire '!oe/m1.!oe'
+wire 'a1.s/m1.a'
+wire 'b01.a/m1.d'
+
+VMemoryBank 'm2'
+wire 'ce2.q[2]/m2.!ce'
+wire '!w/m2.!we'
+wire '!oe/m2.!oe'
+wire 'a2.s/m2.a'
+wire 'b02.a/m2.d'
+
+VMemoryBank 'm3'
+wire 'ce2.q[3]/m3.!ce'
+wire '!w/m3.!we'
+wire '!oe/m3.!oe'
+wire 'd[2-31]/m3.a'
+wire 'b03.a/m3.d'

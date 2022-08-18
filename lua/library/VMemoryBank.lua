@@ -1,7 +1,7 @@
 input '!ce'
 input '!oe'
 input '!we'
-input('a', 20)
+input('a', 29)
 output('d', 7)
 
 High 'VCC'

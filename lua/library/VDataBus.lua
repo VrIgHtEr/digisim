@@ -1,6 +1,8 @@
-output('a', 31)
-output('b', 31)
-output('d', 31)
+local trace = opts.trace and true or false
+
+output('a', 31, trace)
+output('b', 31, trace)
+output('d', 31, trace)
 
 Pulldown { 'a', width = 32 }
 wire 'a.q/a'
