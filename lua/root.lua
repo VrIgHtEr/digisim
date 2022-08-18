@@ -15,11 +15,12 @@ wire 'mem.!ce/ctrl.!mem_ce'
 wire 'mem.!oe/ctrl.!mem_oe'
 wire 'mem.!w/ctrl.!mem_we'
 wire 'mem.signed/ctrl.mem_signed'
-wire 'mem.a/data.d'
+wire 'mem.a/data.address'
+wire 'mem.d/data.d'
 
 Sequencer {
     'test',
-    width = 14,
+    width = 14 + 32 + 24,
     sequence = {
         { h, h, h, h, h, l, z, z, z, z, z, z, z, z },
         { h, h, l, h, h, l, z, z, z, z, z, z, z, z },
@@ -45,4 +46,5 @@ wire 'test.q[2]/ctrl.!mem_oe'
 wire 'test.q[3]/ctrl.!mem_half'
 wire 'test.q[4]/ctrl.!mem_word'
 wire 'test.q[5]/ctrl.mem_signed'
-wire 'test.q[6-13]/data.d[0-7]'
+wire 'test.q[6-37]/data.d'
+wire 'test.q[38-69]/data.address'
