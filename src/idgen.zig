@@ -24,8 +24,8 @@ pub const IdGen = struct {
             self.string[i] = 33;
             if (i == self.string.len - 1) {
                 self.string = try self.allocator.realloc(self.string, self.string.len + 1);
-            }
-            self.string[i + 1] += 1;
+                self.string[i + 1] = 33;
+            } else self.string[i + 1] += 1;
         }
         return try digisim.strings.ref(self.string);
     }
