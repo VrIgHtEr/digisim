@@ -330,19 +330,19 @@ pub const Component = struct {
     }
 
     pub fn assignNames(self: *@This()) Err!void {
-        if (self.childTraces) {
-            var j = self.ports.iterator();
-            while (j.next()) |p| {
-                const port = self.digisim.ports.getPtr(p.key_ptr.*) orelse unreachable;
-                if (port.trace) {
-                    port.alias = try self.digisim.idgen.refNewId(self.digisim);
-                    stdout.print("$var wire {d} {s} {s} $end\n", .{ port.width(), port.alias orelse unreachable, port.name }) catch ({});
-                }
+        var j = self.ports.iterator();
+        while (j.next()) |p| {
+            const port = self.digisim.ports.getPtr(p.key_ptr.*) orelse unreachable;
+            if (port.trace) {
+                port.alias = try self.digisim.idgen.refNewId(self.digisim);
+                stdout.print("$var wire {d} {s} {s} $end\n", .{ port.width(), port.alias orelse unreachable, port.name }) catch ({});
             }
-            if (!self.isLeaf()) {
-                var i = self.components.iterator();
-                while (i.next()) |c| {
-                    const comp = self.digisim.components.getPtr(c.key_ptr.*) orelse unreachable;
+        }
+        if (!self.isLeaf()) {
+            var i = self.components.iterator();
+            while (i.next()) |c| {
+                const comp = self.digisim.components.getPtr(c.key_ptr.*) orelse unreachable;
+                if (comp.childTraces) {
                     stdout.print("$scope module {s} $end\n", .{comp.name}) catch ({});
                     try comp.assignNames();
                     stdout.print("$upscope $end\n", .{}) catch ({});
