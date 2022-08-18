@@ -17,7 +17,7 @@ pub fn build(b: *std.build.Builder) void {
         run_cmd.addArgs(args);
     }
     b.installDirectory(.{
-        .source_dir = "src/lua",
+        .source_dir = "lua",
         .install_dir = std.build.InstallDir{ .custom = "share" },
         .install_subdir = "digisim",
     });
