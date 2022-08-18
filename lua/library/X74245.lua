@@ -30,5 +30,3 @@ TristateBufferBank { 'b', width = w }
 wire 'b/b.a'
 wire 'nb.q/b.en'
 wire 'b.q/a'
-
-wire 'a/b'
