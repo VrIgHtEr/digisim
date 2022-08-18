@@ -9,6 +9,7 @@ VControlBus { 'ctrl', trace = true }
 VDataBus { 'data', trace = true }
 
 VMemoryInterface 'mem'
+wire 'clk.q/mem.clk'
 wire 'mem.!word/ctrl.!mem_word'
 wire 'mem.!half/ctrl.!mem_half'
 wire 'mem.!ce/ctrl.!mem_ce'
@@ -18,10 +19,69 @@ wire 'mem.signed/ctrl.mem_signed'
 wire 'mem.a/data.address'
 wire 'mem.d/data.d'
 
+local function outputnumber(seq, num)
+    if num == nil then
+        for _ = 1, 32 do
+            seq[#seq + 1] = z
+        end
+    else
+        num = math.floor(num)
+        for _ = 1, 32 do
+            seq[#seq + 1] = (num % 2) == 0 and l or h
+            num = math.floor(num * 0.5)
+        end
+    end
+end
+
+local function row(ce, we, oe, half, word, signed, data, address)
+    local ret = { ce or z, we or z, oe or z, half or z, word or z, signed or z }
+    outputnumber(ret, data)
+    outputnumber(ret, address)
+    return ret
+end
+
+local function addWrite(seq, half, word, signed, address, data)
+    seq[#seq + 1] = row(l, l, h, half, word, signed, data, address)
+    seq[#seq + 1] = row(h, h, h, half, word, signed, data, address)
+end
+
+local function addRead(seq, half, word, signed, address)
+    seq[#seq + 1] = row(l, h, l, half, word, signed, nil, address)
+end
+
+local function generate()
+    local seq = { row(h, h, h, h, h, h) }
+    for i = 0, 15 do
+        addWrite(seq, h, h, h, i, i)
+    end
+    for i = 0, 15 do
+        addWrite(seq, h, h, h, i + 16, i + 255 - 15)
+    end
+    for i = 0, 31 do
+        addRead(seq, h, h, h, i)
+    end
+    for i = 0, 31 do
+        addRead(seq, l, h, h, i)
+    end
+    for i = 0, 31 do
+        addRead(seq, l, l, h, i)
+    end
+    for i = 0, 31 do
+        addRead(seq, h, h, l, i)
+    end
+    for i = 0, 31 do
+        addRead(seq, l, h, l, i)
+    end
+    for i = 0, 31 do
+        addRead(seq, l, l, l, i)
+    end
+    return seq
+end
+
 Sequencer {
     'test',
     width = 14 + 32 + 24,
-    sequence = {
+    sequence = generate() or {
         { h, h, h, h, h, l, z, z, z, z, z, z, z, z },
         { h, h, l, h, h, l, z, z, z, z, z, z, z, z },
         { h, h, h, h, h, l, z, z, z, z, z, z, z, z },

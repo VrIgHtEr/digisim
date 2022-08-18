@@ -3,6 +3,7 @@ input '!half'
 input '!ce'
 input '!oe'
 input '!w'
+input 'clk'
 input 'signed'
 input('a', 31)
 output('d', 31)
@@ -13,6 +14,12 @@ Low 'GND'
 Or '!writing'
 wire '!ce/!writing.a[0]'
 wire '!w/!writing.a[1]'
+
+Not '!clk'
+wire '!clk.a/clk'
+Or '!w'
+wire '!w/!w.a[0]'
+wire '!clk.q/!w.a[1]'
 -----------------------------------------------------------
 -- addresses for banks 0-2
 -- bank 3 can be connected directly to d[2..31]
@@ -226,28 +233,28 @@ wire 'b03.b/in.a[24-31]'
 -- memory banks
 VMemoryBank 'm0'
 wire 'ce2.q[0]/m0.!ce'
-wire '!w/m0.!we'
+wire '!w.q/m0.!we'
 wire '!oe/m0.!oe'
 wire 'a0.s/m0.a'
 wire 'b00.a/m0.d'
 
 VMemoryBank 'm1'
 wire 'ce2.q[1]/m1.!ce'
-wire '!w/m1.!we'
+wire '!w.q/m1.!we'
 wire '!oe/m1.!oe'
 wire 'a1.s/m1.a'
 wire 'b01.a/m1.d'
 
 VMemoryBank 'm2'
 wire 'ce2.q[2]/m2.!ce'
-wire '!w/m2.!we'
+wire '!w.q/m2.!we'
 wire '!oe/m2.!oe'
 wire 'a2.s/m2.a'
 wire 'b02.a/m2.d'
 
 VMemoryBank 'm3'
 wire 'ce2.q[3]/m3.!ce'
-wire '!w/m3.!we'
+wire '!w.q/m3.!we'
 wire '!oe/m3.!oe'
 wire 'd[2-31]/m3.a'
 wire 'b03.a/m3.d'
