@@ -42,7 +42,7 @@ end
 
 local function addWrite(seq, half, word, signed, address, data)
     seq[#seq + 1] = row(l, l, h, half, word, signed, data, address)
-    seq[#seq + 1] = row(h, h, h, half, word, signed, data, address)
+    --seq[#seq + 1] = row(h, h, h, half, word, signed, data, address)
 end
 
 local function addRead(seq, half, word, signed, address)

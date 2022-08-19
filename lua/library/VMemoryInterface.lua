@@ -252,9 +252,14 @@ wire '!oe/m2.!oe'
 wire 'a2.s/m2.a'
 wire 'b02.a/m2.d'
 
+Buffer { 'a3_1', width = 30 }
+wire 'a[2-31]/a3_1.a'
+Buffer { 'a3', width = 30 }
+wire 'a3_1.q/a3.a'
+
 VMemoryBank 'm3'
 wire 'ce2.q[3]/m3.!ce'
 wire '!w.q/m3.!we'
 wire '!oe/m3.!oe'
-wire 'a[2-31]/m3.a'
+wire 'a3.q/m3.a'
 wire 'b03.a/m3.d'

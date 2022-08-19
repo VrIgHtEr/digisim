@@ -10,15 +10,14 @@ end
 input('a', w - 1)
 output('q', w - 1)
 
-for i = 0, w - 1 do
-    local prev = 'x' .. i .. '_0'
-    Buffer(prev)
-    wire('a[' .. i .. ']/prev.a')
-    for j = 1, d - 1 do
-        local n = 'x' .. i .. '_' .. j
-        Buffer(n)
-        wire(prev .. '.q/' .. n .. '.a')
-        prev = n
-    end
-    wire(prev .. '.q/q[' .. i .. ']')
-end
+local c = 'b0'
+Buffer { c, width = w }
+--
+--for i = 1, w - 1 do
+--    local n = 'b' .. i
+--    Buffer { n, width = w }
+--    wire(c .. '.q/' .. n .. '.a')
+--    c = n
+--end
+--
+wire 'c.q/q'
