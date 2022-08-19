@@ -75,6 +75,21 @@ local function generate()
     for i = 0, 31 do
         addRead(seq, l, l, l, i)
     end
+    addWrite(seq, l, h, h, 0, 0xABCD)
+    addRead(seq, l, h, h, 0)
+    addRead(seq, l, h, l, 0)
+    addWrite(seq, l, h, h, 3, 0xABCD)
+    addRead(seq, l, h, h, 3)
+    addRead(seq, l, h, l, 3)
+
+    addWrite(seq, l, l, h, 0, 0xdeadbeef)
+    addRead(seq, l, l, h, 0)
+    addWrite(seq, l, l, h, 5, 0xdeadbeef)
+    addRead(seq, l, l, h, 5)
+    addWrite(seq, l, l, h, 10, 0xdeadbeef)
+    addRead(seq, l, l, h, 10)
+    addWrite(seq, l, l, h, 15, 0xdeadbeef)
+    addRead(seq, l, l, h, 15)
     return seq
 end
 
