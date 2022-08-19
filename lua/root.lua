@@ -90,6 +90,11 @@ local function generate()
     addRead(seq, l, l, h, 10)
     addWrite(seq, l, l, h, 15, 0xdeadbeef)
     addRead(seq, l, l, h, 15)
+
+    for i = 0, 31 do
+        addRead(seq, h, h, h, i)
+        addRead(seq, h, h, l, i)
+    end
     return seq
 end
 
