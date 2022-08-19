@@ -18,7 +18,7 @@ const PQEntry = struct {
 };
 const Pq = std.PriorityQueue(PQEntry, void, PQEntry.compare);
 
-pub const Handler = fn (usize, []Signal, []Signal, *usize) usize;
+pub const Handler = fn ([]Signal, []Signal, *usize) usize;
 
 pub const Simulation = struct {
     digisim: *Digisim,
@@ -115,7 +115,7 @@ pub const Simulation = struct {
             }
 
             const outputs = self.outputs[0..component.numOutputs];
-            const nextSchedule = component.handler(self.timestamp, inputs, outputs, &component.data);
+            const nextSchedule = component.handler(inputs, outputs, &component.data);
             if (nextSchedule != 0) {
                 try self.pq.add(.{ .timestamp = self.timestamp + nextSchedule, .component = component });
             }

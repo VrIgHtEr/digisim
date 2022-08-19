@@ -31,7 +31,7 @@ pub const LuaHandlerState = packed struct {
     }
 };
 
-pub fn lua_h(_: usize, input: []Signal, output: []Signal, data: *usize) usize {
+pub fn lua_h(input: []Signal, output: []Signal, data: *usize) usize {
     const s = @intToPtr(*LuaHandlerState, data.*);
     _ = s.d.lua.checkstack(4);
     s.d.lua.loadref(s.handler);
@@ -70,7 +70,7 @@ pub fn lua_h(_: usize, input: []Signal, output: []Signal, data: *usize) usize {
     return ret;
 }
 
-pub fn nand_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
+pub fn nand_h(input: []Signal, output: []Signal, _: *usize) usize {
     for (input) |x| {
         if (x != Signal.high) {
             output[0] = Signal.high;
@@ -81,7 +81,7 @@ pub fn nand_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
     return 0;
 }
 
-pub fn and_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
+pub fn and_h(input: []Signal, output: []Signal, _: *usize) usize {
     for (input) |x| {
         if (x != Signal.high) {
             output[0] = Signal.low;
@@ -92,7 +92,7 @@ pub fn and_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
     return 0;
 }
 
-pub fn or_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
+pub fn or_h(input: []Signal, output: []Signal, _: *usize) usize {
     for (input) |x| {
         if (x == Signal.high) {
             output[0] = Signal.high;
@@ -103,7 +103,7 @@ pub fn or_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
     return 0;
 }
 
-pub fn nor_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
+pub fn nor_h(input: []Signal, output: []Signal, _: *usize) usize {
     for (input) |x| {
         if (x == Signal.high) {
             output[0] = Signal.low;
@@ -114,7 +114,7 @@ pub fn nor_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
     return 0;
 }
 
-pub fn global_reset_h(_: usize, _: []Signal, output: []Signal, data: *usize) usize {
+pub fn global_reset_h(_: []Signal, output: []Signal, data: *usize) usize {
     if (data.* != 0) {
         const ret = data.*;
         data.* = 0;
@@ -124,7 +124,7 @@ pub fn global_reset_h(_: usize, _: []Signal, output: []Signal, data: *usize) usi
     return 0;
 }
 
-pub fn clock_h(_: usize, _: []Signal, output: []Signal, data: *usize) usize {
+pub fn clock_h(_: []Signal, output: []Signal, data: *usize) usize {
     const mask: usize = (std.math.maxInt(usize) >> 1) + 1;
     const period = data.* & ~mask;
     if ((data.* & mask) != 0) {
@@ -137,34 +137,34 @@ pub fn clock_h(_: usize, _: []Signal, output: []Signal, data: *usize) usize {
     return period;
 }
 
-pub fn pullup_h(_: usize, _: []Signal, output: []Signal, _: *usize) usize {
+pub fn pullup_h(_: []Signal, output: []Signal, _: *usize) usize {
     for (output) |_, idx| output[idx] = Signal.weakhigh;
     return 0;
 }
 
-pub fn pulldown_h(_: usize, _: []Signal, output: []Signal, _: *usize) usize {
+pub fn pulldown_h(_: []Signal, output: []Signal, _: *usize) usize {
     for (output) |_, idx| output[idx] = Signal.weaklow;
     return 0;
 }
 
-pub fn high_h(_: usize, _: []Signal, output: []Signal, _: *usize) usize {
+pub fn high_h(_: []Signal, output: []Signal, _: *usize) usize {
     for (output) |_, idx| output[idx] = Signal.high;
     return 0;
 }
 
-pub fn low_h(_: usize, _: []Signal, output: []Signal, _: *usize) usize {
+pub fn low_h(_: []Signal, output: []Signal, _: *usize) usize {
     for (output) |_, idx| output[idx] = Signal.low;
     return 0;
 }
 
-pub fn buffer_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
+pub fn buffer_h(input: []Signal, output: []Signal, _: *usize) usize {
     for (input) |x, idx| {
         output[idx] = x;
     }
     return 0;
 }
 
-pub fn tristate_buffer_h(_: usize, input: []Signal, output: []Signal, _: *usize) usize {
+pub fn tristate_buffer_h(input: []Signal, output: []Signal, _: *usize) usize {
     var i: usize = 1;
     if (input[0] == Signal.high) {
         while (i < input.len) : (i += 1) {
