@@ -12,7 +12,7 @@ High 'VCC'
 Low 'GND'
 
 -----------------------------------------------------------
--- four memory banks
+-- four memory banks with 30-bit address and 8-bit data
 VMemoryBank 'm0'
 wire '!oe/m0.!oe'
 
@@ -81,8 +81,7 @@ wire '!ce/cw.a[0]'
 wire '!word/cw.a[1]'
 
 -- align chip enable signals
--- rotate by 2 if a[1] is high, then
--- rotate by 1 more if a[0] is high
+-- rotate by 2 if a[1] is high
 X74157 'ce1'
 wire 'a[1]/ce1.s'
 wire 'GND.q/ce1.!e'
@@ -92,6 +91,8 @@ fan 'cw.q/ce1.a[2-3]'
 fan 'cw.q/ce1.b[0-1]'
 wire '!ce/ce1.b[2]'
 wire 'ch.q/ce1.b[3]'
+
+-- then rotate by 1 more if a[0] is high
 X74157 'ce2'
 wire 'a[0]/ce2.s'
 wire 'GND.q/ce2.!e'
@@ -123,6 +124,7 @@ wire 'align.!eb/VCC.q'
 fan 'VCC.q/align.sb'
 wire 'align.sa/a[0-1]'
 
+--------------------------------------------------------------
 -- alignment matrix
 -- a % 4 == 0
 -- connect banks 0-3 data to port a of next 4 components respectively
