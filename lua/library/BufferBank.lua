@@ -12,12 +12,13 @@ output('q', w - 1)
 
 local c = 'b0'
 Buffer { c, width = w }
---
---for i = 1, w - 1 do
---    local n = 'b' .. i
---    Buffer { n, width = w }
---    wire(c .. '.q/' .. n .. '.a')
---    c = n
---end
---
-wire 'c.q/q'
+wire 'a/b0.a'
+
+for i = 1, w - 1 do
+    local n = 'b' .. i
+    Buffer { n, width = w }
+    wire(c .. '.q/' .. n .. '.a')
+    c = n
+end
+
+wire(c .. '.q/q')

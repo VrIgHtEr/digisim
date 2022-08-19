@@ -22,7 +22,6 @@ wire '!w/!w.a[0]'
 wire '!clk.q/!w.a[1]'
 -----------------------------------------------------------
 -- addresses for banks 0-2
--- bank 3 can be connected directly to d[2..31]
 
 -- increment bank 0 address if alignment > 0
 Or 'c0'
@@ -45,6 +44,11 @@ X74283 { 'a2', width = 30 }
 wire 'c2.q/a2.cin'
 wire 'a[2-31]/a2.a'
 fan 'GND.q/a2.b'
+
+-- bank 3 never needs incrementing
+-- only buffer for timing purposes
+BufferBank { 'a3', width = 30, depth = 2 }
+wire 'a[2-31]/a3.a'
 
 ------------------------------------------------------------
 -- chip enable signals for halfword (bit 1) and word (bits 2-3) bytes
@@ -251,11 +255,6 @@ wire '!w.q/m2.!we'
 wire '!oe/m2.!oe'
 wire 'a2.s/m2.a'
 wire 'b02.a/m2.d'
-
-Buffer { 'a3_1', width = 30 }
-wire 'a[2-31]/a3_1.a'
-Buffer { 'a3', width = 30 }
-wire 'a3_1.q/a3.a'
 
 VMemoryBank 'm3'
 wire 'ce2.q[3]/m3.!ce'
