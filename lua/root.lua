@@ -20,15 +20,15 @@ wire 'mem.a/data.address'
 wire 'mem.d/data.d'
 
 VRegister 'mar'
-wire 'mar.a/data.address'
-wire 'mar.d/data.d'
+wire 'mar.out/data.address'
+wire 'mar.in/data.d'
 wire 'clk.q/mar.cp'
 wire 'rst.q/mar.!mr'
 wire 'ctrl.mar_in/mar.w'
 
 VRegister 'ir'
-wire 'ir.a/data.instruction'
-wire 'ir.d/data.d'
+wire 'ir.out/data.instruction'
+wire 'ir.in/data.d'
 wire 'clk.q/ir.cp'
 wire 'rst.q/ir.!mr'
 wire 'ctrl.ir_in/ir.w'
@@ -47,24 +47,24 @@ local function outputnumber(seq, num)
     end
 end
 
-local function row(ce, we, oe, half, word, signed, data, address)
-    local ret = { ce or z, we or z, oe or z, half or z, word or z, signed or z }
+local function row(ce, we, oe, half, word, signed, mar_in, ir_in, data)
+    local ret = { ce or z, we or z, oe or z, half or z, word or z, signed or z, mar_in or z, ir_in or z }
     outputnumber(ret, data)
-    outputnumber(ret, address)
     return ret
 end
 
 local function addWrite(seq, half, word, signed, address, data)
-    seq[#seq + 1] = row(l, l, h, half, word, signed, data, address)
-    --seq[#seq + 1] = row(h, h, h, half, word, signed, data, address)
+    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, address)
+    seq[#seq + 1] = row(l, l, h, half, word, signed, l, l, data)
 end
 
 local function addRead(seq, half, word, signed, address)
-    seq[#seq + 1] = row(l, h, l, half, word, signed, nil, address)
+    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, address)
+    seq[#seq + 1] = row(l, h, l, half, word, signed, l, h, nil)
 end
 
 local function generate()
-    local seq = { row(h, h, h, h, h, h) }
+    local seq = { row() }
     for i = 0, 15 do
         addWrite(seq, h, h, h, i, i)
     end
@@ -114,24 +114,8 @@ end
 
 Sequencer {
     'test',
-    width = 14 + 32 + 24,
-    sequence = generate() or {
-        { h, h, h, h, h, l, z, z, z, z, z, z, z, z },
-        { h, h, l, h, h, l, z, z, z, z, z, z, z, z },
-        { h, h, h, h, h, l, z, z, z, z, z, z, z, z },
-        { h, h, l, h, h, l, z, z, z, z, z, z, z, z },
-        { h, l, l, h, h, l, z, z, z, z, z, z, z, z },
-        { h, l, h, h, h, l, z, z, z, z, z, z, z, z },
-        { l, h, h, h, h, l, z, z, z, z, z, z, z, z },
-        { l, h, l, h, h, l, z, z, z, z, z, z, z, z },
-        { l, h, h, h, h, l, z, z, z, z, z, z, z, z },
-        { l, h, l, h, h, l, z, z, z, z, z, z, z, z },
-        { l, l, l, h, h, l, z, z, z, z, z, z, z, z },
-        { l, l, h, h, h, l, h, h, h, h, h, h, h, h },
-        { h, h, h, h, h, l, h, h, h, h, h, h, h, h },
-        { l, h, l, h, h, l, z, z, z, z, z, z, z, z },
-        { h, h, h, h, h, l, z, z, z, z, z, z, z, z },
-    },
+    width = 8 + 32,
+    sequence = generate(),
 }
 wire 'clk.q/test.clk'
 wire 'test.q[0]/ctrl.!mem_ce'
@@ -140,5 +124,6 @@ wire 'test.q[2]/ctrl.!mem_oe'
 wire 'test.q[3]/ctrl.!mem_half'
 wire 'test.q[4]/ctrl.!mem_word'
 wire 'test.q[5]/ctrl.mem_signed'
-wire 'test.q[6-37]/data.d'
-wire 'test.q[38-69]/data.address'
+wire 'test.q[6]/ctrl.mar_in'
+wire 'test.q[7]/ctrl.ir_in'
+wire 'test.q[8-39]/data.d'

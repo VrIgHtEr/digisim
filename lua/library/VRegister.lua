@@ -3,16 +3,16 @@ if width < 1 then
     error 'invalid width'
 end
 
-input('d', width - 1)
+input('in', width - 1)
 input 'w'
 input 'cp'
 input '!mr'
-output('a', width - 1)
+output('out', width - 1)
 
 X74273 { 'r', width = width }
 wire '!mr/r.!mr'
-wire 'd/r.d'
-wire 'a/r.q'
+wire 'in/r.d'
+wire 'out/r.q'
 
 And 'clk'
 wire 'cp/clk.a[0]'
