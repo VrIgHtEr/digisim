@@ -27,3 +27,7 @@ wire 'mem_signed.q/mem_signed'
 output('mar_in', trace)
 Pulldown 'mar_in'
 wire 'mar_in.q/mar_in'
+
+output('ir_in', trace)
+Pulldown 'ir_in'
+wire 'ir_in.q/ir_in'

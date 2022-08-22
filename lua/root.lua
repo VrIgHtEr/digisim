@@ -19,12 +19,19 @@ wire 'mem.signed/ctrl.mem_signed'
 wire 'mem.a/data.address'
 wire 'mem.d/data.d'
 
-VMemoryAddressRegister 'mar'
+VRegister 'mar'
 wire 'mar.a/data.address'
 wire 'mar.d/data.d'
 wire 'clk.q/mar.cp'
 wire 'rst.q/mar.!mr'
 wire 'ctrl.mar_in/mar.w'
+
+VRegister 'ir'
+wire 'ir.a/data.instruction'
+wire 'ir.d/data.d'
+wire 'clk.q/ir.cp'
+wire 'rst.q/ir.!mr'
+wire 'ctrl.ir_in/ir.w'
 
 local function outputnumber(seq, num)
     if num == nil then

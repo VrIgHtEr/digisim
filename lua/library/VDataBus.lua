@@ -15,3 +15,7 @@ wire 'd.q/d'
 output('address', 31, trace)
 Pulldown { 'address', width = 32 }
 wire 'address.q/address'
+
+output('instruction', 31, trace)
+Pulldown { 'instruction', width = 32 }
+wire 'instruction.q/instruction'
