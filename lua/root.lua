@@ -19,6 +19,13 @@ wire 'mem.signed/ctrl.mem_signed'
 wire 'mem.a/data.address'
 wire 'mem.d/data.d'
 
+VMemoryAddressRegister 'mar'
+wire 'mar.a/data.address'
+wire 'mar.d/data.d'
+wire 'clk.q/mar.cp'
+wire 'rst.q/mar.!mr'
+wire 'ctrl.mar_in/mar.w'
+
 local function outputnumber(seq, num)
     if num == nil then
         for _ = 1, 32 do
