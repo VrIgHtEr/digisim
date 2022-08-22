@@ -27,11 +27,11 @@ wire '!oe/m3.!oe'
 
 -----------------------------------------------------------
 -- write synchronization
-Not '!clk'
-wire '!clk.a/clk'
-Or '!w'
-wire '!w/!w.a[0]'
-wire '!clk.q/!w.a[1]'
+Not 'nw'
+wire '!w/nw.a'
+Nand '!w'
+wire 'nw.q/!w.a[0]'
+wire 'clk/!w.a[1]'
 wire '!w.q/m0.!we'
 wire '!w.q/m1.!we'
 wire '!w.q/m2.!we'
