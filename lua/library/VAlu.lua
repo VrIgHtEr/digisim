@@ -22,6 +22,18 @@ wire 'VCC.q/out.dir'
 wire '!oe/out.!oe'
 wire 'out.b/d'
 
+Not '!eb'
+wire 'op[2]/!eb.a'
+X74139 'sel'
+wire 'op[0-1]/sel.sa'
+wire 'op[0-1]/sel.sb'
+wire 'op[2]/sel.!ea'
+wire '!eb.q/sel.!eb'
+
+And 'signed'
+wire 'signed/signed.a[0]'
+wire 'sel.!qa[3]/signed.a[1]'
+
 X7485 { 'comp', width = width }
 wire 'GND.q/comp.lt_in'
 wire 'GND.q/comp.gt_in'
@@ -32,21 +44,13 @@ wire 'comp.gt/gt'
 wire('a[0-' .. (width - 2) .. ']/comp.a[0-' .. (width - 2) .. ']')
 wire('b[0-' .. (width - 2) .. ']/comp.b[0-' .. (width - 2) .. ']')
 Xor 'ha'
-wire 'ha.a[0]/signed'
+wire 'ha.a[0]/signed.q'
 wire('ha.a[1]/a[' .. (width - 1) .. ']')
 wire('ha.q/comp.a[' .. (width - 1) .. ']')
 Xor 'hb'
-wire 'hb.a[0]/signed'
+wire 'hb.a[0]/signed.q'
 wire('hb.a[1]/b[' .. (width - 1) .. ']')
 wire('hb.q/comp.b[' .. (width - 1) .. ']')
-
-Not '!eb'
-wire 'op[2]/!eb.a'
-X74139 'sel'
-wire 'op[0-1]/sel.sa'
-wire 'op[0-1]/sel.sb'
-wire 'op[2]/sel.!ea'
-wire '!eb.q/sel.!eb'
 
 VAluAddSub { 'add', width = width }
 wire 'a/add.a'
