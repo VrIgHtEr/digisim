@@ -114,6 +114,15 @@ pub fn nor_h(input: []Signal, output: []Signal, _: *usize) usize {
     return 0;
 }
 
+pub fn not_h(input: []Signal, output: []Signal, _: *usize) usize {
+    for (input) |x, idx| {
+        if (x == Signal.high) {
+            output[idx] = Signal.low;
+        } else output[idx] = Signal.high;
+    }
+    return 0;
+}
+
 pub fn xor_h(input: []Signal, output: []Signal, _: *usize) usize {
     var ret = false;
     for (input) |x| {

@@ -145,6 +145,9 @@ local function create_env(id, opts)
             cheat = function(func)
                 digisim.cheat(id, func)
             end,
+            Not = function(name, o)
+                digisim.components.Not(id, validate_builtin_component_inputs(name, o, 0))
+            end,
             Nand = function(name, o)
                 digisim.components.Nand(id, validate_builtin_component_inputs(name, o, 1))
             end,

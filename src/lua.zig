@@ -386,6 +386,33 @@ pub const Lua = struct {
         return 1;
     }
 
+    fn lua_createnot(L: ?State) callconv(.C) c_int {
+        const digisim = getInstance(L);
+        const lua = &digisim.lua;
+        const args = lua.gettop();
+        if (args < 3) lua.err("invalid number of arguments passed to createnot");
+
+        if (!lua.islightuserdata(0 - args)) lua.err("first argument was not a lightuserdata");
+        const comp = getcomponent(digisim, lua.touserdata(0 - args)) catch lua.err("component not found");
+
+        if (!lua.isstring(1 - args)) lua.err("second argument was not a string");
+        const str = lua.tolstring(1 - args);
+
+        if (!lua.isnumber(2 - args)) lua.err("3rd arg not a number");
+        const pin_end_f = lua.tonumber(2 - args);
+        if (pin_end_f < 0 or pin_end_f >= 1048576) lua.err("pin_end out of range");
+        const pin_end = @floatToInt(usize, pin_end_f);
+
+        const id = comp.addComponent(str) catch lua.err("failed to create component");
+        const cmp = digisim.components.getPtr(id) orelse unreachable;
+
+        _ = cmp.addPort("a", true, 0, pin_end, false) catch lua.err("failed to add port a");
+        _ = cmp.addPort("q", false, 0, pin_end, false) catch lua.err("failed to add port q");
+        cmp.setHandler(Components.not_h) catch unreachable;
+        lua.pushlightuserdata(@intToPtr(*anyopaque, id));
+        return 1;
+    }
+
     fn lua_createpulldown(L: ?State) callconv(.C) c_int {
         const digisim = getInstance(L);
         const lua = &digisim.lua;
@@ -587,6 +614,10 @@ pub const Lua = struct {
         self.pushlstring("Xnor");
         self.pushlightuserdata(digisim);
         self.pushcclosure(lua_createxnor, 1);
+        self.settable(-3);
+        self.pushlstring("Not");
+        self.pushlightuserdata(digisim);
+        self.pushcclosure(lua_createnot, 1);
         self.settable(-3);
         self.pushlstring("Pullup");
         self.pushlightuserdata(digisim);

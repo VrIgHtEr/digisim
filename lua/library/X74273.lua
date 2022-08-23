@@ -11,7 +11,7 @@ output('q', width - 1)
 Not 'mr'
 wire '!mr/mr.a'
 
-NotBank { '!d', width = width }
+Not { '!d', width = width }
 wire 'd/!d.a'
 
 EdgeDetector { 'e', width = 3 }
