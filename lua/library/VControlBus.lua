@@ -31,3 +31,11 @@ wire 'mar_in.q/mar_in'
 output('ir_in', trace)
 Pulldown 'ir_in'
 wire 'ir_in.q/ir_in'
+
+output('alu_sub', trace)
+Pulldown 'alu_sub'
+wire 'alu_sub.q/alu_sub'
+
+output('!alu_oe', trace)
+Pulldown '!alu_oe'
+wire '!alu_oe.q/!alu_oe'

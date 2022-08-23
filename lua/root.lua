@@ -33,6 +33,13 @@ wire 'clk.q/ir.cp'
 wire 'rst.q/ir.!mr'
 wire 'ctrl.ir_in/ir.w'
 
+VAlu 'alu'
+wire 'data.a/alu.a'
+wire 'data.b/alu.b'
+wire 'data.d/alu.d'
+wire 'ctrl.!alu_oe/alu.!oe'
+wire 'ctrl.alu_sub/alu.sub'
+
 local function outputnumber(seq, num)
     if num == nil then
         for _ = 1, 32 do
@@ -47,20 +54,20 @@ local function outputnumber(seq, num)
     end
 end
 
-local function row(ce, we, oe, half, word, signed, mar_in, ir_in, data)
-    local ret = { ce or z, we or z, oe or z, half or z, word or z, signed or z, mar_in or z, ir_in or z }
+local function row(ce, we, oe, half, word, signed, mar_in, ir_in, alu_oe, alu_sub, data)
+    local ret = { ce or z, we or z, oe or z, half or z, word or z, signed or z, mar_in or z, ir_in or z, alu_oe or z, alu_sub or z }
     outputnumber(ret, data)
     return ret
 end
 
 local function addWrite(seq, half, word, signed, address, data)
-    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, address)
-    seq[#seq + 1] = row(l, l, h, half, word, signed, l, l, data)
+    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, h, l, address)
+    seq[#seq + 1] = row(l, l, h, half, word, signed, l, l, h, l, data)
 end
 
 local function addRead(seq, half, word, signed, address)
-    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, address)
-    seq[#seq + 1] = row(l, h, l, half, word, signed, l, h, nil)
+    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, h, l, address)
+    seq[#seq + 1] = row(l, h, l, half, word, signed, l, h, h, l)
 end
 
 local function generate()
@@ -114,7 +121,7 @@ end
 
 Sequencer {
     'test',
-    width = 8 + 32,
+    width = 10 + 32,
     sequence = generate(),
 }
 wire 'clk.q/test.clk'
@@ -126,4 +133,6 @@ wire 'test.q[4]/ctrl.!mem_word'
 wire 'test.q[5]/ctrl.mem_signed'
 wire 'test.q[6]/ctrl.mar_in'
 wire 'test.q[7]/ctrl.ir_in'
-wire 'test.q[8-39]/data.d'
+wire 'test.q[8]/ctrl.!alu_oe'
+wire 'test.q[9]/ctrl.alu_sub'
+wire 'test.q[10-41]/data.d'
