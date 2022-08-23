@@ -39,3 +39,23 @@ wire 'alu_sub.q/alu_sub'
 output('!alu_oe', trace)
 Pulldown '!alu_oe'
 wire '!alu_oe.q/!alu_oe'
+
+output('alu_op', 2)
+Pulldown { 'alu_op', width = 3 }
+wire 'alu_op.q/alu_op'
+
+output('alu_signed', trace)
+Pullup 'alu_signed'
+wire 'alu_signed.q/alu_signed'
+
+output('alu_lt', trace)
+Pulldown 'alu_lt'
+wire 'alu_lt.q/alu_lt'
+
+output('alu_eq', trace)
+Pulldown 'alu_eq'
+wire 'alu_eq.q/alu_eq'
+
+output('alu_gt', trace)
+Pulldown 'alu_gt'
+wire 'alu_gt.q/alu_gt'

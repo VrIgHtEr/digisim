@@ -39,6 +39,11 @@ wire 'data.b/alu.b'
 wire 'data.d/alu.d'
 wire 'ctrl.!alu_oe/alu.!oe'
 wire 'ctrl.alu_sub/alu.sub'
+wire 'ctrl.alu_op/alu.op'
+wire 'ctrl.alu_signed/alu.signed'
+wire 'alu.lt/ctrl.alu_lt'
+wire 'alu.eq/ctrl.alu_eq'
+wire 'alu.gt/ctrl.alu_gt'
 
 local function outputnumber(seq, num)
     if num == nil then

@@ -10,7 +10,7 @@ input '!oe'
 
 High 'VCC'
 
-XorBank { '!b', width = width }
+X7486 { '!b', width = width }
 wire 'b/!b.a'
 fan 'sub/!b.b'
 

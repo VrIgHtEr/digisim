@@ -7,7 +7,9 @@ input('a', w - 1)
 input('b', w - 1)
 output('q', w - 1)
 
-XorBank { 'bank', width = w }
-wire 'a/bank.a'
-wire 'b/bank.b'
-wire 'q/bank.q'
+for i = 0, w - 1 do
+    Xor('x' .. i)
+    wire('x' .. i .. '.a[0]/a[' .. i .. ']')
+    wire('x' .. i .. '.a[1]/b[' .. i .. ']')
+    wire('x' .. i .. '.q/q[' .. i .. ']')
+end

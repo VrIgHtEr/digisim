@@ -9,7 +9,7 @@ input '!oe'
 
 High 'VCC'
 
-XorBank { 'op', width = width }
+X7486 { 'op', width = width }
 wire 'a/op.a'
 wire 'b/op.b'
 
