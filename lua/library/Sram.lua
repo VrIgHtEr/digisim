@@ -16,20 +16,23 @@ local z = sig.z
 
 local pce = high
 local pwe = high
-local bit = bit
+local bor = bit.bor
+local tobit = bit.tobit
+local lshift = bit.lshift
+local band = bit.band
 
 local function read_address(inputs)
-    local ret = bit.tobit(0)
+    local ret = tobit(0)
     for i = 0, address_width - 1 do
-        ret = bit.bor(ret, bit.lshift(inputs[i + 4] == high and 1 or 0, i))
+        ret = bor(ret, lshift(inputs[i + 4] == high and 1 or 0, i))
     end
     return ret
 end
 
 local function read_data(inputs)
-    local ret = bit.tobit(0)
+    local ret = tobit(0)
     for i = 0, data_width - 1 do
-        ret = bit.bor(ret, bit.lshift(inputs[i + 4 + address_width] == high and 1 or 0, i))
+        ret = bor(ret, lshift(inputs[i + 4 + address_width] == high and 1 or 0, i))
     end
     return ret
 end
@@ -42,13 +45,13 @@ local function write(inputs)
 end
 
 local function read_byte(address)
-    return memory[address + 1] or bit.tobit(0)
+    return memory[address + 1] or tobit(0)
 end
 
 local function read(inputs, outputs)
     local data = read_byte(read_address(inputs))
     for i = 0, data_width - 1 do
-        if bit.band(data, bit.lshift(1, i)) == 0 then
+        if band(data, lshift(1, i)) == 0 then
             outputs[i + 1] = low
         else
             outputs[i + 1] = high
