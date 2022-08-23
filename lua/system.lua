@@ -157,6 +157,12 @@ local function create_env(id, opts)
             Or = function(name, o)
                 digisim.components.Or(id, validate_builtin_component_inputs(name, o, 1))
             end,
+            Xor = function(name, o)
+                digisim.components.Xor(id, validate_builtin_component_inputs(name, o, 1))
+            end,
+            Xnor = function(name, o)
+                digisim.components.Xnor(id, validate_builtin_component_inputs(name, o, 1))
+            end,
             Pullup = function(name, o)
                 digisim.components.Pullup(id, validate_builtin_component_inputs(name, o))
             end,

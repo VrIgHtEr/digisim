@@ -114,6 +114,30 @@ pub fn nor_h(input: []Signal, output: []Signal, _: *usize) usize {
     return 0;
 }
 
+pub fn xor_h(input: []Signal, output: []Signal, _: *usize) usize {
+    var ret = false;
+    for (input) |x| {
+        if (x == Signal.high)
+            ret = !ret;
+    }
+    if (ret) {
+        output[0] = Signal.high;
+    } else output[0] = Signal.low;
+    return 0;
+}
+
+pub fn xnor_h(input: []Signal, output: []Signal, _: *usize) usize {
+    var ret = false;
+    for (input) |x| {
+        if (x == Signal.high)
+            ret = !ret;
+    }
+    if (ret) {
+        output[0] = Signal.low;
+    } else output[0] = Signal.high;
+    return 0;
+}
+
 pub fn global_reset_h(_: []Signal, output: []Signal, data: *usize) usize {
     if (data.* != 0) {
         const ret = data.*;
