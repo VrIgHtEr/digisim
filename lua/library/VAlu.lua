@@ -56,8 +56,15 @@ wire 'sub/add.sub'
 wire 'sel.!qa[0]/add.!oe'
 
 --SLL
---SLT
---SLTU
+
+Xnor 'slt_u'
+wire 'sel.!qa[2]/slt_u.a[0]'
+wire 'sel.!qa[3]/slt_u.a[1]'
+X74245 { 'slt', width = 32 }
+wire 'VCC.q/slt.dir'
+wire 'slt_u.q/slt.!oe'
+fan('GND.q/slt.a[1-' .. (width - 1) .. ']')
+wire 'slt.b/out.a'
 
 VAluXor { 'xor', width = width }
 wire 'a/xor.a'
