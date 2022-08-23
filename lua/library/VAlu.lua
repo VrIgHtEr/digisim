@@ -23,14 +23,22 @@ wire '!oe/out.!oe'
 wire 'out.b/d'
 
 X7485 { 'comp', width = width }
-wire 'a/comp.a'
-wire 'b/comp.b'
 wire 'GND.q/comp.lt_in'
 wire 'GND.q/comp.gt_in'
 wire 'VCC.q/comp.eq_in'
 wire 'comp.lt/lt'
 wire 'comp.eq/eq'
 wire 'comp.gt/gt'
+wire('a[0-' .. (width - 2) .. ']/comp.a[0-' .. (width - 2) .. ']')
+wire('b[0-' .. (width - 2) .. ']/comp.b[0-' .. (width - 2) .. ']')
+Xor 'ha'
+wire 'ha.a[0]/signed'
+wire('ha.a[1]/a[' .. (width - 1) .. ']')
+wire('ha.q/comp.a[' .. (width - 1) .. ']')
+Xor 'hb'
+wire 'hb.a[0]/signed'
+wire('hb.a[1]/b[' .. (width - 1) .. ']')
+wire('hb.q/comp.b[' .. (width - 1) .. ']')
 
 Not '!eb'
 wire 'op[2]/!eb.a'
