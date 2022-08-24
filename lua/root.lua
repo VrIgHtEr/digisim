@@ -53,6 +53,19 @@ wire 'alu.lt/ctrl.alu_lt'
 wire 'alu.eq/ctrl.alu_eq'
 wire 'alu.gt/ctrl.alu_gt'
 
+VRegisterBank 'registers'
+wire 'data.d/registers.d'
+wire 'data.a/registers.a'
+wire 'data.b/registers.b'
+wire 'clk.q/registers.clk'
+wire 'rst.q/registers.!mr'
+wire 'ctrl.reg_we/registers.we'
+wire 'ctrl.!reg_oea/registers.!oea'
+wire 'ctrl.!reg_oeb/registers.!oeb'
+wire 'ctrl.rs1/registers.rs1'
+wire 'ctrl.rs2/registers.rs2'
+wire 'ctrl.rd/registers.rd'
+
 local function outputnumber(seq, num)
     if num == nil then
         for _ = 1, 32 do

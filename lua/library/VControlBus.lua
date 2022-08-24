@@ -75,3 +75,27 @@ wire 'pc_we.q/pc_we'
 output('pc_count', trace)
 Pulldown 'pc_count'
 wire 'pc_count.q/pc_count'
+
+output('!reg_oea', trace)
+Pullup '!reg_oea'
+wire '!reg_oea.q/!reg_oea'
+
+output('!reg_oeb', trace)
+Pullup '!reg_oeb'
+wire '!reg_oeb.q/!reg_oeb'
+
+output('reg_we', trace)
+Pulldown 'reg_we'
+wire 'reg_we.q/reg_we'
+
+output('rs1', 4)
+Pulldown { 'rs1', width = 5 }
+wire 'rs1.q/rs1'
+
+output('rs2', 4)
+Pulldown { 'rs2', width = 5 }
+wire 'rs2.q/rs2'
+
+output('rd', 4)
+Pulldown { 'rd', width = 5 }
+wire 'rd.q/rd'

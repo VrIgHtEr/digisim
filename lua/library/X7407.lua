@@ -24,7 +24,6 @@ if d > 0 then
 
     wire(c .. '.q/q')
 else
-    Buffer { 'bla', width = 1 }
-    wire 'a[0]/bla.a'
+    Low 'GND'
     wire 'a/q'
 end
