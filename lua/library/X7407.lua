@@ -1,4 +1,4 @@
-local w = math.floor(opts.width or 1)
+local w = math.floor(opts.width or 6)
 if w < 1 then
     error 'width < 1'
 end

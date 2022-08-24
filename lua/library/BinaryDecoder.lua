@@ -1,4 +1,4 @@
-local width = opts.width or 1
+local width = opts.width or 4
 if type(width) ~= 'number' then
     error 'invalid width type'
 end
@@ -20,8 +20,8 @@ else
     BinaryDecoder { 'dec', width = width - 1 }
     wire('a[0-' .. (width - 2) .. ']/dec.a')
 
-    AndBank { 'al', width = outputs / 2 }
-    AndBank { 'ah', width = outputs / 2 }
+    X7408 { 'al', width = outputs / 2 }
+    X7408 { 'ah', width = outputs / 2 }
 
     wire('al.q/q[0-' .. (outputs / 2 - 1) .. ']')
     wire('ah.q/q[' .. (outputs / 2) .. '-' .. (outputs - 1) .. ']')

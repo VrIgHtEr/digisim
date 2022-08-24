@@ -13,7 +13,7 @@ wire 'a[0-1]/csm.sa'
 wire 'VCC.q/csm.!eb'
 fan 'VCC.q/csm.sb'
 
-OrBank { 'cso', width = 4 }
+X7432 { 'cso', width = 4 }
 fan '!ce/cso.a'
 wire 'csm.!qa/cso.b'
 

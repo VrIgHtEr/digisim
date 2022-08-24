@@ -19,7 +19,7 @@ BinaryDecoder { 'a', width = w }
 wire 'sa/a.a'
 X7404 { 'na', width = o }
 wire 'a.q/na.a'
-OrBank { 'oa', width = o }
+X7432 { 'oa', width = o }
 wire 'na.q/oa.a'
 wire 'oa.q/!qa'
 for i = 0, o - 1 do
@@ -30,7 +30,7 @@ BinaryDecoder { 'b', width = w }
 wire 'sb/b.a'
 X7404 { 'nb', width = o }
 wire 'b.q/nb.a'
-OrBank { 'ob', width = o }
+X7432 { 'ob', width = o }
 wire 'nb.q/ob.a'
 wire 'ob.q/!qb'
 for i = 0, o - 1 do
