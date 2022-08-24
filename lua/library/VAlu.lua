@@ -2,6 +2,10 @@ local width = math.floor(opts.width or 32)
 if width < 1 then
     error 'invalid width'
 end
+local shwidth = math.log(width, 2)
+if shwidth % 1 ~= 0 then
+    error 'width must be a power of 2'
+end
 
 input('a', width - 1)
 input('b', width - 1)
@@ -16,6 +20,12 @@ output 'gt'
 
 Low 'GND'
 High 'VCC'
+
+VBarrelShifter { 'shift', shwidth = shwidth }
+wire('b[0-' .. (shwidth - 1) .. ']/shift.shamt')
+wire 'sub/shift.arithmetic'
+wire 'GND.q/shift.left'
+wire 'a/shift.d'
 
 X74245 { 'out', width = width }
 wire 'VCC.q/out.dir'

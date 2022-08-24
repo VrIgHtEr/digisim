@@ -264,6 +264,7 @@ local function compile(opts)
         return unpack(ret)
     else
         stderr:write('LUA ERROR: ' .. tostring(ret[2]) .. '\n')
+        error(ret[2])
     end
 end
 

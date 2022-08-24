@@ -66,7 +66,7 @@ wire 'a2.s/m2.a'
 
 -- bank 3 never needs incrementing
 -- only buffer for timing purposes
-BufferBank { 'a3', width = 30, depth = 3 }
+BufferBank { 'a3', width = 30, depth = 0 }
 wire 'a[2-31]/a3.a'
 wire 'a3.q/m3.a'
 

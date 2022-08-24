@@ -3,7 +3,7 @@ local z = sig.z
 local h = sig.high
 
 Reset { 'rst', period = 100 }
-Clock { 'clk', period = 1000 }
+Clock { 'clk', period = 500 }
 
 VControlBus { 'ctrl', trace = true }
 VDataBus { 'data', trace = true }
