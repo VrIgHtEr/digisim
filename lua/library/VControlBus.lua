@@ -59,3 +59,19 @@ wire 'alu_eq.q/alu_eq'
 output('alu_gt', trace)
 Pulldown 'alu_gt'
 wire 'alu_gt.q/alu_gt'
+
+output('!pc_oe', trace)
+Pullup '!pc_oe'
+wire '!pc_oe.q/!pc_oe'
+
+output('pc_short', trace)
+Pulldown 'pc_short'
+wire 'pc_short.q/pc_short'
+
+output('pc_we', trace)
+Pulldown 'pc_we'
+wire 'pc_we.q/pc_we'
+
+output('pc_count', trace)
+Pulldown 'pc_count'
+wire 'pc_count.q/pc_count'

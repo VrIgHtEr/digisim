@@ -33,6 +33,14 @@ wire 'clk.q/ir.cp'
 wire 'rst.q/ir.!mr'
 wire 'ctrl.ir_in/ir.w'
 
+VProgramCounter { 'pc', width = 32 }
+wire 'rst.q/pc.!mr'
+wire 'ctrl.!pc_oe/pc.!oe'
+wire 'ctrl.pc_short/pc.short'
+wire 'ctrl.pc_count/pc.count'
+wire 'ctrl.pc_we/pc.we'
+wire 'clk.q/pc.clk'
+
 VAlu 'alu'
 wire 'data.a/alu.a'
 wire 'data.b/alu.b'
