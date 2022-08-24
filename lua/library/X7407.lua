@@ -24,7 +24,7 @@ if d > 0 then
 
     wire(c .. '.q/q')
 else
-    X7404 { 'bla', width = 1 }
+    Buffer { 'bla', width = 1 }
     wire 'a[0]/bla.a'
     wire 'a/q'
 end

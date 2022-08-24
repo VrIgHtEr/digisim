@@ -66,7 +66,7 @@ wire 'a2.s/m2.a'
 
 -- bank 3 never needs incrementing
 -- only buffer for timing purposes
-BufferBank { 'a3', width = 30, depth = 0 }
+X7407 { 'a3', width = 30, depth = 0 }
 wire 'a[2-31]/a3.a'
 wire 'a3.q/m3.a'
 
@@ -263,7 +263,7 @@ wire 'out.a[16-31]/mc.q'
 X74245 { 'in', width = 32 }
 wire '!dir.q/in.!oe'
 wire 'GND.q/in.dir'
-BufferBank { 'obuf', width = 32, depth = 1 }
+X7407 { 'obuf', width = 32, depth = 1 }
 wire 'obuf.a/d'
 wire 'in.b/obuf.q'
 wire 'b00.b/in.a[0-7]'
