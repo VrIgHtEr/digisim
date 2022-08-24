@@ -9,7 +9,7 @@ input '!oe'
 
 High 'VCC'
 
-AndBank { 'op', width = width }
+X7408 { 'op', width = width }
 wire 'a/op.a'
 wire 'b/op.b'
 
