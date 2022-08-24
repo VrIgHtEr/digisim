@@ -14,7 +14,7 @@ X7404 { 'na', width = 4 }
 wire 'a/na.a'
 
 X7400 { 'out', width = 16 }
-wire 'out.q/output'
+wire 'out.q/y'
 fan 'e.q/out.a'
 
 for i = 0, 15 do

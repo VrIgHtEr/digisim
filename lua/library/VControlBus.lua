@@ -76,14 +76,6 @@ output('pc_count', trace)
 Pulldown 'pc_count'
 wire 'pc_count.q/pc_count'
 
-output('!reg_oea', trace)
-Pullup '!reg_oea'
-wire '!reg_oea.q/!reg_oea'
-
-output('!reg_oeb', trace)
-Pullup '!reg_oeb'
-wire '!reg_oeb.q/!reg_oeb'
-
 output('reg_we', trace)
 Pulldown 'reg_we'
 wire 'reg_we.q/reg_we'
