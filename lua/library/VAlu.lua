@@ -21,12 +21,6 @@ output 'gt'
 Low 'GND'
 High 'VCC'
 
-VBarrelShifter { 'shift', shwidth = shwidth }
-wire('b[0-' .. (shwidth - 1) .. ']/shift.shamt')
-wire 'sub/shift.arithmetic'
-wire 'GND.q/shift.left'
-wire 'a/shift.d'
-
 X74245 { 'out', width = width }
 wire 'VCC.q/out.dir'
 wire '!oe/out.!oe'
@@ -39,6 +33,14 @@ wire 'op[0-1]/sel.sa'
 wire 'op[0-1]/sel.sb'
 wire 'op[2]/sel.!ea'
 wire '!eb.q/sel.!eb'
+
+X7404 { 'left', width = 1 }
+wire 'sel.!qa[1]/left.a'
+VBarrelShifter { 'shift', shwidth = shwidth }
+wire('b[0-' .. (shwidth - 1) .. ']/shift.shamt')
+wire 'sub/shift.arithmetic'
+wire 'a/shift.d'
+wire 'left.q/shift.left'
 
 And 'signed'
 wire 'signed/signed.a[0]'
@@ -69,7 +71,14 @@ wire 'out.a/add.d'
 wire 'sub/add.sub'
 wire 'sel.!qa[0]/add.!oe'
 
---SLL
+Xnor 'sll_rx'
+wire 'sel.!qa[1]/sll_rx.a[0]'
+wire 'sel.!qb[1]/sll_rx.a[1]'
+X74245 { 'sh', width = width }
+wire 'VCC.q/sh.dir'
+wire 'sll_rx.q/sh.!oe'
+wire 'shift.q/sh.a'
+wire 'sh.b/out.a'
 
 Xnor 'slt_u'
 wire 'sel.!qa[2]/slt_u.a[0]'
@@ -85,8 +94,6 @@ wire 'a/xor.a'
 wire 'b/xor.b'
 wire 'out.a/xor.d'
 wire 'sel.!qb[0]/xor.!oe'
-
---SRx
 
 VAluOr { 'or', width = width }
 wire 'a/or.a'
