@@ -2,14 +2,15 @@ local l = sig.low
 local z = sig.z
 local h = sig.high
 
-Reset { 'rst', period = 100 }
-Clock { 'clk', period = 500 }
-
 VControlBus { 'ctrl', trace = true }
 VDataBus { 'data', trace = true }
 
+VStartModule { 'start' }
+wire 'ctrl.!rst/start.!rst'
+wire 'ctrl.clk/start.clk'
+
 VMemoryInterface 'mem'
-wire 'clk.q/mem.clk'
+wire 'ctrl.clk/mem.clk'
 wire 'mem.!word/ctrl.!mem_word'
 wire 'mem.!half/ctrl.!mem_half'
 wire 'mem.!ce/ctrl.!mem_ce'
@@ -22,24 +23,24 @@ wire 'mem.d/data.d'
 VRegister 'mar'
 wire 'mar.out/data.address'
 wire 'mar.in/data.d'
-wire 'clk.q/mar.cp'
-wire 'rst.q/mar.!mr'
+wire 'ctrl.clk/mar.cp'
+wire 'ctrl.!rst/mar.!mr'
 wire 'ctrl.mar_in/mar.w'
 
 VRegister 'ir'
 wire 'ir.out/data.instruction'
 wire 'ir.in/data.d'
-wire 'clk.q/ir.cp'
-wire 'rst.q/ir.!mr'
+wire 'ctrl.clk/ir.cp'
+wire 'ctrl.!rst/ir.!mr'
 wire 'ctrl.ir_in/ir.w'
 
 VProgramCounter { 'pc', width = 32 }
-wire 'rst.q/pc.!mr'
+wire 'ctrl.!rst/pc.!mr'
 wire 'ctrl.!pc_oe/pc.!oe'
 wire 'ctrl.pc_short/pc.short'
 wire 'ctrl.pc_count/pc.count'
 wire 'ctrl.pc_we/pc.we'
-wire 'clk.q/pc.clk'
+wire 'ctrl.clk/pc.clk'
 
 VAlu 'alu'
 wire 'data.a/alu.a'
@@ -57,9 +58,8 @@ VRegisterBank 'registers'
 wire 'data.d/registers.d'
 wire 'data.a/registers.a'
 wire 'data.b/registers.b'
-wire 'clk.q/registers.clk'
-wire 'rst.q/registers.!mr'
-wire 'ctrl.reg_we/registers.we'
+wire 'ctrl.clk/registers.clk'
+wire 'ctrl.!rst/registers.!mr'
 wire 'ctrl.rs1/registers.rs1'
 wire 'ctrl.rs2/registers.rs2'
 wire 'ctrl.rd/registers.rd'
@@ -148,7 +148,7 @@ Sequencer {
     width = 10 + 32,
     sequence = generate(),
 }
-wire 'clk.q/test.clk'
+wire 'ctrl.clk/test.clk'
 wire 'test.q[0]/ctrl.!mem_ce'
 wire 'test.q[1]/ctrl.!mem_we'
 wire 'test.q[2]/ctrl.!mem_oe'

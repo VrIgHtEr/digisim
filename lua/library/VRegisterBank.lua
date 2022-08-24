@@ -3,7 +3,6 @@ if width < 4 then
     error 'invalid width'
 end
 
-input 'we'
 input('rs1', 4)
 input('rs2', 4)
 input('rd', 4)

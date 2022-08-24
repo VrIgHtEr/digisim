@@ -1,4 +1,9 @@
 local trace = opts.trace and true or false
+input 'clk'
+
+output('!rst', trace)
+Pullup '!rst'
+wire '!rst.q/!rst'
 
 output('!mem_ce', trace)
 Pullup '!mem_ce'
@@ -75,10 +80,6 @@ wire 'pc_we.q/pc_we'
 output('pc_count', trace)
 Pulldown 'pc_count'
 wire 'pc_count.q/pc_count'
-
-output('reg_we', trace)
-Pulldown 'reg_we'
-wire 'reg_we.q/reg_we'
 
 output('rs1', 4)
 Pulldown { 'rs1', width = 5 }
