@@ -32,7 +32,7 @@ wire 'VCC.q/out.dir'
 wire '!oe/out.!oe'
 wire 'out.b/d'
 
-Not '!eb'
+X7404 { '!eb', width = 1 }
 wire 'op[2]/!eb.a'
 X74139 'sel'
 wire 'op[0-1]/sel.sa'

@@ -3,9 +3,9 @@ input 'clk'
 input 'rst'
 output 'q'
 output '!q'
-Not 'r'
-Not 'd'
-Not 'c'
+X7404 { 'r', width = 1 }
+X7404 { 'd', width = 1 }
+X7404 { 'c', width = 1 }
 Nand 'qb'
 Nand 'qn'
 Or 'qrb'

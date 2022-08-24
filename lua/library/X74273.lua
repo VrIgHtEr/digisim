@@ -8,10 +8,10 @@ input 'cp'
 input('d', width - 1)
 output('q', width - 1)
 
-Not 'mr'
+X7404 { 'mr', width = 1 }
 wire '!mr/mr.a'
 
-Not { '!d', width = width }
+X7404 { '!d', width = width }
 wire 'd/!d.a'
 
 EdgeDetector { 'e', width = 3 }

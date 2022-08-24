@@ -8,10 +8,10 @@ output('b', w - 1)
 input 'dir'
 input '!oe'
 
-Not 'oe'
+X7404 { 'oe', width = 1 }
 wire '!oe/oe.a'
 
-Not '!dir'
+X7404 { '!dir', width = 1 }
 wire 'dir/!dir.a'
 
 And 'na'

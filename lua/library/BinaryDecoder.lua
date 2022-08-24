@@ -10,7 +10,7 @@ local outputs = math.pow(2, width)
 
 input('a', width - 1)
 output('q', outputs - 1)
-Not 'n'
+X7404 { 'n', width = 1 }
 wire('a[' .. (width - 1) .. ']/n.a')
 
 if width == 1 then

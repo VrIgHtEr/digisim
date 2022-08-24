@@ -9,7 +9,7 @@ input('a', w - 1)
 input('b', w - 1)
 output('q', w - 1)
 
-Not 'ns'
+X7404 { 'ns', width = 1 }
 wire 's/ns.a'
 
 Nor 's1'

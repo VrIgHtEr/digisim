@@ -9,11 +9,11 @@ input 'a'
 output 'q'
 
 local prev = 'n0'
-Not(prev)
+X7404 { prev, width = 1 }
 wire('a/' .. prev .. '.a')
 for i = 1, w - 1 do
     local n = 'n' .. i
-    Not(n)
+    X7404 { n, width = 1 }
     wire(prev .. '.q/' .. n .. '.a')
     prev = n
 end

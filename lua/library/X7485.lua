@@ -15,7 +15,7 @@ output 'lt'
 
 local a = 'a[' .. (width - 1) .. ']'
 local b = 'b[' .. (width - 1) .. ']'
-Not { 'n', width = 2 }
+X7404 { 'n', width = 2 }
 wire(a .. '/n.a[0]')
 wire(b .. '/n.a[1]')
 

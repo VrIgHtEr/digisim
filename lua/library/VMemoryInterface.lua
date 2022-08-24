@@ -27,7 +27,7 @@ wire '!oe/m3.!oe'
 
 -----------------------------------------------------------
 -- write synchronization
-Not 'nw'
+X7404 { 'nw', width = 1 }
 wire '!w/nw.a'
 Nand '!w'
 wire 'nw.q/!w.a[0]'
@@ -244,7 +244,7 @@ fan 'scb.q/mc.b'
 wire 'b02.b/mc.a[0-7]'
 wire 'b03.b/mc.a[8-15]'
 
-Not 'w'
+X7404 { 'w', width = 1 }
 wire '!w/w.a'
 Or { 'out_oe', width = 3 }
 wire '!ce/out_oe.a[0]'

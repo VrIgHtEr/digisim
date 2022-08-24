@@ -17,7 +17,7 @@ output('!qb', o - 1)
 
 BinaryDecoder { 'a', width = w }
 wire 'sa/a.a'
-Not { 'na', width = o }
+X7404 { 'na', width = o }
 wire 'a.q/na.a'
 OrBank { 'oa', width = o }
 wire 'na.q/oa.a'
@@ -28,7 +28,7 @@ end
 
 BinaryDecoder { 'b', width = w }
 wire 'sb/b.a'
-Not { 'nb', width = o }
+X7404 { 'nb', width = o }
 wire 'b.q/nb.a'
 OrBank { 'ob', width = o }
 wire 'nb.q/ob.a'
