@@ -175,7 +175,7 @@ pub const Lua = struct {
         const id = comp.addComponent(str) catch lua.err("failed to create component");
         const cmp = digisim.components.getPtr(id) orelse unreachable;
 
-        _ = cmp.addPort("q", false, 0, 0, false) catch lua.err("failed to add port q");
+        _ = cmp.addPort("q", false, 0, 0, true) catch lua.err("failed to add port q");
         cmp.data = period;
         cmp.setHandler(Components.clock_h) catch unreachable;
         lua.pushlightuserdata(@intToPtr(*anyopaque, id));
