@@ -25,12 +25,13 @@ wire 'ctrl.clk/mar.cp'
 wire 'ctrl.!rst/mar.!mr'
 wire 'ctrl.mar_in/mar.w'
 
-VRegister 'ir'
-wire 'ir.out/data.instruction'
-wire 'ir.in/data.d'
-wire 'ctrl.clk/ir.cp'
+VInstructionDecoder 'ir'
+wire 'ir.instr/data.instruction'
+wire 'ir.d/data.d'
+wire 'ctrl.clk/ir.clk'
 wire 'ctrl.!rst/ir.!mr'
 wire 'ctrl.ir_in/ir.w'
+wire 'ctrl.pc_short/ir.short'
 
 VProgramCounter { 'pc', width = 32 }
 wire 'ctrl.!rst/pc.!mr'
