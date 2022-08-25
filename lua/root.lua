@@ -1,6 +1,4 @@
-local l = sig.low
-local z = sig.z
-local h = sig.high
+local l, z, h = sig.low, sig.z, sig.high
 
 VControlBus { 'ctrl', trace = true }
 VDataBus { 'data', trace = true }
