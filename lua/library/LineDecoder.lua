@@ -9,16 +9,15 @@ if enable_pins < 1 then
 end
 local width = math.pow(2, selwidth)
 input('a', selwidth - 1)
-output('y', width - 1);
+output(active_low and '!y' or 'y', width - 1);
 (active_low and X7404 or X7408) { 'na', width = selwidth }
 wire 'a/na.a'
-
-X7400 { 'out', width = 16 }
-wire 'out.q/y'
+X7400 { 'out', width = width }
+wire('out.q/' .. (active_low and '!' or '') .. 'y')
 if enable_pins == 1 then
     if active_low then
         input '!e'
-        X7400 { 'e', width = 1 }
+        X7404 { 'e', width = 1 }
         wire '!e/e.a'
         fan 'e.q/out.a'
     else
@@ -27,6 +26,7 @@ if enable_pins == 1 then
     end
 else
     And { 'e', width = enable_pins }
+    fan 'e.q/out.a'
     if active_low then
         X7404 { 'ne', width = enable_pins }
         for i = 0, enable_pins - 1 do
@@ -42,7 +42,6 @@ else
             wire(x .. '/e.a[' .. i .. ']')
         end
     end
-    fan 'e.q/out.a'
 end
 
 for i = 0, width - 1 do

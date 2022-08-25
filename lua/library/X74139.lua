@@ -15,16 +15,10 @@ input '!eb'
 output('!qa', o - 1)
 output('!qb', o - 1)
 
-BinaryDecoder { 'a', width = w }
+LineDecoder { 'a', selwidth = 2, active_low = true }
+wire '!ea/a.!e'
 wire 'sa/a.a'
-X7404 { 'na', width = o }
-wire 'a.q/na.a'
-X7432 { 'oa', width = o }
-wire 'na.q/oa.a'
-wire 'oa.q/!qa'
-for i = 0, o - 1 do
-    wire('!ea/oa.b[' .. i .. ']')
-end
+wire '!qa/a.!y'
 
 BinaryDecoder { 'b', width = w }
 wire 'sb/b.a'
