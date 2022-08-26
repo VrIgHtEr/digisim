@@ -8,12 +8,9 @@ output 'short'
 High 'VCC'
 Low 'GND'
 
-X7400 { 'short', width = 2 }
+X7400 { 'short', width = 1 }
 wire 'd[0]/short.a[0]'
 wire 'd[1]/short.b[0]'
-wire 'instr[0]/short.a[1]'
-wire 'instr[1]/short.b[1]'
-wire 'short.q[1]/short'
 --
 X74157 { 'in', width = 32 }
 wire 'd/in.a'
@@ -21,9 +18,11 @@ fan 'GND.q/in.b'
 wire 'GND.q/in.!e'
 wire 'short.q[0]/in.s'
 
-VRegister { 'instr', width = 32 }
+VRegister { 'instr', width = 33 }
 wire '!mr/instr.!mr'
 wire 'clk/instr.cp'
 wire 'w/instr.w'
-wire 'instr/instr.out'
-wire 'in.q/instr.in'
+wire 'instr/instr.out[0-31]'
+wire 'in.q/instr.in[0-31]'
+wire 'short.q/instr.in[32]'
+wire 'short/instr.out[32]'
