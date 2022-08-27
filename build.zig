@@ -11,6 +11,7 @@ pub fn build(b: *std.build.Builder) void {
     exe.linkSystemLibrary("luajit");
     exe.install();
     exe.single_threaded = true;
+    exe.use_stage1 = false;
 
     const run_cmd = exe.run();
     run_cmd.step.dependOn(b.getInstallStep());

@@ -1,5 +1,6 @@
 const std = @import("std");
 const stdout = &@import("output.zig").stdout;
+const builtin = @import("builtin");
 const c = @cImport({
     // See https://github.com/ziglang/zig/issues/515
     @cDefine("_NO_CRT_STDIO_INLINE", "1");
@@ -9,12 +10,12 @@ const c = @cImport({
     @cInclude("lualib.h");
 });
 
-const LUA_REGISTRYINDEX: c_int = -10000;
-const LUA_ENVIRONINDEX: c_int = -10000;
-const LUA_GLOBALSINDEX: c_int = -10002;
-
 pub const State = *c.lua_State;
-const LuaFunc = fn (?State) callconv(.C) c_int;
+const LuaFunc =
+    switch (builtin.zig_backend) {
+    .stage1 => fn (?State) callconv(.C) c_int,
+    else => *const fn (?State) callconv(.C) c_int,
+};
 const Digisim = @import("digisim.zig").Digisim;
 const Component = @import("tree/component.zig").Component;
 const Components = @import("builtins.zig");
@@ -24,7 +25,7 @@ pub const Lua = struct {
     L: State,
 
     fn upvalueindex(x: c_int) c_int {
-        return LUA_GLOBALSINDEX - x;
+        return c.LUA_GLOBALSINDEX - x;
     }
 
     fn getInstance(L: ?State) *Digisim {
@@ -721,19 +722,19 @@ pub const Lua = struct {
     }
 
     pub fn setglobal(self: *@This(), glob: [:0]const u8) void {
-        c.lua_setglobal(self.L, glob);
+        c.lua_setglobal(self.L, @ptrCast([*c]const u8, glob));
     }
 
     pub fn getglobal(self: *@This(), glob: [:0]const u8) void {
-        c.lua_getglobal(self.L, glob);
+        c.lua_getglobal(self.L, @ptrCast([*c]const u8, glob));
     }
 
     pub fn pushstring(self: *@This(), glob: [:0]const u8) void {
-        c.lua_pushstring(self.L, glob);
+        c.lua_pushstring(self.L, @ptrCast([*c]const u8, glob));
     }
 
     pub fn pushlstring(self: *@This(), glob: []const u8) void {
-        c.lua_pushlstring(self.L, glob.ptr, glob.len);
+        c.lua_pushlstring(self.L, @ptrCast([*c]const u8, glob.ptr), glob.len);
     }
 
     pub fn gettable(self: *@This(), pos: c_int) void {
@@ -795,15 +796,15 @@ pub const Lua = struct {
     }
 
     pub fn ref(self: *@This()) c_int {
-        return c.luaL_ref(self.L, LUA_REGISTRYINDEX);
+        return c.luaL_ref(self.L, c.LUA_REGISTRYINDEX);
     }
 
     pub fn loadref(self: *@This(), r: c_int) void {
-        self.rawgeti(LUA_REGISTRYINDEX, r);
+        self.rawgeti(c.LUA_REGISTRYINDEX, r);
     }
 
     pub fn unref(self: *@This(), r: c_int) void {
-        c.luaL_unref(self.L, LUA_REGISTRYINDEX, r);
+        c.luaL_unref(self.L, c.LUA_REGISTRYINDEX, r);
     }
 
     pub fn settop(self: *@This(), r: c_int) void {

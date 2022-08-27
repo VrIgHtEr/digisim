@@ -87,7 +87,7 @@ pub const Digisim = struct {
             if (dirname) |dname| {
                 const luapath = try std.fs.path.joinZ(allocator, &[_][]const u8{ dname, "/", relpath });
                 defer allocator.free(luapath);
-                const finalLuaPath = stdlib.realpath(luapath, 0);
+                const finalLuaPath = stdlib.realpath(@ptrCast([*c]const u8, luapath), 0);
                 if (finalLuaPath) |p| {
                     defer stdlib.free(p);
                     try self.lua.setupenv(std.mem.span(finalLuaPath));
@@ -212,7 +212,7 @@ pub const Digisim = struct {
         var i = self.components.iterator();
         while (i.next()) |e| {
             if (e.value_ptr.isLeaf()) {
-                try self.root.components.put(e.key_ptr.*, .{});
+                try self.root.components.put(e.key_ptr.*, {});
             } else {
                 e.value_ptr.components.clearAndFree();
             }
@@ -238,7 +238,7 @@ pub const Digisim = struct {
                 if (port.trace) try ports.append(port.id);
             }
             for (ports.items) |portid| {
-                try self.root.ports.put(portid, .{});
+                try self.root.ports.put(portid, {});
                 _ = branch.ports.swapRemove(portid);
             }
             ports.clearRetainingCapacity();
@@ -401,7 +401,7 @@ pub const Digisim = struct {
                 while (j.next()) |je| {
                     const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
                     for (port.pins) |*pin| {
-                        try nets.put(pin.net, .{});
+                        try nets.put(pin.net, {});
                     }
                 }
             } else {
@@ -410,7 +410,7 @@ pub const Digisim = struct {
                     const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
                     if (port.trace) {
                         for (port.pins) |*pin| {
-                            try nets.put(pin.net, .{});
+                            try nets.put(pin.net, {});
                         }
                     }
                 }
@@ -421,7 +421,7 @@ pub const Digisim = struct {
             const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
             if (port.trace) {
                 for (port.pins) |*pin| {
-                    try nets.put(pin.net, .{});
+                    try nets.put(pin.net, {});
                 }
             }
         }
@@ -438,7 +438,7 @@ pub const Digisim = struct {
                 while (j.next()) |je| {
                     const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
                     for (port.pins) |*pin| {
-                        try nets.put(pin.net, .{});
+                        try nets.put(pin.net, {});
                     }
                 }
             } else {
@@ -447,7 +447,7 @@ pub const Digisim = struct {
                     const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
                     if (port.trace) {
                         for (port.pins) |*pin| {
-                            try nets.put(pin.net, .{});
+                            try nets.put(pin.net, {});
                         }
                     }
                 }
@@ -458,7 +458,7 @@ pub const Digisim = struct {
             const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
             if (port.trace) {
                 for (port.pins) |*pin| {
-                    try nets.put(pin.net, .{});
+                    try nets.put(pin.net, {});
                 }
             }
         }
@@ -542,7 +542,7 @@ pub const Digisim = struct {
                                     try sensitivityLists.put(pin.net, std.AutoHashMap(*CompiledComponent, void).init(self.allocator));
                                     map = sensitivityLists.getPtr(pin.net) orelse unreachable;
                                 }
-                                try map.put(cmap.get(v.value_ptr.id) orelse unreachable, .{});
+                                try map.put(cmap.get(v.value_ptr.id) orelse unreachable, {});
                             }
                         }
                     }
@@ -586,7 +586,7 @@ pub const Digisim = struct {
                             try traceLists.put(pin.net, std.AutoHashMap(*CompiledPort, void).init(self.allocator));
                             map = traceLists.getPtr(pin.net) orelse unreachable;
                         }
-                        try map.put(cport, .{});
+                        try map.put(cport, {});
                     }
                 }
             }

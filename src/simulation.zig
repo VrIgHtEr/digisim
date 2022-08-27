@@ -1,6 +1,7 @@
 const std = @import("std");
 const stdout = &@import("output.zig").stdout;
 const buffer = &@import("output.zig").buf;
+const builtin = @import("builtin");
 const Allocator = std.mem.Allocator;
 const Component = @import("comp/component.zig").Component;
 const Port = @import("comp/port.zig").Port;
@@ -18,7 +19,11 @@ const PQEntry = struct {
 };
 const Pq = std.PriorityQueue(PQEntry, void, PQEntry.compare);
 
-pub const Handler = fn ([]Signal, []Signal, *usize) usize;
+pub const Handler =
+    switch (builtin.zig_backend) {
+    .stage1 => fn ([]Signal, []Signal, *usize) usize,
+    else => *const fn ([]Signal, []Signal, *usize) usize,
+};
 
 pub const Simulation = struct {
     digisim: *Digisim,
@@ -46,7 +51,7 @@ pub const Simulation = struct {
         errdefer self.nextdirty.deinit();
         self.nextdirty = @TypeOf(self.nextdirty).init(digisim.allocator);
         errdefer self.nextdirty.deinit();
-        for (numComponents) |*c| try self.dirty.put(c, .{});
+        for (numComponents) |*c| try self.dirty.put(c, {});
 
         var maxinputs: usize = 1;
         var maxoutputs: usize = 1;
@@ -64,9 +69,9 @@ pub const Simulation = struct {
         self.traceports = std.AutoHashMap(*Port, void).init(digisim.allocator);
         errdefer self.traceports.deinit();
         for (numComponents) |*c| {
-            try self.dirty.put(c, .{});
+            try self.dirty.put(c, {});
         }
-        self.pq = Pq.init(digisim.allocator, .{});
+        self.pq = Pq.init(digisim.allocator, {});
         errdefer self.pq.deinit();
         return self;
     }
@@ -93,13 +98,13 @@ pub const Simulation = struct {
             if (self.pq.count() == 0)
                 return true;
             const item = self.pq.remove();
-            try self.dirty.put(item.component, .{});
+            try self.dirty.put(item.component, {});
             self.timestamp = item.timestamp;
         }
         while (self.pq.count() > 0) {
             const item = self.pq.peek() orelse unreachable;
             if (item.timestamp > self.timestamp) break;
-            try self.dirty.put(item.component, .{});
+            try self.dirty.put(item.component, {});
             _ = self.pq.remove();
         }
         var iter = self.dirty.keyIterator();
@@ -126,7 +131,7 @@ pub const Simulation = struct {
                     const value = outputs[idx];
                     if (value != pin.value or (pin.net.tracelist != null and pin.net.tracevalue == Signal.uninitialized)) {
                         pin.value = value;
-                        try self.dirtynets.put(pin.net, .{});
+                        try self.dirtynets.put(pin.net, {});
                     }
                     idx += 1;
                 }
@@ -145,7 +150,7 @@ pub const Simulation = struct {
                 if (v != net.tracevalue) {
                     net.tracevalue = v;
                     for (tracelist) |t| {
-                        try self.traceports.put(t, .{});
+                        try self.traceports.put(t, {});
                     }
                 }
             }
@@ -153,7 +158,7 @@ pub const Simulation = struct {
                 net.value = value;
                 if (net.sensitivitylist) |sensitivitylist| {
                     for (sensitivitylist) |c| {
-                        try self.nextdirty.put(c, .{});
+                        try self.nextdirty.put(c, {});
                     }
                 }
             }
