@@ -1,6 +1,5 @@
 const std = @import("std");
 const stdout = &@import("output.zig").stdout;
-const builtin = @import("builtin");
 const c = @cImport({
     // See https://github.com/ziglang/zig/issues/515
     @cDefine("_NO_CRT_STDIO_INLINE", "1");
@@ -11,11 +10,7 @@ const c = @cImport({
 });
 
 pub const State = *c.lua_State;
-const LuaFunc =
-    switch (builtin.zig_backend) {
-    .stage1 => fn (?State) callconv(.C) c_int,
-    else => *const fn (?State) callconv(.C) c_int,
-};
+const LuaFunc = *const fn (?State) callconv(.C) c_int;
 const Digisim = @import("digisim.zig").Digisim;
 const Component = @import("tree/component.zig").Component;
 const Components = @import("builtins.zig");

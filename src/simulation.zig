@@ -1,7 +1,6 @@
 const std = @import("std");
 const stdout = &@import("output.zig").stdout;
 const buffer = &@import("output.zig").buf;
-const builtin = @import("builtin");
 const Allocator = std.mem.Allocator;
 const Component = @import("comp/component.zig").Component;
 const Port = @import("comp/port.zig").Port;
@@ -19,11 +18,7 @@ const PQEntry = struct {
 };
 const Pq = std.PriorityQueue(PQEntry, void, PQEntry.compare);
 
-pub const Handler =
-    switch (builtin.zig_backend) {
-    .stage1 => fn ([]Signal, []Signal, *usize) usize,
-    else => *const fn ([]Signal, []Signal, *usize) usize,
-};
+pub const Handler = *const fn ([]Signal, []Signal, *usize) usize;
 
 pub const Simulation = struct {
     digisim: *Digisim,
