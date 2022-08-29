@@ -1,3 +1,7 @@
+local width = math.floor(opts.width or 1)
+if width < 1 then
+    error 'invalid width'
+end
 input 'in'
 input 'pause'
 output 'out'
@@ -18,6 +22,7 @@ wire 'out.q/out'
 
 X7432 { 'in', width = 1 }
 wire 'in/in.a'
+wire 'm.d/in.q'
 
 X7408 { 'p', width = 1 }
 wire 'm.q/p.a'

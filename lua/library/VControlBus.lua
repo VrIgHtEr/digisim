@@ -1,5 +1,6 @@
 local trace = opts.trace and true or false
 input 'clk'
+input '!clk'
 
 output('!rst', trace)
 Pullup '!rst'
@@ -92,3 +93,7 @@ wire 'rs2.q/rs2'
 output('rd', 4)
 Pulldown { 'rd', width = 5 }
 wire 'rd.q/rd'
+
+output 'pause'
+Pulldown 'pause'
+wire 'pause.q/pause'

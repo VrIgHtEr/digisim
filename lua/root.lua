@@ -6,6 +6,8 @@ VDataBus { 'data', trace = true }
 VStartModule { 'start' }
 wire 'ctrl.!rst/start.!rst'
 wire 'ctrl.clk/start.clk'
+wire 'ctrl.!clk/start.!clk'
+wire 'ctrl.pause/start.pause'
 
 VMemoryInterface 'mem'
 wire 'ctrl.clk/mem.clk'
