@@ -4,13 +4,22 @@ pub fn build(b: *std.build.Builder) void {
     const target = b.standardTargetOptions(.{});
     const mode = b.standardReleaseOptions();
 
+    //const lj_clone = b.addSystemCommand(&[_][]const u8{ "sh", "-c", "if [ ! -d luajit ] ; then git clone https://luajit.org/git/luajit.git luajit ; fi" });
+    //const lj_make = b.addSystemCommand(&[_][]const u8{ "sh", "-c", "cd luajit && make BUILDMODE=static" });
+    //lj_make.step.dependOn(&lj_clone.step);
+
     const exe = b.addExecutable("digisim", "src/main.zig");
     exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.linkLibC();
     exe.linkSystemLibrary("luajit");
-    exe.install();
+
+    //exe.addIncludeDir("luajit/src");
+    //exe.addObjectFile("luajit/src/libluajit.a");
+    //exe.step.dependOn(&lj_make.step);
+
     exe.single_threaded = true;
+    exe.install();
 
     const run_cmd = exe.run();
     run_cmd.step.dependOn(b.getInstallStep());
