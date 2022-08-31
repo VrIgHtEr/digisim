@@ -10,6 +10,9 @@ wire 'ctrl.clk/start.clk'
 wire 'ctrl.!clk/start.!clk'
 wire 'ctrl.pause/start.pause'
 wire 'ctrl.icomplete/start.icomplete'
+wire 'start.d2/data.d[2]'
+wire 'start.pc_we/ctrl.pc_we'
+wire 'start.icomplete/ctrl.icomplete'
 
 VMemoryInterface 'mem'
 wire 'ctrl.clk/mem.clk'
@@ -135,6 +138,9 @@ end
 
 local function generate()
     local seq = { row() }
+    for _ = 1, 32 do
+        seq[#seq + 1] = row()
+    end
     for i = 0, 15 do
         addWrite(seq, h, h, h, i, i)
     end

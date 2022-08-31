@@ -1,5 +1,5 @@
-local width = math.floor(opts.width or 1)
-if width < 1 then
+local width = math.floor(opts.width or 0)
+if width < 0 then
     error 'invalid width'
 end
 input 'in'
@@ -28,3 +28,17 @@ X7408 { 'p', width = 1 }
 wire 'm.q/p.a'
 wire 'pause/p.b'
 wire 'p.q/in.b'
+
+if width > 0 then
+    input('din', width - 1)
+    output('dout', width - 1)
+
+    X7404 { '!out', width = 1 }
+    wire 'out.q/!out.a'
+    High 'VCC'
+    X74245 { 'data', width = width }
+    wire '!out.q/data.!oe'
+    wire 'VCC.q/data.dir'
+    wire 'din/data.a'
+    wire 'dout/data.b'
+end
