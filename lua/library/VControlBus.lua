@@ -117,3 +117,7 @@ wire '!imm_u.q/!imm_u'
 output('!imm_j', trace)
 Pullup '!imm_j'
 wire '!imm_j.q/!imm_j'
+
+output 'icomplete'
+Pulldown 'icomplete'
+wire 'icomplete.q/icomplete'
