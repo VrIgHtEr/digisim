@@ -2,6 +2,7 @@ local l, z, h = sig.low, sig.z, sig.high
 
 VControlBus { 'ctrl', trace = true }
 VDataBus { 'data', trace = true }
+VDecodeBus { 'decode', trace = true }
 
 VStartModule { 'start' }
 wire 'ctrl.!rst/start.!rst'
@@ -34,6 +35,40 @@ wire 'ctrl.clk/ir.clk'
 wire 'ctrl.!rst/ir.!mr'
 wire 'ctrl.ir_in/ir.w'
 wire 'ctrl.pc_short/ir.short'
+wire 'ctrl.!imm_i/ir.!imm_i'
+wire 'ctrl.!imm_s/ir.!imm_s'
+wire 'ctrl.!imm_b/ir.!imm_b'
+wire 'ctrl.!imm_u/ir.!imm_u'
+wire 'ctrl.!imm_j/ir.!imm_j'
+wire 'ir.LOAD/decode.LOAD'
+wire 'ir.STORE/decode.STORE'
+wire 'ir.MADD/decode.MADD'
+wire 'ir.BRANCH/decode.BRANCH'
+wire 'ir.LOADFP/decode.LOADFP'
+wire 'ir.STOREFP/decode.STOREFP'
+wire 'ir.MSUB/decode.MSUB'
+wire 'ir.JALR/decode.JALR'
+wire 'ir.CUSTOM0/decode.CUSTOM0'
+wire 'ir.CUSTOM1/decode.CUSTOM1'
+wire 'ir.NMSUB/decode.NMSUB'
+wire 'ir.RESERVED0/decode.RESERVED0'
+wire 'ir.MISCMEM/decode.MISCMEM'
+wire 'ir.AMO/decode.AMO'
+wire 'ir.NMADD/decode.NMADD'
+wire 'ir.JAL/decode.JAL'
+wire 'ir.OPIMM/decode.OPIMM'
+wire 'ir.OP/decode.OP'
+wire 'ir.OPFP/decode.OPFP'
+wire 'ir.SYSTEM/decode.SYSTEM'
+wire 'ir.AUIPC/decode.AUIPC'
+wire 'ir.LUI/decode.LUI'
+wire 'ir.RESERVED1/decode.RESERVED1'
+wire 'ir.RESERVED2/decode.RESERVED2'
+wire 'ir.OPIMM32/decode.OPIMM32'
+wire 'ir.OP32/decode.OP32'
+wire 'ir.CUSTOM2/decode.CUSTOM2'
+wire 'ir.CUSTOM3/decode.CUSTOM3'
+wire 'ir.F7Z/decode.F7Z'
 
 VProgramCounter { 'pc', width = 32 }
 wire 'ctrl.!rst/pc.!mr'

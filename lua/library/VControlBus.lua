@@ -97,3 +97,23 @@ wire 'rd.q/rd'
 output 'pause'
 Pulldown 'pause'
 wire 'pause.q/pause'
+
+output('!imm_i', trace)
+Pullup '!imm_i'
+wire '!imm_i.q/!imm_i'
+
+output('!imm_s', trace)
+Pullup '!imm_s'
+wire '!imm_s.q/!imm_s'
+
+output('!imm_b', trace)
+Pullup '!imm_b'
+wire '!imm_b.q/!imm_b'
+
+output('!imm_u', trace)
+Pullup '!imm_u'
+wire '!imm_u.q/!imm_u'
+
+output('!imm_j', trace)
+Pullup '!imm_j'
+wire '!imm_j.q/!imm_j'
