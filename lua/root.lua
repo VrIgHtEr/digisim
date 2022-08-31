@@ -82,7 +82,7 @@ wire 'ctrl.pc_short/pc.short'
 wire 'ctrl.pc_count/pc.count'
 wire 'ctrl.pc_we/pc.we'
 wire 'ctrl.clk/pc.clk'
-wire 'data.a/pc.d'
+wire 'data.d/pc.d'
 
 VAlu 'alu'
 wire 'data.a/alu.a'
