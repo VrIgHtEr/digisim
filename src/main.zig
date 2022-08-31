@@ -24,7 +24,7 @@ fn errmain() !u8 {
     try sim.runLuaSetup();
     while (true) {
         _ = try sim.step();
-        if (sim.compiled.?.timestamp > 1000000000) break;
+        if (sim.compiled.?.timestamp > 100000) break;
     }
     return 0;
 }

@@ -43,7 +43,7 @@ Pulldown 'alu_sub'
 wire 'alu_sub.q/alu_sub'
 
 output('!alu_oe', trace)
-Pulldown '!alu_oe'
+Pullup '!alu_oe'
 wire '!alu_oe.q/!alu_oe'
 
 output('alu_op', 2)
