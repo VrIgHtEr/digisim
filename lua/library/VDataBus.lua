@@ -10,7 +10,7 @@ wire 'b.q/b'
 
 output('d', 31, trace)
 Pulldown { 'd', width = 32 }
---wire 'd.q/d'
+wire 'd.q/d'
 
 output('address', 31, trace)
 Pulldown { 'address', width = 32 }
