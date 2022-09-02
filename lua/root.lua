@@ -4,15 +4,29 @@ VControlBus { 'ctrl', trace = true }
 VDataBus { 'data', trace = true }
 VDecodeBus { 'decode', trace = true }
 
-VStartModule { 'start' }
-wire 'ctrl.!rst/start.!rst'
+VStartModule 'start'
 wire 'ctrl.clk/start.clk'
+wire 'ctrl.!rst/start.!rst'
 wire 'ctrl.!clk/start.!clk'
 wire 'ctrl.pause/start.pause'
 wire 'ctrl.icomplete/start.icomplete'
 wire 'start.d2/data.d[2]'
 wire 'start.pc_we/ctrl.pc_we'
 wire 'start.icomplete/ctrl.icomplete'
+
+VHart 'hart'
+wire 'ctrl.!clk/hart.clk'
+wire 'ctrl.!rst/hart.!rst'
+wire 'ctrl.pause/hart.pause'
+wire 'ctrl.icomplete/hart.icomplete'
+wire 'ctrl.!pc_oe/hart.!pc_oe'
+wire 'ctrl.mar_in/hart.mar_in'
+wire 'ctrl.!mem_word/hart.!mem_word'
+wire 'ctrl.!mem_half/hart.!mem_half'
+wire 'ctrl.!mem_ce/hart.!mem_ce'
+wire 'ctrl.!mem_oe/hart.!mem_oe'
+wire 'ctrl.ir_in/hart.ir_in'
+wire 'ctrl.ischedule/hart.ischedule'
 
 VMemoryInterface 'mem'
 wire 'ctrl.clk/mem.clk'

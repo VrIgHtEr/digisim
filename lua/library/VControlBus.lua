@@ -121,3 +121,7 @@ wire '!imm_j.q/!imm_j'
 output 'icomplete'
 Pulldown 'icomplete'
 wire 'icomplete.q/icomplete'
+
+output 'ischedule'
+Pulldown 'ischedule'
+wire 'ischedule.q/ischedule'
