@@ -118,6 +118,18 @@ output('!imm_j', trace)
 Pullup '!imm_j'
 wire '!imm_j.q/!imm_j'
 
+output('!rs1_oe', trace)
+Pullup '!rs1_oe'
+wire '!rs1_oe.q/!rs1_oe'
+
+output('!rs2_oe', trace)
+Pullup '!rs2_oe'
+wire '!rs2_oe.q/!rs2_oe'
+
+output('!rd_oe', trace)
+Pullup '!rd_oe'
+wire '!rd_oe.q/!rd_oe'
+
 output 'icomplete'
 Pulldown 'icomplete'
 wire 'icomplete.q/icomplete'

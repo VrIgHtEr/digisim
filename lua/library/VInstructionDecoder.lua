@@ -7,9 +7,15 @@ input '!imm_s'
 input '!imm_b'
 input '!imm_u'
 input '!imm_j'
+input '!rs1_oe'
+input '!rs2_oe'
+input '!rd_oe'
 output('instr', 31)
 output 'short'
 output('imm', 31)
+output('rs1', 4)
+output('rs2', 4)
+output('rd', 4)
 
 output 'LOAD'
 output 'STORE'
@@ -173,3 +179,18 @@ wire 'instr[21-30]/imm[1-10]'
 wire 'instr[20]/imm[11]'
 wire 'instr[12-19]/imm[12-19]'
 fan 'instr[31]/imm[20-31]'
+
+X74245 { 'rs1', width = 5 }
+wire 'rs1.!oe/!rs1_oe'
+wire 'VCC.q/rs1.dir'
+wire 'rs1.b/rs1'
+
+X74245 { 'rs2', width = 5 }
+wire 'rs2.!oe/!rs2_oe'
+wire 'VCC.q/rs2.dir'
+wire 'rs2.b/rs2'
+
+X74245 { 'rd', width = 5 }
+wire 'rd.!oe/!rd_oe'
+wire 'VCC.q/rd.dir'
+wire 'rd.b/rd'
