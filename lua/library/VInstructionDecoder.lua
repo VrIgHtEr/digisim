@@ -184,13 +184,16 @@ X74245 { 'rs1', width = 5 }
 wire 'rs1.!oe/!rs1_oe'
 wire 'VCC.q/rs1.dir'
 wire 'rs1.b/rs1'
+wire 'rs1.a/instr[15-19]'
 
 X74245 { 'rs2', width = 5 }
 wire 'rs2.!oe/!rs2_oe'
 wire 'VCC.q/rs2.dir'
 wire 'rs2.b/rs2'
+wire 'rs2.a/instr[20-24]'
 
 X74245 { 'rd', width = 5 }
 wire 'rd.!oe/!rd_oe'
 wire 'VCC.q/rd.dir'
 wire 'rd.b/rd'
+wire 'rd.a/instr[7-11]'
