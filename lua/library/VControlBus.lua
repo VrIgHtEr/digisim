@@ -30,6 +30,10 @@ output('mem_signed', trace)
 Pulldown 'mem_signed'
 wire 'mem_signed.q/mem_signed'
 
+output('!mar_out', trace)
+Pullup '!mar_out'
+wire '!mar_out.q/!mar_out'
+
 output('mar_in', trace)
 Pulldown 'mar_in'
 wire 'mar_in.q/mar_in'
