@@ -48,6 +48,7 @@ wire 'ctrl.clk/mar.cp'
 wire 'ctrl.!rst/mar.!mr'
 wire 'ctrl.mar_in/mar.w'
 wire 'ctrl.!mar_out/mar.!oe'
+wire 'mar.out[0]/hart.mar0'
 
 VInstructionDecoder 'ir'
 wire 'ir.instr/data.instruction'

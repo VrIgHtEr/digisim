@@ -3,8 +3,9 @@ input 'clk'
 input 'pause'
 input 'icomplete'
 input 'int'
-input 'trap'
+input 'mar0'
 
+output 'trap'
 output 'ischedule'
 output '!pc_oe'
 output 'mar_in'
@@ -17,14 +18,13 @@ output 'ir_in'
 Low 'GND'
 High 'VCC'
 
-X7404 { '!trapint', width = 2 }
-wire 'trap/!trapint.a[0]'
-wire 'int/!trapint.a[1]'
+X7404 { '!int', width = 1 }
+wire 'int/!int.a'
 
 -------------------------------------------------------------------
 
 X7408 { 's0c', width = 1 }
-wire 's0c.a/!trapint.q[1]'
+wire 's0c.a/!int.q'
 wire 's0c.b/icomplete'
 
 X7404 { '!s0c', width = 1 }
@@ -40,9 +40,17 @@ wire 's0.b[1]/mar_in'
 
 -------------------------------------------------------------------
 
+X7404 { '!mar0', width = 1 }
+wire 'mar0/!mar0.a'
+
+X7408 { 'trap', width = 1 }
+wire 'trap.a/s0c.q'
+wire 'trap.b/mar0'
+wire 'trap.q/trap'
+
 X7408 { 's1c', width = 1 }
 wire 's1c.a/s0c.q'
-wire 's1c.b/!trapint.q[0]'
+wire 's1c.b/!mar0.q'
 
 VControlStage { 's1', width = 5 }
 wire 'pause/s1.pause'
