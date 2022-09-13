@@ -1,5 +1,6 @@
 const IdGen = @import("idgen.zig").IdGen;
 const Component = @import("tree/component.zig").Component;
+const Components = @import("builtins.zig");
 const Port = @import("tree/port.zig").Port;
 const Pin = @import("tree/pin.zig").Pin;
 const Net = @import("tree/net.zig").Net;
@@ -94,6 +95,20 @@ pub const Digisim = struct {
                 }
             }
         } else return Error.InitializationFailed;
+
+        {
+            const id = self.root.addComponent("VCC") catch return Error.InitializationFailed;
+            const cmp = self.components.getPtr(id) orelse unreachable;
+            _ = cmp.addPort("q", false, 0, 0, false) catch return Error.InitializationFailed;
+            cmp.setHandler(Components.high_h) catch unreachable;
+        }
+        {
+            const id = self.root.addComponent("GND") catch return Error.InitializationFailed;
+            const cmp = self.components.getPtr(id) orelse unreachable;
+            _ = cmp.addPort("q", false, 0, 0, false) catch return Error.InitializationFailed;
+            cmp.setHandler(Components.low_h) catch unreachable;
+        }
+
         return self;
     }
 

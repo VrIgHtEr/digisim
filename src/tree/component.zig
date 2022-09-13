@@ -1,5 +1,6 @@
 const std = @import("std");
 const stdout = &@import("../output.zig").stdout;
+const stdoutbuf = &@import("../output.zig").buf;
 const Port = @import("port.zig").Port;
 const Net = @import("net.zig").Net;
 const digi = @import("../digisim.zig");
@@ -288,6 +289,16 @@ pub const Component = struct {
         if (std.mem.lastIndexOf(u8, name, ".")) |index| {
             const port_name = name[index + 1 ..];
             if (port_name.len == 0) return Err.InvalidPortName;
+            if (std.mem.eql(u8, port_name, "VCC")) {
+                stdout.print("VCC!\n", .{}) catch undefined;
+                stdoutbuf.flush() catch undefined;
+                return (try self.digisim.root.getComponent("VCC") orelse unreachable).findPortByName("q");
+            }
+            if (std.mem.eql(u8, port_name, "GND")) {
+                stdout.print("GND!\n", .{}) catch undefined;
+                stdoutbuf.flush() catch undefined;
+                return (try self.digisim.root.getComponent("GND") orelse unreachable).findPortByName("q");
+            }
             if (self.digisim.strings.get(port_name)) |n| {
                 if (try self.getComponent(name[0..index])) |c| {
                     if (c.findPortByName(n)) |p| {
@@ -297,6 +308,16 @@ pub const Component = struct {
             }
         } else {
             if (name.len == 0) return Err.InvalidPortName;
+            if (std.mem.eql(u8, name, "VCC")) {
+                stdout.print("VCC!\n", .{}) catch undefined;
+                stdoutbuf.flush() catch undefined;
+                return (try self.digisim.root.getComponent("VCC") orelse unreachable).findPortByName("q");
+            }
+            if (std.mem.eql(u8, name, "GND")) {
+                stdout.print("GND!\n", .{}) catch undefined;
+                stdoutbuf.flush() catch undefined;
+                return (try self.digisim.root.getComponent("GND") orelse unreachable).findPortByName("q");
+            }
             if (self.digisim.strings.get(name)) |n| {
                 return self.findPortByName(n);
             }

@@ -36,7 +36,7 @@ wire '!rst/s1.!mr'
 wire '!clk/s1.clk'
 wire 'pause/s1.pause'
 wire '!started.q/s1.in'
-fan 'VCC.q/s1.din'
+fan 'VCC/s1.din'
 wire 's1.dout[0]/pc_we'
 wire 's1.dout[1]/d2'
 
