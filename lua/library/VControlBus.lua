@@ -137,3 +137,11 @@ wire 'icomplete.q/icomplete'
 output 'ischedule'
 Pulldown 'ischedule'
 wire 'ischedule.q/ischedule'
+
+output 'int'
+Pulldown 'int'
+wire 'int.q/int'
+
+output 'trap'
+Pulldown 'trap'
+wire 'trap.q/trap'

@@ -27,6 +27,8 @@ wire 'ctrl.!mem_ce/hart.!mem_ce'
 wire 'ctrl.!mem_oe/hart.!mem_oe'
 wire 'ctrl.ir_in/hart.ir_in'
 wire 'ctrl.ischedule/hart.ischedule'
+wire 'ctrl.int/hart.int'
+wire 'ctrl.trap/hart.trap'
 
 VMemoryInterface 'mem'
 wire 'ctrl.clk/mem.clk'
