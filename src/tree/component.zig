@@ -309,14 +309,10 @@ pub const Component = struct {
         } else {
             if (name.len == 0) return Err.InvalidPortName;
             if (std.mem.eql(u8, name, "VCC")) {
-                stdout.print("VCC!\n", .{}) catch undefined;
-                stdoutbuf.flush() catch undefined;
-                return (try self.digisim.root.getComponent("VCC") orelse unreachable).findPortByName("q");
+                return self.digisim.getPort("VCC.q") catch unreachable orelse unreachable;
             }
             if (std.mem.eql(u8, name, "GND")) {
-                stdout.print("GND!\n", .{}) catch undefined;
-                stdoutbuf.flush() catch undefined;
-                return (try self.digisim.root.getComponent("GND") orelse unreachable).findPortByName("q");
+                return self.digisim.getPort("GND.q") catch unreachable orelse unreachable;
             }
             if (self.digisim.strings.get(name)) |n| {
                 return self.findPortByName(n);

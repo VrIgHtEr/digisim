@@ -165,7 +165,7 @@ pub const Digisim = struct {
     }
 
     pub fn getPort(self: *@This(), name: []const u8) !?*Port {
-        return self.root.getPort(self, name);
+        return self.root.getPort(name);
     }
 
     fn countPins(self: *@This()) usize {
