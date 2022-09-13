@@ -134,18 +134,22 @@ output('!rd_oe', trace)
 Pullup '!rd_oe'
 wire '!rd_oe.q/!rd_oe'
 
-output 'icomplete'
+output('icomplete', trace)
 Pulldown 'icomplete'
 wire 'icomplete.q/icomplete'
 
-output 'ischedule'
+output('ischedule', trace)
 Pulldown 'ischedule'
 wire 'ischedule.q/ischedule'
 
-output 'int'
+output('int', trace)
 Pulldown 'int'
 wire 'int.q/int'
 
-output 'trap'
+output('trap', trace)
 Pulldown 'trap'
 wire 'trap.q/trap'
+
+output('legal', trace)
+Pulldown 'legal'
+wire 'legal.q/legal'
