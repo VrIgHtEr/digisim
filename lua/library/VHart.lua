@@ -15,10 +15,12 @@ output '!mem_ce'
 output '!mem_oe'
 output 'ir_in'
 
+-------------------------------------------------------------------
+-- if an interrupt is not pending and an instruction has been completed
+-- then load PC into MAR
+
 X7404 { '!int', width = 1 }
 wire 'int/!int.a'
-
--------------------------------------------------------------------
 
 X7408 { 's0c', width = 1 }
 wire 's0c.a/!int.q'
@@ -36,14 +38,24 @@ wire 'VCC/s0.a[1]'
 wire 's0.b[1]/mar_in'
 
 -------------------------------------------------------------------
+-- if value in mar is misaligned then trap 0
+
+X7408 { 'trapc', width = 1 }
+wire 'trapc.a/s0c.q'
+wire 'trapc.b/mar0'
+
+VControlStage { 'strap' }
+wire 'pause/strap.pause'
+wire '!rst/strap.!mr'
+wire 'clk/strap.clk'
+wire 'trapc.q/strap.in'
+wire 'strap.out/trap'
+
+-------------------------------------------------------------------
+-- if value in mar is aligned then load word into IR
 
 X7404 { '!mar0', width = 1 }
 wire 'mar0/!mar0.a'
-
-X7408 { 'trap', width = 1 }
-wire 'trap.a/s0c.q'
-wire 'trap.b/mar0'
-wire 'trap.q/trap'
 
 X7408 { 's1c', width = 1 }
 wire 's1c.a/s0c.q'
@@ -61,6 +73,9 @@ wire 's1.dout[2]/!mem_ce'
 wire 's1.dout[3]/!mem_oe'
 wire 'VCC/s1.din[4]'
 wire 's1.dout[4]/ir_in'
+
+-----------------------------------------------------------------
+-- after IR is loaded, schedule the instruction
 
 VControlStage { 's2', width = 1 }
 wire 'pause/s2.pause'
