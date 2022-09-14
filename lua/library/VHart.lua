@@ -4,8 +4,10 @@ input 'pause'
 input 'icomplete'
 input 'int'
 input 'mar0'
+input 'legal'
 
 output 'trap'
+output('cause', 4)
 output 'ischedule'
 output '!pc_oe'
 output 'mar_in'
@@ -74,7 +76,7 @@ wire 's1.dout[3]/!mem_oe'
 wire 'VCC/s1.din[4]'
 wire 's1.dout[4]/ir_in'
 
------------------------------------------------------------------
+-------------------------------------------------------------------
 -- after IR is loaded, schedule the instruction
 
 VControlStage { 's2', width = 1 }
@@ -84,3 +86,23 @@ wire 'clk/s2.clk'
 wire 's1.out/s2.in'
 wire 'VCC/s2.din'
 wire 's2.dout/ischedule'
+
+-------------------------------------------------------------------
+-- if an illegal instruction is scheduled
+-- then trap 2
+
+X7404 { '!legal', width = 1 }
+wire '!legal.a/legal'
+
+X7408 { 'illegal', width = 1 }
+wire 'illegal.a/!legal.q'
+wire 'illegal.b/ischedule'
+
+VControlStage { 'sillegal', width = 1 }
+wire 'pause/sillegal.pause'
+wire '!rst/sillegal.!mr'
+wire 'clk/sillegal.clk'
+wire 'illegal.q/sillegal.in'
+wire 'sillegal.out/trap'
+wire 'VCC/sillegal.din'
+wire 'sillegal.dout/cause[1]'
