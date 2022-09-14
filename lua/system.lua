@@ -138,10 +138,9 @@ end
 
 local sig = { uninitialized = 0, unknown = 1, low = 2, high = 3, z = 4, weak = 5, weaklow = 6, weakhigh = 7 }
 
-local function create_env(id, opts, compname)
+local function create_env(id, opts)
     return setmetatable({}, {
         __index = setmetatable({
-            name = compname,
             sig = sig,
             opts = opts,
             input = function(name, pin_end, trace)
@@ -239,8 +238,7 @@ local function create_env(id, opts, compname)
                             name, o = validate_component_inputs(name, o)
                             local comp = digisim.createcomponent(id, name)
                             local old_fenv = getfenv(constructor)
-                            local fullname = compname == nil and name or compname .. '.' .. name
-                            setfenv(constructor, create_env(comp, o, fullname))
+                            setfenv(constructor, create_env(comp, o))
                             local success, err = pcall(constructor)
                             setfenv(constructor, old_fenv)
                             if not success then

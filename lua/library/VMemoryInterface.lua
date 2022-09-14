@@ -19,11 +19,6 @@ local function extract(size, offset)
     return ret
 end
 
-debug('DUMP: ' .. name)
-for k, v in ipairs(memory) do
-    debug('    ' .. k .. ': ' .. bit.tobit(math.floor(v)))
-end
-
 input '!word'
 input '!half'
 input '!ce'

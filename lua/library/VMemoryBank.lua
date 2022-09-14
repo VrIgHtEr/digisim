@@ -8,11 +8,6 @@ for k, v in pairs(memory) do
     end
 end
 
-debug('    DUMP: ' .. name)
-for k, v in ipairs(memory) do
-    debug('        ' .. k .. ': ' .. bit.tobit(math.floor(v)))
-end
-
 local function extract(size, offset)
     local ret = {}
     for k, v in pairs(memory) do
