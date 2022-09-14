@@ -46,12 +46,13 @@ X7408 { 'trapc', width = 1 }
 wire 'trapc.a/s0c.q'
 wire 'trapc.b/mar0'
 
-VControlStage { 'strap' }
+VControlStage { 'strap', width = 1 }
 wire 'pause/strap.pause'
 wire '!rst/strap.!mr'
 wire 'clk/strap.clk'
 wire 'trapc.q/strap.in'
-wire 'strap.out/trap'
+fan 'VCC/strap.din'
+wire 'strap.dout/trap'
 
 -------------------------------------------------------------------
 -- if value in mar is aligned then load word into IR
@@ -96,13 +97,13 @@ wire '!legal.a/legal'
 
 X7408 { 'illegal', width = 1 }
 wire 'illegal.a/!legal.q'
-wire 'illegal.b/ischedule'
+wire 'illegal.b/s2.out'
 
-VControlStage { 'sillegal', width = 1 }
+VControlStage { 'sillegal', width = 2 }
 wire 'pause/sillegal.pause'
 wire '!rst/sillegal.!mr'
 wire 'clk/sillegal.clk'
 wire 'illegal.q/sillegal.in'
-wire 'sillegal.out/trap'
-wire 'VCC/sillegal.din'
-wire 'sillegal.dout/cause[1]'
+fan 'VCC/sillegal.din'
+wire 'sillegal.dout[0]/cause[1]'
+wire 'sillegal.dout[1]/trap'
