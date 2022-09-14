@@ -18,6 +18,7 @@ do
     memory = mem
 end
 
+input '!rst'
 input '!ce'
 input '!oe'
 input '!we'
@@ -41,7 +42,7 @@ local band = bit.band
 local function read_address(inputs)
     local ret = tobit(0)
     for i = 0, address_width - 1 do
-        ret = bor(ret, lshift(inputs[i + 4] == high and 1 or 0, i))
+        ret = bor(ret, lshift(inputs[i + 5] == high and 1 or 0, i))
     end
     return ret
 end
@@ -49,7 +50,7 @@ end
 local function read_data(inputs)
     local ret = tobit(0)
     for i = 0, data_width - 1 do
-        ret = bor(ret, lshift(inputs[i + 4 + address_width] == high and 1 or 0, i))
+        ret = bor(ret, lshift(inputs[i + 5 + address_width] == high and 1 or 0, i))
     end
     return ret
 end
@@ -76,10 +77,13 @@ local function read(inputs, outputs)
 end
 
 cheat(function(inputs, outputs)
-    local ce = inputs[1]
-    local oe = inputs[2]
-    local we = inputs[3]
-
+    local reset = inputs[1]
+    local ce = inputs[2]
+    local oe = inputs[3]
+    local we = inputs[4]
+    if reset ~= high then
+        return 0
+    end
     if ce ~= low then
         for i = 1, data_width do
             outputs[i] = z
