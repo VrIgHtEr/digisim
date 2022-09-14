@@ -74,6 +74,12 @@ pub const Component = struct {
     }
 
     fn findPortByName(self: *@This(), name: []const u8) ?*Port {
+        if (std.mem.eql(u8, name, "VCC")) {
+            return self.digisim.getPort("VCC.q") catch unreachable orelse unreachable;
+        }
+        if (std.mem.eql(u8, name, "GND")) {
+            return self.digisim.getPort("GND.q") catch unreachable orelse unreachable;
+        }
         var i = self.ports.iterator();
         while (i.next()) |e| {
             const entry = self.digisim.ports.getPtr(e.key_ptr.*) orelse unreachable;
@@ -289,16 +295,6 @@ pub const Component = struct {
         if (std.mem.lastIndexOf(u8, name, ".")) |index| {
             const port_name = name[index + 1 ..];
             if (port_name.len == 0) return Err.InvalidPortName;
-            if (std.mem.eql(u8, port_name, "VCC")) {
-                stdout.print("VCC!\n", .{}) catch undefined;
-                stdoutbuf.flush() catch undefined;
-                return (try self.digisim.root.getComponent("VCC") orelse unreachable).findPortByName("q");
-            }
-            if (std.mem.eql(u8, port_name, "GND")) {
-                stdout.print("GND!\n", .{}) catch undefined;
-                stdoutbuf.flush() catch undefined;
-                return (try self.digisim.root.getComponent("GND") orelse unreachable).findPortByName("q");
-            }
             if (self.digisim.strings.get(port_name)) |n| {
                 if (try self.getComponent(name[0..index])) |c| {
                     if (c.findPortByName(n)) |p| {
@@ -308,12 +304,6 @@ pub const Component = struct {
             }
         } else {
             if (name.len == 0) return Err.InvalidPortName;
-            if (std.mem.eql(u8, name, "VCC")) {
-                return self.digisim.getPort("VCC.q") catch unreachable orelse unreachable;
-            }
-            if (std.mem.eql(u8, name, "GND")) {
-                return self.digisim.getPort("GND.q") catch unreachable orelse unreachable;
-            }
             if (self.digisim.strings.get(name)) |n| {
                 return self.findPortByName(n);
             }
