@@ -1,3 +1,24 @@
+local memory = opts.memory or {}
+if type(memory) ~= 'table' then
+    error 'invalid memory'
+end
+for k, v in pairs(memory) do
+    if type(k) ~= 'number' or k < 1 or k >= 8388609 or k % 1 ~= 0 or type(v) ~= 'number' or v < 0 or v >= 256 then
+        error 'invalid memory'
+    end
+end
+
+local function extract(size, offset)
+    local ret = {}
+    for k, v in pairs(memory) do
+        local k1 = k - 1
+        if k1 % size == offset then
+            ret[math.floor(k1 / size) + 1] = math.floor(v)
+        end
+    end
+    return ret
+end
+
 input '!word'
 input '!half'
 input '!ce'
@@ -10,16 +31,16 @@ output('d', 31)
 
 -----------------------------------------------------------
 -- four memory banks with 30-bit address and 8-bit data
-VMemoryBank 'm0'
+VMemoryBank { 'm0', memory = extract(4, 0) }
 wire '!oe/m0.!oe'
 
-VMemoryBank 'm1'
+VMemoryBank { 'm1', memory = extract(4, 1) }
 wire '!oe/m1.!oe'
 
-VMemoryBank 'm2'
+VMemoryBank { 'm2', memory = extract(4, 2) }
 wire '!oe/m2.!oe'
 
-VMemoryBank 'm3'
+VMemoryBank { 'm3', memory = extract(4, 3) }
 wire '!oe/m3.!oe'
 
 -----------------------------------------------------------
