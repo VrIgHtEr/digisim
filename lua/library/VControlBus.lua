@@ -83,7 +83,7 @@ Pulldown 'pc_we'
 wire 'pc_we.q/pc_we'
 
 output('pc_count', trace)
-Pulldown 'pc_count'
+Pullup 'pc_count'
 wire 'pc_count.q/pc_count'
 
 output('rs1', 4)

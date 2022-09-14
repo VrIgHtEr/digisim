@@ -10,7 +10,6 @@ output '!rd_oe'
 output '!imm_u'
 output '!alu_oe'
 output 'pc_we'
-output 'pc_count'
 
 X7404 { 'LUI', width = 1 }
 wire '!LUI/LUI.a'
@@ -22,27 +21,16 @@ wire '!legal.b/LUI.q'
 X7404 { 'legal', width = 1 }
 wire '!legal.q/legal.a'
 
-X74245 { 'control', width = 6 }
+X74245 { 'control', width = 5 }
 wire 'VCC/control.dir'
 wire '!legal.q/control.!oe'
-
-wire 'VCC/control.a[0]'
+fan 'VCC/control.a[0-1]'
 wire 'control.b[0]/legal'
-
-wire 'GND/control.a[1]'
-wire 'control.b[1]/!rd_oe'
-
-wire 'GND/control.a[2]'
-wire 'control.b[2]/!imm_u'
-
-wire 'GND/control.a[3]'
-wire 'control.b[3]/!alu_oe'
-
-wire 'VCC/control.a[4]'
-wire 'control.b[4]/pc_we'
-
-wire 'VCC/control.a[5]'
-wire 'control.b[5]/pc_count'
+wire 'control.b[1]/pc_we'
+fan 'GND/control.a[2-4]'
+wire 'control.b[2]/!rd_oe'
+wire 'control.b[3]/!imm_u'
+wire 'control.b[4]/!alu_oe'
 
 VControlStage { 'icomplete', width = 1 }
 wire 'pause/icomplete.pause'
