@@ -13,7 +13,7 @@ end
 do
     local mem = {}
     for k, v in pairs(memory) do
-        mem[math.floor(k)] = math.floor(v)
+        mem[math.floor(k)] = bit.tobit(math.floor(v))
     end
     memory = mem
 end

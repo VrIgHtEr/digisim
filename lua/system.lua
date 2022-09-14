@@ -9,11 +9,20 @@ local function read_file(file)
         return
     end
     local success, content = pcall(f.read, f, '*all')
+    f:close()
     if not success or not content then
         return
     end
-    f:close()
     return content
+end
+
+local function mem(file)
+    local content = read_file(digisim_path .. '/' .. file) or ''
+    local ret = {}
+    for i = 1, string.len(content) do
+        ret[i] = string.byte(string.sub(content, i, i))
+    end
+    return ret
 end
 
 local base_env = {
@@ -25,7 +34,7 @@ local base_env = {
     type = type,
     error = error,
     bit = bit,
-    file = read_file,
+    mem = mem,
     string = setmetatable({}, {
         __index = string,
         __newindex = function()
