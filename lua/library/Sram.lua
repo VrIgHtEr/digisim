@@ -11,11 +11,9 @@ for k, v in pairs(memory) do
     end
 end
 do
-    debug 'DUMP'
     local mem = {}
     for k, v in pairs(memory) do
         mem[math.floor(k)] = math.floor(v)
-        debug(math.floor(k) .. ': ' .. math.floor(v))
     end
     memory = mem
 end

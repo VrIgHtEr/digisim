@@ -23,7 +23,7 @@ local function mem(file)
         return r
     end
     for i = 1, string.len(c) do
-        r[i] = string.byte(string.sub(c, i, i))
+        r[i] = string.byte(c, i, i)
     end
     return r
 end
@@ -38,9 +38,6 @@ local base_env = {
     error = error,
     bit = bit,
     mem = mem,
-    debug = function(m)
-        io.stderr:write((m ~= nil and tostring(m) or '') .. '\n')
-    end,
     string = setmetatable({}, {
         __index = string,
         __newindex = function()
