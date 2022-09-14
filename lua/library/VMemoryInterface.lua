@@ -8,9 +8,6 @@ input 'signed'
 input('a', 31)
 output('d', 31)
 
-High 'VCC'
-Low 'GND'
-
 -----------------------------------------------------------
 -- four memory banks with 30-bit address and 8-bit data
 VMemoryBank 'm0'
@@ -45,14 +42,14 @@ wire 'a[0-1]/c0.a'
 X74283 { 'a0', width = 30 }
 wire 'c0.q/a0.cin'
 wire 'a[2-31]/a0.a'
-fan 'GND.q/a0.b'
+fan 'GND/a0.b'
 wire 'a0.s/m0.a'
 
 -- increment bank 1 address if alignment > 1
 X74283 { 'a1', width = 30 }
 wire 'a[1]/a1.cin'
 wire 'a[2-31]/a1.a'
-fan 'GND.q/a1.b'
+fan 'GND/a1.b'
 wire 'a1.s/m1.a'
 
 -- increment bank 2 address if alignment == 3
@@ -61,7 +58,7 @@ wire 'a[0-1]/c2.a'
 X74283 { 'a2', width = 30 }
 wire 'c2.q/a2.cin'
 wire 'a[2-31]/a2.a'
-fan 'GND.q/a2.b'
+fan 'GND/a2.b'
 wire 'a2.s/m2.a'
 
 -- bank 3 never needs incrementing
@@ -84,7 +81,7 @@ wire '!word/cw.a[1]'
 -- rotate by 2 if a[1] is high
 X74157 'ce1'
 wire 'a[1]/ce1.s'
-wire 'GND.q/ce1.!e'
+wire 'GND/ce1.!e'
 wire '!ce/ce1.a[0]'
 wire 'ch.q/ce1.a[1]'
 fan 'cw.q/ce1.a[2-3]'
@@ -95,7 +92,7 @@ wire 'ch.q/ce1.b[3]'
 -- then rotate by 1 more if a[0] is high
 X74157 'ce2'
 wire 'a[0]/ce2.s'
-wire 'GND.q/ce2.!e'
+wire 'GND/ce2.!e'
 wire 'ce1.q/ce2.a'
 wire 'ce1.q[0-2]/ce2.b[1-3]'
 wire 'ce1.q[3]/ce2.b[0]'
@@ -120,8 +117,8 @@ wire 'rsa.q/rso.a[0]'
 wire '!ce/rso.a[1]'
 X74139 'align'
 wire 'align.!ea/rso.q'
-wire 'align.!eb/VCC.q'
-fan 'VCC.q/align.sb'
+wire 'align.!eb/VCC'
+fan 'VCC/align.sb'
 wire 'align.sa/a[0-1]'
 
 --------------------------------------------------------------
@@ -229,7 +226,7 @@ And 'sbb'
 wire 'sbb.a[0]/signed'
 wire 'sbb.a[1]/b00.b[7]'
 X74157 { 'mb', width = 8 }
-wire 'GND.q/mb.!e'
+wire 'GND/mb.!e'
 wire '!half/mb.s'
 fan 'sbb.q/mb.b'
 wire 'b01.b/mb.a'
@@ -238,7 +235,7 @@ And 'scb'
 wire 'scb.a[0]/signed'
 wire 'scb.a[1]/mb.q[7]'
 X74157 { 'mc', width = 16 }
-wire 'GND.q/mc.!e'
+wire 'GND/mc.!e'
 wire '!word/mc.s'
 fan 'scb.q/mc.b'
 wire 'b02.b/mc.a[0-7]'
@@ -251,7 +248,7 @@ wire '!ce/out_oe.a[0]'
 wire '!oe/out_oe.a[1]'
 wire 'w.q/out_oe.a[2]'
 X74245 { 'out', width = 32 }
-wire 'VCC.q/out.dir'
+wire 'VCC/out.dir'
 wire 'out_oe.q/out.!oe'
 wire 'out.b/d'
 wire 'out.a[0-7]/b00.b'
@@ -262,7 +259,7 @@ wire 'out.a[16-31]/mc.q'
 -- input
 X74245 { 'in', width = 32 }
 wire '!dir.q/in.!oe'
-wire 'GND.q/in.dir'
+wire 'GND/in.dir'
 X7407 { 'obuf', width = 32, depth = 1 }
 wire 'obuf.a/d'
 wire 'in.b/obuf.q'

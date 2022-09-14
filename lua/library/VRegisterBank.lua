@@ -12,19 +12,16 @@ input('d', width - 1)
 output('a', width - 1)
 output('b', width - 1)
 
-High 'VCC'
-Low 'GND'
-
 VLineDecoder5x32 'rs1'
-wire 'GND.q/rs1.!e'
+wire 'GND/rs1.!e'
 wire 'rs1/rs1.a'
 
 VLineDecoder5x32 'rs2'
-wire 'GND.q/rs2.!e'
+wire 'GND/rs2.!e'
 wire 'rs2/rs2.a'
 
 VLineDecoder5x32 '!rd'
-wire 'GND.q/!rd.!e'
+wire 'GND/!rd.!e'
 wire 'rd/!rd.a'
 X7404 { 'rd', width = 32 }
 wire '!rd.y/rd.a'

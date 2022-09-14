@@ -4,9 +4,6 @@ if shwidth < 1 then
 end
 local width = math.pow(2, shwidth)
 
-High 'VCC'
-Low 'GND'
-
 input('shamt', shwidth - 1)
 input 'arithmetic'
 input 'left'
@@ -14,7 +11,7 @@ input('d', width - 1)
 output('q', width - 1)
 
 X74157 { 'in', width = width }
-wire 'GND.q/in.!e'
+wire 'GND/in.!e'
 wire 'left/in.s'
 wire 'd/in.a'
 for i = 0, width - 1 do
@@ -26,7 +23,7 @@ for i = 0, shwidth - 1 do
     local shamt = math.pow(2, i)
     local x = 'shift' .. i
     X74157 { x, width = width }
-    wire(x .. '.!e/GND.q')
+    wire(x .. '.!e/GND')
     wire(x .. '.s/shamt[' .. i .. ']')
     wire(x .. '.a/' .. res)
 
@@ -45,7 +42,7 @@ for i = 0, shwidth - 1 do
 end
 
 X74157 { 'out', width = width }
-wire 'GND.q/out.!e'
+wire 'GND/out.!e'
 wire 'left/out.s'
 wire 'out.q/q'
 wire(res .. '/out.a')

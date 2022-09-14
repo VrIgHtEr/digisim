@@ -3,8 +3,6 @@ if width < 1 then
     error 'invalid width'
 end
 
-High 'VCC'
-
 output('out', width - 1)
 input('d', width - 1)
 input '!mr'
@@ -21,6 +19,6 @@ wire 'mar.cp/cp'
 
 X74245 { 'out', width = width }
 wire 'mar.out/out.a'
-wire 'VCC.q/out.dir'
+wire 'VCC/out.dir'
 wire '!oe/out.!oe'
 wire 'out.b/d'

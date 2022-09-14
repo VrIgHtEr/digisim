@@ -8,8 +8,6 @@ output('d', width - 1)
 input 'sub'
 input '!oe'
 
-High 'VCC'
-
 X7486 { '!b', width = width }
 wire 'b/!b.a'
 fan 'sub/!b.b'
@@ -21,6 +19,6 @@ wire 'sub/adder.cin'
 
 X74245 { 'out', width = width }
 wire '!oe/out.!oe'
-wire 'VCC.q/out.dir'
+wire 'VCC/out.dir'
 wire 'adder.s/out.a'
 wire 'out.b/d'

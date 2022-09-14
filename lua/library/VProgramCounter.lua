@@ -10,20 +10,17 @@ input 'count'
 input 'clk'
 output('d', width - 1)
 
-Low 'GND'
-High 'VCC'
-
 X7404 { 'long', width = 1 }
 wire 'short/long.a'
 X74283 { 'c', width = width }
-wire 'GND.q/c.cin'
-wire 'GND.q/c.a[0]'
+wire 'GND/c.cin'
+wire 'GND/c.a[0]'
 wire 'short/c.a[1]'
 wire 'long.q/c.a[2]'
-fan('GND.q/c.a[3-' .. (width - 1) .. ']')
+fan('GND/c.a[3-' .. (width - 1) .. ']')
 
 X74157 { 'in', width = width }
-wire 'GND.q/in.!e'
+wire 'GND/in.!e'
 wire 'count/in.s'
 wire 'd/in.a'
 wire 'c.s/in.b'
@@ -39,6 +36,6 @@ wire 'pc.q/c.b'
 
 X74245 { 'out', width = width }
 wire '!oe/out.!oe'
-wire 'VCC.q/out.dir'
+wire 'VCC/out.dir'
 wire 'pc.q/out.a'
 wire 'out.b/d'

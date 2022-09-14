@@ -47,17 +47,14 @@ output 'CUSTOM2'
 output 'CUSTOM3'
 output 'F7Z'
 
-High 'VCC'
-Low 'GND'
-
 X7400 { 'short', width = 1 }
 wire 'd[0]/short.a[0]'
 wire 'd[1]/short.b[0]'
 --
 X74157 { 'in', width = 32 }
 wire 'd/in.a'
-fan 'GND.q/in.b'
-wire 'GND.q/in.!e'
+fan 'GND/in.b'
+wire 'GND/in.!e'
 wire 'short.q[0]/in.s'
 
 VRegister { 'instr', width = 33 }
@@ -75,8 +72,8 @@ wire 'instr[1]/l.b'
 
 X74138 'col'
 wire 'l.q/col.!e1'
-wire 'GND.q/col.!e2'
-wire 'VCC.q/col.e3'
+wire 'GND/col.!e2'
+wire 'VCC/col.e3'
 wire 'instr[2-4]/col.a'
 
 X74139 'col01'
@@ -123,9 +120,9 @@ wire 'col45.!qb[3]/RESERVED2'
 
 X74139 'col6'
 wire 'col6.sa/instr[5-6]'
-fan 'GND.q/col6.sb'
+fan 'GND/col6.sb'
 wire 'col6.!ea/col.!y[6]'
-wire 'col6.!eb/VCC.q'
+wire 'col6.!eb/VCC'
 wire 'col6.!qa[0]/OPIMM32'
 wire 'col6.!qa[1]/OP32'
 wire 'col6.!qa[2]/CUSTOM2'
@@ -140,14 +137,14 @@ wire 'F7Z.q/F7Z'
 
 X74245 { 'imm_i', width = 32 }
 wire 'imm_i.!oe/!imm_i'
-wire 'VCC.q/imm_i.dir'
+wire 'VCC/imm_i.dir'
 wire 'imm_i.b/imm'
 wire 'instr[20-31]/imm_i.a[0-11]'
 fan 'instr[31]/imm_i.a[12-31]'
 
 X74245 { 'imm_s', width = 32 }
 wire 'imm_s.!oe/!imm_s'
-wire 'VCC.q/imm_s.dir'
+wire 'VCC/imm_s.dir'
 wire 'imm_s.b/imm'
 wire 'instr[7-11]/imm_s.a[0-4]'
 wire 'instr[25-31]/imm_s.a[5-11]'
@@ -155,9 +152,9 @@ fan 'instr[31]/imm_s.a[12-31]'
 
 X74245 { 'imm_b', width = 32 }
 wire 'imm_b.!oe/!imm_b'
-wire 'VCC.q/imm_b.dir'
+wire 'VCC/imm_b.dir'
 wire 'imm_b.b/imm'
-fan 'GND.q/imm_b.a[0]'
+fan 'GND/imm_b.a[0]'
 wire 'instr[8-11]/imm_b.a[1-4]'
 wire 'instr[25-30]/imm_b.a[5-10]'
 wire 'instr[7]/imm_b.a[11]'
@@ -165,16 +162,16 @@ fan 'instr[31]/imm_b.a[12-31]'
 
 X74245 { 'imm_u', width = 32 }
 wire 'imm_u.!oe/!imm_u'
-wire 'VCC.q/imm_u.dir'
+wire 'VCC/imm_u.dir'
 wire 'imm_u.b/imm'
-fan 'GND.q/imm_u.a[0-11]'
+fan 'GND/imm_u.a[0-11]'
 wire 'instr[12-31]/imm_u.a[12-31]'
 
 X74245 { 'imm_j', width = 32 }
 wire 'imm_j.!oe/!imm_j'
-wire 'VCC.q/imm_j.dir'
+wire 'VCC/imm_j.dir'
 wire 'imm_j.b/imm'
-wire 'GND.q/imm_j.a[0]'
+wire 'GND/imm_j.a[0]'
 wire 'instr[21-30]/imm[1-10]'
 wire 'instr[20]/imm[11]'
 wire 'instr[12-19]/imm[12-19]'
@@ -182,18 +179,18 @@ fan 'instr[31]/imm[20-31]'
 
 X74245 { 'rs1', width = 5 }
 wire 'rs1.!oe/!rs1_oe'
-wire 'VCC.q/rs1.dir'
+wire 'VCC/rs1.dir'
 wire 'rs1.b/rs1'
 wire 'rs1.a/instr[15-19]'
 
 X74245 { 'rs2', width = 5 }
 wire 'rs2.!oe/!rs2_oe'
-wire 'VCC.q/rs2.dir'
+wire 'VCC/rs2.dir'
 wire 'rs2.b/rs2'
 wire 'rs2.a/instr[20-24]'
 
 X74245 { 'rd', width = 5 }
 wire 'rd.!oe/!rd_oe'
-wire 'VCC.q/rd.dir'
+wire 'VCC/rd.dir'
 wire 'rd.b/rd'
 wire 'rd.a/instr[7-11]'

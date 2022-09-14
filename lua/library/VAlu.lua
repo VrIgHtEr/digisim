@@ -18,11 +18,8 @@ output 'lt'
 output 'eq'
 output 'gt'
 
-Low 'GND'
-High 'VCC'
-
 X74245 { 'out', width = width }
-wire 'VCC.q/out.dir'
+wire 'VCC/out.dir'
 wire '!oe/out.!oe'
 wire 'out.b/d'
 
@@ -47,9 +44,9 @@ wire 'signed/signed.a[0]'
 wire 'sel.!qa[3]/signed.a[1]'
 
 X7485 { 'comp', width = width }
-wire 'GND.q/comp.lt_in'
-wire 'GND.q/comp.gt_in'
-wire 'VCC.q/comp.eq_in'
+wire 'GND/comp.lt_in'
+wire 'GND/comp.gt_in'
+wire 'VCC/comp.eq_in'
 wire 'comp.lt/lt'
 wire 'comp.eq/eq'
 wire 'comp.gt/gt'
@@ -75,7 +72,7 @@ Xnor 'sll_rx'
 wire 'sel.!qa[1]/sll_rx.a[0]'
 wire 'sel.!qb[1]/sll_rx.a[1]'
 X74245 { 'sh', width = width }
-wire 'VCC.q/sh.dir'
+wire 'VCC/sh.dir'
 wire 'sll_rx.q/sh.!oe'
 wire 'shift.q/sh.a'
 wire 'sh.b/out.a'
@@ -84,9 +81,9 @@ Xnor 'slt_u'
 wire 'sel.!qa[2]/slt_u.a[0]'
 wire 'sel.!qa[3]/slt_u.a[1]'
 X74245 { 'slt', width = 32 }
-wire 'VCC.q/slt.dir'
+wire 'VCC/slt.dir'
 wire 'slt_u.q/slt.!oe'
-fan('GND.q/slt.a[1-' .. (width - 1) .. ']')
+fan('GND/slt.a[1-' .. (width - 1) .. ']')
 wire 'slt.b/out.a'
 
 VAluXor { 'xor', width = width }

@@ -4,14 +4,11 @@ input '!we'
 input('a', 29)
 output('d', 7)
 
-High 'VCC'
-Low 'GND'
-
 X74139 'csm'
-wire 'GND.q/csm.!ea'
+wire 'GND/csm.!ea'
 wire 'a[0-1]/csm.sa'
-wire 'VCC.q/csm.!eb'
-fan 'VCC.q/csm.sb'
+wire 'VCC/csm.!eb'
+fan 'VCC/csm.sb'
 
 X7432 { 'cso', width = 4 }
 fan '!ce/cso.a'

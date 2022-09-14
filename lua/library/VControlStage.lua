@@ -35,10 +35,10 @@ if width > 0 then
 
     X7404 { '!out', width = 1 }
     wire 'out.q/!out.a'
-    High 'VCC'
+
     X74245 { 'data', width = width }
     wire '!out.q/data.!oe'
-    wire 'VCC.q/data.dir'
+    wire 'VCC/data.dir'
     wire 'din/data.a'
     wire 'dout/data.b'
 end
