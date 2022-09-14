@@ -1,6 +1,23 @@
 local address_width = 19
 local data_width = 8
 
+local memory = opts.memory or {}
+if type(memory) ~= 'table' then
+    error 'invalid memory'
+end
+for k, v in pairs(memory) do
+    if type(k) ~= 'number' or k < 1 or k >= 524289 or k % 1 ~= 0 or type(v) ~= 'number' or v < 0 or v >= 256 then
+        error 'invalid memory'
+    end
+end
+do
+    local mem = {}
+    for k, v in pairs(memory) do
+        mem[math.floor(k)] = math.floor(v)
+    end
+    memory = mem
+end
+
 input '!ce'
 input '!oe'
 input '!we'
@@ -37,7 +54,6 @@ local function read_data(inputs)
     return ret
 end
 
-local memory = {}
 local function write(inputs)
     local address = read_address(inputs)
     local data = read_data(inputs)
