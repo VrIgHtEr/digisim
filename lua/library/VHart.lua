@@ -95,15 +95,13 @@ wire 's2.dout/ischedule'
 X7404 { '!legal', width = 1 }
 wire '!legal.a/legal'
 
-X7408 { 'illegal', width = 1 }
+X7400 { 'illegal', width = 1 }
 wire 'illegal.a/!legal.q'
 wire 'illegal.b/s2.out'
 
-VControlStage { 'sillegal', width = 2 }
-wire 'pause/sillegal.pause'
-wire '!rst/sillegal.!mr'
-wire 'clk/sillegal.clk'
-wire 'illegal.q/sillegal.in'
-fan 'VCC/sillegal.din'
-wire 'sillegal.dout[0]/cause[1]'
-wire 'sillegal.dout[1]/trap'
+X74245 { 'sillegal', width = 2 }
+wire 'illegal.q/sillegal.!oe'
+wire 'VCC/sillegal.dir'
+fan 'VCC/sillegal.a'
+wire 'sillegal.b[0]/cause[1]'
+wire 'sillegal.b[1]/trap'
