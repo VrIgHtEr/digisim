@@ -129,9 +129,10 @@ wire 'ce2.q[3]/m3.!ce'
 
 -----------------------------------------------------------
 -- data direction signal
-Or '!dir'
+Nor { '!dir', width = 3 }
 wire '!ce/!dir.a[0]'
-wire '!w/!dir.a[1]'
+wire '!oe/!dir.a[1]'
+wire 'nw.q/!dir.a[2]'
 
 --------------------------------------------------------------
 ---- alignment matrix row selector
