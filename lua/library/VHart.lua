@@ -1,6 +1,5 @@
 input '!rst'
 input 'clk'
-input 'pause'
 input 'icomplete'
 input 'int'
 input 'mar0'
@@ -47,7 +46,6 @@ wire 'trapc.a/s0c.q'
 wire 'trapc.b/mar0'
 
 VControlStage { 'strap', width = 1 }
-wire 'pause/strap.pause'
 wire '!rst/strap.!mr'
 wire 'clk/strap.clk'
 wire 'trapc.q/strap.in'
@@ -65,7 +63,6 @@ wire 's1c.a/s0c.q'
 wire 's1c.b/!mar0.q'
 
 VControlStage { 's1', width = 5 }
-wire 'pause/s1.pause'
 wire '!rst/s1.!mr'
 wire 'clk/s1.clk'
 wire 's1c.q/s1.in'
@@ -81,7 +78,6 @@ wire 's1.dout[4]/ir_in'
 -- after IR is loaded, schedule the instruction
 
 VControlStage { 's2', width = 1 }
-wire 'pause/s2.pause'
 wire '!rst/s2.!mr'
 wire 'clk/s2.clk'
 wire 's1.out/s2.in'

@@ -98,10 +98,6 @@ output('rd', 4)
 Pulldown { 'rd', width = 5 }
 wire 'rd.q/rd'
 
-output 'pause'
-Pulldown 'pause'
-wire 'pause.q/pause'
-
 output('!imm_i', trace)
 Pullup '!imm_i'
 wire '!imm_i.q/!imm_i'

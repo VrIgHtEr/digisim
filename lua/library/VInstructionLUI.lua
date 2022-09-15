@@ -1,6 +1,5 @@
 input '!rst'
 input 'clk'
-input 'pause'
 input 'ischedule'
 input '!LUI'
 
@@ -33,7 +32,6 @@ wire 'control.b[3]/!imm_u'
 wire 'control.b[4]/!alu_oe'
 
 VControlStage { 'icomplete', width = 1 }
-wire 'pause/icomplete.pause'
 wire '!rst/icomplete.!mr'
 wire 'clk/icomplete.clk'
 wire 'legal.q/icomplete.in'
