@@ -47,8 +47,9 @@ wire 'ctrl.!alu_oe/ILUI.!alu_oe'
 wire 'ctrl.pc_we/ILUI.pc_we'
 wire 'decode.LUI/ILUI.!LUI'
 
-VMemoryInterface 'mem'
+VMemoryInterface { 'mem', memory = mem 'rom' }
 wire 'ctrl.clk/mem.clk'
+wire 'ctrl.!rst/mem.!rst'
 wire 'mem.!word/ctrl.!mem_word'
 wire 'mem.!half/ctrl.!mem_half'
 wire 'mem.!ce/ctrl.!mem_ce'

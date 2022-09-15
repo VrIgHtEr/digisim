@@ -16,6 +16,15 @@ local function read_file(file)
     return content
 end
 
+local function mem(file)
+    local c = read_file(digisim_path .. '/' .. file) or ''
+    local ret = {}
+    for i = 1, string.len(c) do
+        ret[i] = string.byte(string.sub(c, i, i))
+    end
+    return ret
+end
+
 local base_env = {
     math = math,
     table = table,
@@ -25,7 +34,7 @@ local base_env = {
     type = type,
     error = error,
     bit = bit,
-    file = read_file,
+    mem = mem,
     string = setmetatable({}, {
         __index = string,
         __newindex = function()

@@ -19,6 +19,7 @@ local function extract(size, offset)
     return ret
 end
 
+input '!rst'
 input '!word'
 input '!half'
 input '!ce'
@@ -33,15 +34,19 @@ output('d', 31)
 -- four memory banks with 30-bit address and 8-bit data
 VMemoryBank { 'm0', memory = extract(4, 0) }
 wire '!oe/m0.!oe'
+wire '!rst/m0.!rst'
 
 VMemoryBank { 'm1', memory = extract(4, 1) }
 wire '!oe/m1.!oe'
+wire '!rst/m1.!rst'
 
 VMemoryBank { 'm2', memory = extract(4, 2) }
 wire '!oe/m2.!oe'
+wire '!rst/m2.!rst'
 
 VMemoryBank { 'm3', memory = extract(4, 3) }
 wire '!oe/m3.!oe'
+wire '!rst/m3.!rst'
 
 -----------------------------------------------------------
 -- write synchronization
