@@ -1,4 +1,7 @@
-vim.api.nvim_exec('nnoremap <silent> <leader><leader><leader> :wa<cr>:!zig build --prominent-compile-errors && zig-out/bin/digisim<cr>', true)
+vim.api.nvim_exec(
+    'nnoremap <silent> <leader><leader><leader> :wa<cr>:!zig build -Drelease-fast=true --prominent-compile-errors && zig-out/bin/digisim<cr>',
+    true
+)
 
 local cleanupau = vim.api.nvim_create_augroup('DIGISIM_VIMRC_CLEANUP', { clear = true })
 
