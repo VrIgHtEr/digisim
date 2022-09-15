@@ -149,3 +149,7 @@ wire 'trap.q/trap'
 output('legal', trace)
 Pulldown 'legal'
 wire 'legal.q/legal'
+
+output('!rd_rs1_oe', trace)
+Pullup '!rd_rs1_oe'
+wire '!rd_rs1_oe.q/!rd_rs1_oe'

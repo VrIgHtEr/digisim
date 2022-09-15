@@ -10,6 +10,7 @@ input '!imm_j'
 input '!rs1_oe'
 input '!rs2_oe'
 input '!rd_oe'
+input '!rd_rs1_oe'
 output('instr', 31)
 output 'short'
 output('imm', 31)
@@ -194,3 +195,9 @@ wire 'rd.!oe/!rd_oe'
 wire 'VCC/rd.dir'
 wire 'rd.b/rd'
 wire 'rd.a/instr[7-11]'
+
+X74245 { 'rd_rs1', width = 5 }
+wire 'rd_rs1.!oe/!rd_rs1_oe'
+wire 'VCC/rd_rs1.dir'
+wire 'rd_rs1.b/rs1'
+wire 'rd_rs1.a/instr[7-11]'
