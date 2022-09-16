@@ -128,21 +128,21 @@ wire 'trap1.dout[0]/mepc_in'
 wire 'GND/trap1.din[1]'
 wire 'trap1.dout[1]/!pc_oe'
 
-VControlStage { 'trap2', width = 2 }
+VControlStage { 'trap2', width = 1 }
 wire '!rst/trap2.!mr'
 wire 'clk/trap2.clk'
 wire 'trap1.out/trap2.in'
 wire 'VCC/trap2.din[0]'
-wire 'trap2.dout[0]/pc_we'
-wire 'GND/trap2.din[1]'
-wire 'trap2.dout[1]/pc_count'
+wire 'trap2.dout[0]/mtval_in'
 
-VControlStage { 'trap3', width = 1 }
+VControlStage { 'trap3', width = 2 }
 wire '!rst/trap3.!mr'
 wire 'clk/trap3.clk'
 wire 'trap2.out/trap3.in'
 wire 'VCC/trap3.din[0]'
-wire 'trap3.dout[0]/mtval_in'
+wire 'trap3.dout[0]/pc_we'
+wire 'GND/trap3.din[1]'
+wire 'trap3.dout[1]/pc_count'
 
 VControlStage { 'trap4', width = 1 }
 wire '!rst/trap4.!mr'
