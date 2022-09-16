@@ -173,7 +173,3 @@ wire '!mtval_out.q/!mtval_out'
 output('mtval_in', trace)
 Pulldown 'mtval_in'
 wire 'mtval_in.q/mtval_in'
-
-output('!pc_oe_a', trace)
-Pullup '!pc_oe_a'
-wire '!pc_oe_a.q/!pc_oe_a'

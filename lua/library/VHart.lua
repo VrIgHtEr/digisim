@@ -9,6 +9,7 @@ output 'trap'
 output('d', 31)
 output 'ischedule'
 output '!pc_oe'
+output '!alu_oe'
 output 'mar_in'
 output '!mem_word'
 output '!mem_half'
@@ -35,13 +36,14 @@ wire 's0c.b/icomplete'
 X7404 { '!s0c', width = 1 }
 wire 's0c.q/!s0c.a'
 
-X74245 { 's0', width = 2 }
+X74245 { 's0', width = 3 }
 wire '!s0c.q/s0.!oe'
 wire 'VCC/s0.dir'
-wire 'GND/s0.a[0]'
+fan 'GND/s0.a[0-1]'
 wire 's0.b[0]/!pc_oe'
-wire 'VCC/s0.a[1]'
-wire 's0.b[1]/mar_in'
+wire 's0.b[1]/!alu_oe'
+fan 'VCC/s0.a[2]'
+wire 's0.b[2]/mar_in'
 
 -------------------------------------------------------------------
 -- if value in mar is misaligned then trap 0
@@ -119,14 +121,15 @@ wire 'VCC/trap0.dir'
 wire 'VCC/trap0.a[0]'
 wire 'trap0.b[0]/mcause_in'
 
-VControlStage { 'trap1', width = 2 }
+VControlStage { 'trap1', width = 3 }
 wire '!rst/trap1.!mr'
 wire 'clk/trap1.clk'
 wire 'trap/trap1.in'
-wire 'VCC/trap1.din[0]'
+fan 'VCC/trap1.din[0]'
 wire 'trap1.dout[0]/mepc_in'
-wire 'GND/trap1.din[1]'
+fan 'GND/trap1.din[1-2]'
 wire 'trap1.dout[1]/!pc_oe'
+wire 'trap1.dout[2]/!alu_oe'
 
 VControlStage { 'trap2', width = 1 }
 wire '!rst/trap2.!mr'

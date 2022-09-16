@@ -3,7 +3,6 @@ if width < 4 then
     error 'invalid width'
 end
 input '!oe'
-input '!oe_a'
 input 'short'
 input '!mr'
 input 'we'
@@ -40,10 +39,4 @@ X74245 { 'out', width = width }
 wire '!oe/out.!oe'
 wire 'VCC/out.dir'
 wire 'pc.q/out.a'
-wire 'out.b/d'
-
-X74245 { 'out_a', width = width }
-wire '!oe_a/out_a.!oe'
-wire 'VCC/out_a.dir'
-wire 'pc.q/out_a.a'
-wire 'out_a.b/a'
+wire 'out.b/a'
