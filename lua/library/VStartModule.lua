@@ -20,7 +20,7 @@ wire 'VCC/s.in'
 X7404 { '!started', width = 1 }
 wire 's.out/!started.a'
 
-output 'd2'
+output 'd6'
 output 'pc_we'
 output 'pc_count'
 
@@ -30,7 +30,7 @@ wire '!clk/s1.clk'
 wire '!started.q/s1.in'
 fan 'VCC/s1.din[0-1]'
 wire 's1.dout[0]/pc_we'
-wire 's1.dout[1]/d2'
+wire 's1.dout[1]/d6'
 fan 'GND/s1.din[2]'
 wire 's1.dout[2]/pc_count'
 
