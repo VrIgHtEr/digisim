@@ -3,12 +3,14 @@ if width < 4 then
     error 'invalid width'
 end
 input '!oe'
+input '!oe_a'
 input 'short'
 input '!mr'
 input 'we'
 input 'count'
 input 'clk'
 output('d', width - 1)
+output('a', width - 1)
 
 X7404 { 'long', width = 1 }
 wire 'short/long.a'
@@ -39,3 +41,9 @@ wire '!oe/out.!oe'
 wire 'VCC/out.dir'
 wire 'pc.q/out.a'
 wire 'out.b/d'
+
+X74245 { 'out_a', width = width }
+wire '!oe_a/out_a.!oe'
+wire 'VCC/out_a.dir'
+wire 'pc.q/out_a.a'
+wire 'out_a.b/a'

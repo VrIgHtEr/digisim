@@ -8,9 +8,8 @@ output 'icomplete'
 output '!rd_oe'
 output '!imm_u'
 output '!alu_oe'
-output '!rd_rs1_oe'
 output 'pc_we'
-output '!pc_oe'
+output '!pc_oe_a'
 
 X7404 { 'AUIPC', width = 1 }
 wire '!AUIPC/AUIPC.a'
@@ -22,30 +21,21 @@ wire '!legal.b/AUIPC.q'
 X7404 { 'legal', width = 1 }
 wire '!legal.q/legal.a'
 
-X74245 { 'control1', width = 3 }
+X74245 { 'control1', width = 6 }
 wire 'VCC/control1.dir'
 wire '!legal.q/control1.!oe'
-fan 'VCC/control1.a[0]'
+fan 'VCC/control1.a[0-1]'
 wire 'control1.b[0]/legal'
-fan 'GND/control1.a[1-2]'
-wire 'control1.b[1]/!rd_oe'
-wire 'control1.b[2]/!pc_oe'
-
-VControlStage { 'control2', width = 5 }
-wire '!rst/control2.!mr'
-wire 'clk/control2.clk'
-wire 'legal.q/control2.in'
-fan 'VCC/control2.din[0]'
-wire 'control2.dout[0]/pc_we'
-fan 'GND/control2.din[1-4]'
-wire 'control2.dout[1]/!alu_oe'
-wire 'control2.dout[2]/!rd_rs1_oe'
-wire 'control2.dout[3]/!rd_oe'
-wire 'control2.dout[4]/!imm_u'
+wire 'control1.b[1]/pc_we'
+fan 'GND/control1.a[2-5]'
+wire 'control1.b[2]/!pc_oe_a'
+wire 'control1.b[3]/!imm_u'
+wire 'control1.b[4]/!rd_oe'
+wire 'control1.b[5]/!alu_oe'
 
 VControlStage { 'icomplete', width = 1 }
 wire '!rst/icomplete.!mr'
 wire 'clk/icomplete.clk'
-wire 'control2.out/icomplete.in'
+wire 'legal.q/icomplete.in'
 wire 'VCC/icomplete.din'
 wire 'icomplete.dout/icomplete'

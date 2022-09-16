@@ -150,10 +150,6 @@ output('legal', trace)
 Pulldown 'legal'
 wire 'legal.q/legal'
 
-output('!rd_rs1_oe', trace)
-Pullup '!rd_rs1_oe'
-wire '!rd_rs1_oe.q/!rd_rs1_oe'
-
 output('!mcause_out', trace)
 Pullup '!mcause_out'
 wire '!mcause_out.q/!mcause_out'
@@ -177,3 +173,7 @@ wire '!mtval_out.q/!mtval_out'
 output('mtval_in', trace)
 Pulldown 'mtval_in'
 wire 'mtval_in.q/mtval_in'
+
+output('!pc_oe_a', trace)
+Pullup '!pc_oe_a'
+wire '!pc_oe_a.q/!pc_oe_a'
