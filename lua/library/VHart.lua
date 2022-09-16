@@ -6,7 +6,7 @@ input 'mar0'
 input 'legal'
 
 output 'trap'
-output('cause', 4)
+output('d', 31)
 output 'ischedule'
 output '!pc_oe'
 output 'mar_in'
@@ -15,6 +15,11 @@ output '!mem_half'
 output '!mem_ce'
 output '!mem_oe'
 output 'ir_in'
+output 'mcause_in'
+output 'mepc_in'
+output 'mtval_in'
+output 'pc_we'
+output 'pc_count'
 
 -------------------------------------------------------------------
 -- if an interrupt is not pending and an instruction has been completed
@@ -99,5 +104,49 @@ X74245 { 'sillegal', width = 2 }
 wire 'illegal.q/sillegal.!oe'
 wire 'VCC/sillegal.dir'
 fan 'VCC/sillegal.a'
-wire 'sillegal.b[0]/cause[1]'
+wire 'sillegal.b[0]/d[1]'
 wire 'sillegal.b[1]/trap'
+
+-------------------------------------------------------------------
+-- trap handling
+
+X7404 { '!trap', width = 1 }
+wire 'trap/!trap.a'
+
+X74245 { 'trap0', width = 1 }
+wire '!trap.q/trap0.!oe'
+wire 'VCC/trap0.dir'
+wire 'VCC/trap0.a[0]'
+wire 'trap0.b[0]/mcause_in'
+
+VControlStage { 'trap1', width = 2 }
+wire '!rst/trap1.!mr'
+wire 'clk/trap1.clk'
+wire 'trap/trap1.in'
+wire 'VCC/trap1.din[0]'
+wire 'trap1.dout[0]/mepc_in'
+wire 'GND/trap1.din[1]'
+wire 'trap1.dout[1]/!pc_oe'
+
+VControlStage { 'trap2', width = 2 }
+wire '!rst/trap2.!mr'
+wire 'clk/trap2.clk'
+wire 'trap1.out/trap2.in'
+wire 'VCC/trap2.din[0]'
+wire 'trap2.dout[0]/pc_we'
+wire 'GND/trap2.din[1]'
+wire 'trap2.dout[1]/pc_count'
+
+VControlStage { 'trap3', width = 1 }
+wire '!rst/trap3.!mr'
+wire 'clk/trap3.clk'
+wire 'trap2.out/trap3.in'
+wire 'VCC/trap3.din[0]'
+wire 'trap3.dout[0]/mtval_in'
+
+VControlStage { 'trap4', width = 1 }
+wire '!rst/trap4.!mr'
+wire 'clk/trap4.clk'
+wire 'trap3.out/trap4.in'
+wire 'VCC/trap4.din[0]'
+wire 'trap4.dout[0]/icomplete'

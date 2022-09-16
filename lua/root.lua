@@ -29,8 +29,12 @@ wire 'ctrl.ischedule/hart.ischedule'
 wire 'ctrl.int/hart.int'
 wire 'ctrl.trap/hart.trap'
 wire 'ctrl.legal/hart.legal'
-wire 'data.d[0-3]/hart.cause[0-3]'
-wire 'data.d[31]/hart.cause[4]'
+wire 'ctrl.mcause_in/hart.mcause_in'
+wire 'ctrl.mepc_in/hart.mepc_in'
+wire 'ctrl.mtval_in/hart.mtval_in'
+wire 'ctrl.pc_we/hart.pc_we'
+wire 'ctrl.pc_count/hart.pc_count'
+wire 'data.d/hart.d'
 
 VInstructionLUI 'ILUI'
 wire 'ctrl.!rst/ILUI.!rst'
@@ -160,102 +164,23 @@ wire 'ctrl.rs1/registers.rs1'
 wire 'ctrl.rs2/registers.rs2'
 wire 'ctrl.rd/registers.rd'
 
-local function outputnumber(seq, num)
-    if num == nil then
-        for _ = 1, 32 do
-            seq[#seq + 1] = z
-        end
-    else
-        num = math.floor(num)
-        for _ = 1, 32 do
-            seq[#seq + 1] = (num % 2) == 0 and l or h
-            num = math.floor(num * 0.5)
-        end
-    end
-end
+VBusRegister 'MCAUSE'
+wire 'data.d/MCAUSE.d'
+wire 'ctrl.!rst/MCAUSE.!mr'
+wire 'ctrl.clk/MCAUSE.cp'
+wire 'ctrl.mcause_in/MCAUSE.w'
+wire 'ctrl.!mcause_out/MCAUSE.!oe'
 
-local function row(ce, we, oe, half, word, signed, mar_in, ir_in, alu_oe, alu_sub, data)
-    local ret = { ce or z, we or z, oe or z, half or z, word or z, signed or z, mar_in or z, ir_in or z, alu_oe or z, alu_sub or z }
-    outputnumber(ret, data)
-    return ret
-end
+VBusRegister 'MEPC'
+wire 'data.d/MEPC.d'
+wire 'ctrl.!rst/MEPC.!mr'
+wire 'ctrl.clk/MEPC.cp'
+wire 'ctrl.mepc_in/MEPC.w'
+wire 'ctrl.!mepc_out/MEPC.!oe'
 
-local function addWrite(seq, half, word, signed, address, data)
-    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, h, l, address)
-    seq[#seq + 1] = row(l, l, h, half, word, signed, l, l, h, l, data)
-end
-
-local function addRead(seq, half, word, signed, address)
-    seq[#seq + 1] = row(z, z, z, z, z, z, h, l, h, l, address)
-    seq[#seq + 1] = row(l, h, l, half, word, signed, l, h, h, l)
-end
-
-local function generate()
-    local seq = { row() }
-    for _ = 1, 32 do
-        seq[#seq + 1] = row()
-    end
-    for i = 0, 15 do
-        addWrite(seq, h, h, h, i, i)
-    end
-    for i = 0, 15 do
-        addWrite(seq, h, h, h, i + 16, i + 255 - 15)
-    end
-    for i = 0, 31 do
-        addRead(seq, h, h, h, i)
-    end
-    for i = 0, 31 do
-        addRead(seq, l, h, h, i)
-    end
-    for i = 0, 31 do
-        addRead(seq, l, l, h, i)
-    end
-    for i = 0, 31 do
-        addRead(seq, h, h, l, i)
-    end
-    for i = 0, 31 do
-        addRead(seq, l, h, l, i)
-    end
-    for i = 0, 31 do
-        addRead(seq, l, l, l, i)
-    end
-    addWrite(seq, l, h, h, 0, 0xABCD)
-    addRead(seq, l, h, h, 0)
-    addRead(seq, l, h, l, 0)
-    addWrite(seq, l, h, h, 3, 0xABCD)
-    addRead(seq, l, h, h, 3)
-    addRead(seq, l, h, l, 3)
-
-    addWrite(seq, l, l, h, 0, 0xdeadbeef)
-    addRead(seq, l, l, h, 0)
-    addWrite(seq, l, l, h, 5, 0xdeadbeef)
-    addRead(seq, l, l, h, 5)
-    addWrite(seq, l, l, h, 10, 0xdeadbeef)
-    addRead(seq, l, l, h, 10)
-    addWrite(seq, l, l, h, 15, 0xdeadbeef)
-    addRead(seq, l, l, h, 15)
-
-    for i = 0, 31 do
-        addRead(seq, h, h, h, i)
-        addRead(seq, h, h, l, i)
-    end
-    return seq
-end
-
-Sequencer {
-    'test',
-    width = 10 + 32,
-    sequence = generate(),
-}
-wire 'ctrl.clk/test.clk'
-wire 'test.q[0]/ctrl.!mem_ce'
-wire 'test.q[1]/ctrl.!mem_we'
-wire 'test.q[2]/ctrl.!mem_oe'
-wire 'test.q[3]/ctrl.!mem_half'
-wire 'test.q[4]/ctrl.!mem_word'
-wire 'test.q[5]/ctrl.mem_signed'
-wire 'test.q[6]/ctrl.mar_in'
-wire 'test.q[7]/ctrl.ir_in'
-wire 'test.q[8]/ctrl.!alu_oe'
-wire 'test.q[9]/ctrl.alu_sub'
-wire 'test.q[10-41]/data.d'
+VBusRegister 'MTVAL'
+wire 'data.d/MTVAL.d'
+wire 'ctrl.!rst/MTVAL.!mr'
+wire 'ctrl.clk/MTVAL.cp'
+wire 'ctrl.mtval_in/MTVAL.w'
+wire 'ctrl.!mtval_out/MTVAL.!oe'

@@ -153,3 +153,27 @@ wire 'legal.q/legal'
 output('!rd_rs1_oe', trace)
 Pullup '!rd_rs1_oe'
 wire '!rd_rs1_oe.q/!rd_rs1_oe'
+
+output('!mcause_out', trace)
+Pullup '!mcause_out'
+wire '!mcause_out.q/!mcause_out'
+
+output('mcause_in', trace)
+Pulldown 'mcause_in'
+wire 'mcause_in.q/mcause_in'
+
+output('!mepc_out', trace)
+Pullup '!mepc_out'
+wire '!mepc_out.q/!mepc_out'
+
+output('mepc_in', trace)
+Pulldown 'mepc_in'
+wire 'mepc_in.q/mepc_in'
+
+output('!mtval_out', trace)
+Pullup '!mtval_out'
+wire '!mtval_out.q/!mtval_out'
+
+output('mtval_in', trace)
+Pulldown 'mtval_in'
+wire 'mtval_in.q/mtval_in'
