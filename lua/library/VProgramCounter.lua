@@ -23,7 +23,8 @@ fan('GND/c.a[3-' .. (width - 1) .. ']')
 X74157 { 'in', width = width }
 wire 'GND/in.!e'
 wire 'count/in.s'
-wire 'd/in.a'
+wire 'GND/in.a[0]'
+wire('d[1-' .. (width - 1) .. ']/in.a[1-' .. (width - 1) .. ']')
 wire 'c.s/in.b'
 
 X7408 { 'clk', width = 1 }
