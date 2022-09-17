@@ -2,7 +2,6 @@ input '!rst'
 input 'clk'
 input 'icomplete'
 input 'int'
-input 'mar0'
 input 'legal'
 
 output 'trap'
@@ -46,33 +45,12 @@ fan 'VCC/s0.a[2]'
 wire 's0.b[2]/mar_in'
 
 -------------------------------------------------------------------
--- if value in mar is misaligned then trap 0
-
-X7408 { 'trapc', width = 1 }
-wire 'trapc.a/s0c.q'
-wire 'trapc.b/mar0'
-
-VControlStage { 'strap', width = 1 }
-wire '!rst/strap.!mr'
-wire 'clk/strap.clk'
-wire 'trapc.q/strap.in'
-fan 'VCC/strap.din'
-wire 'strap.dout/trap'
-
--------------------------------------------------------------------
--- if value in mar is aligned then load word into IR
-
-X7404 { '!mar0', width = 1 }
-wire 'mar0/!mar0.a'
-
-X7408 { 's1c', width = 1 }
-wire 's1c.a/s0c.q'
-wire 's1c.b/!mar0.q'
+-- then load word into IR
 
 VControlStage { 's1', width = 5 }
 wire '!rst/s1.!mr'
 wire 'clk/s1.clk'
-wire 's1c.q/s1.in'
+wire 's0c.q/s1.in'
 fan 'GND/s1.din[0-3]'
 wire 's1.dout[0]/!mem_word'
 wire 's1.dout[1]/!mem_half'
