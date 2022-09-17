@@ -1,5 +1,3 @@
-local l, z, h = sig.low, sig.z, sig.high
-
 VControlBus { 'ctrl', trace = true }
 VDataBus { 'data', trace = true }
 VDecodeBus { 'decode', trace = true }
