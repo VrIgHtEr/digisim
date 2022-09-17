@@ -1,5 +1,8 @@
 local digisim = _G['digisim']
 local digisim_path = _G['digisim_path']
+local project_path = digisim_path .. '/proj'
+
+local search_paths = { project_path, digisim_path .. '/stdlib' }
 
 ---@param file string
 ---@return string|nil
@@ -217,15 +220,24 @@ local function create_env(id, opts)
                             end
                             constructor = cache[index]
                         else
-                            local file = read_file(digisim_path .. '/library/' .. index .. '.lua')
+                            local file = nil
+                            for _, x in ipairs(search_paths) do
+                                file = read_file(x .. '/' .. index .. '.lua')
+                                if file then
+                                    break
+                                end
+                            end
                             if file then
                                 local success, compiled = pcall(loadstring, file, index)
                                 if not success or not compiled then
                                     cache[index] = false
+                                    error('syntax error in component definition file: ' .. index .. ': ' .. tostring(compiled))
                                     return
                                 end
                                 constructor = compiled
                                 cache[index] = constructor
+                            else
+                                error('Component definition file not found: ' .. index)
                             end
                         end
                         return function(name, o)
