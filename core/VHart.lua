@@ -46,10 +46,13 @@ wire 's0.b[2]/mar_in'
 -------------------------------------------------------------------
 -- then load word into IR
 
+X7432 { 's1c', width = 1 }
+wire 's0c.q/s1c.a'
+
 VControlStage { 's1', width = 5 }
 wire '!rst/s1.!mr'
 wire 'clk/s1.clk'
-wire 's0c.q/s1.in'
+wire 's1c.q/s1.in'
 fan 'GND/s1.din[0-3]'
 wire 's1.dout[0]/!mem_word'
 wire 's1.dout[1]/!mem_half'
@@ -108,18 +111,13 @@ fan 'GND/trap1.din[1-2]'
 wire 'trap1.dout[1]/!pc_oe'
 wire 'trap1.dout[2]/!alu_oe'
 
-VControlStage { 'trap2', width = 2 }
+VControlStage { 'trap2', width = 3 }
 wire '!rst/trap2.!mr'
 wire 'clk/trap2.clk'
 wire 'trap1.out/trap2.in'
-wire 'VCC/trap2.din[0]'
+wire 'trap2.out/s1c.b'
+fan 'VCC/trap2.din[0-1]'
 wire 'trap2.dout[0]/pc_we'
-wire 'GND/trap2.din[1]'
-wire 'trap2.dout[1]/pc_count'
-
-VControlStage { 'trap3', width = 1 }
-wire '!rst/trap3.!mr'
-wire 'clk/trap3.clk'
-wire 'trap2.out/trap3.in'
-wire 'VCC/trap3.din[0]'
-wire 'trap3.dout[0]/icomplete'
+wire 'trap2.dout[1]/mar_in'
+fan 'GND/trap2.din[2]'
+wire 'trap2.dout[2]/pc_count'

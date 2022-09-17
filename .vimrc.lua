@@ -1,6 +1,7 @@
 vim.api.nvim_exec(
     [[
     nnoremap <silent> <leader><leader><leader> :wa<cr>:!zig-out/bin/digisim core<cr>
+    nnoremap <silent> <leader><leader>s :wa<cr>:!./run<cr>
     nnoremap <silent> <leader><leader>c :wa<cr>:!zig build -Drelease-fast=true --prominent-compile-errors<cr>
     ]],
     true
@@ -13,6 +14,7 @@ local function cleanup()
         [[
     unmap <leader><leader><leader>
     unmap <leader><leader>c
+    unmap <leader><leader>s
     ]],
         true
     )
