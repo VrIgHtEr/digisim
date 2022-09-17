@@ -2,6 +2,8 @@ input '!rst'
 input 'clk'
 input 'ischedule'
 input '!AUIPC'
+input '!LUI'
+input 'i5'
 
 output 'legal'
 output 'icomplete'
@@ -11,8 +13,9 @@ output '!alu_oe'
 output 'pc_we'
 output '!pc_oe'
 
-X7404 { 'AUIPC', width = 1 }
+X7486 { 'AUIPC', width = 1 }
 wire '!AUIPC/AUIPC.a'
+wire '!LUI/AUIPC.b'
 
 X7400 { '!legal', width = 1 }
 wire '!legal.a/ischedule'
@@ -27,11 +30,12 @@ wire '!legal.q/control1.!oe'
 fan 'VCC/control1.a[0-1]'
 wire 'control1.b[0]/legal'
 wire 'control1.b[1]/pc_we'
-fan 'GND/control1.a[2-5]'
-wire 'control1.b[2]/!pc_oe'
-wire 'control1.b[3]/!imm_u'
-wire 'control1.b[4]/!rd_oe'
-wire 'control1.b[5]/!alu_oe'
+fan 'GND/control1.a[2-4]'
+wire 'control1.b[2]/!imm_u'
+wire 'control1.b[3]/!rd_oe'
+wire 'control1.b[4]/!alu_oe'
+fan 'i5/control1.a[5]'
+wire 'control1.b[5]/!pc_oe'
 
 VControlStage { 'icomplete', width = 1 }
 wire '!rst/icomplete.!mr'
