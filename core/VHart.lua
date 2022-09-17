@@ -17,7 +17,6 @@ output '!mem_oe'
 output 'ir_in'
 output 'mcause_in'
 output 'mepc_in'
-output 'mtval_in'
 output 'pc_we'
 output 'pc_count'
 
@@ -109,25 +108,18 @@ fan 'GND/trap1.din[1-2]'
 wire 'trap1.dout[1]/!pc_oe'
 wire 'trap1.dout[2]/!alu_oe'
 
-VControlStage { 'trap2', width = 1 }
+VControlStage { 'trap2', width = 2 }
 wire '!rst/trap2.!mr'
 wire 'clk/trap2.clk'
 wire 'trap1.out/trap2.in'
 wire 'VCC/trap2.din[0]'
-wire 'trap2.dout[0]/mtval_in'
+wire 'trap2.dout[0]/pc_we'
+wire 'GND/trap2.din[1]'
+wire 'trap2.dout[1]/pc_count'
 
-VControlStage { 'trap3', width = 2 }
+VControlStage { 'trap3', width = 1 }
 wire '!rst/trap3.!mr'
 wire 'clk/trap3.clk'
 wire 'trap2.out/trap3.in'
 wire 'VCC/trap3.din[0]'
-wire 'trap3.dout[0]/pc_we'
-wire 'GND/trap3.din[1]'
-wire 'trap3.dout[1]/pc_count'
-
-VControlStage { 'trap4', width = 1 }
-wire '!rst/trap4.!mr'
-wire 'clk/trap4.clk'
-wire 'trap3.out/trap4.in'
-wire 'VCC/trap4.din[0]'
-wire 'trap4.dout[0]/icomplete'
+wire 'trap3.dout[0]/icomplete'
