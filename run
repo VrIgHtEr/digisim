@@ -1,2 +1,2 @@
 #!/bin/sh
-zig-out/bin/digisim | shmidcat | gtkwave -Iv display.gtkw
+zig-out/bin/digisim core | shmidcat | gtkwave -Iv display.gtkw

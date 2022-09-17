@@ -15,11 +15,9 @@ fn errmain() !u8 {
 
     var args = try process.argsAlloc(allocator);
     defer process.argsFree(allocator, args);
-    for (args[1..]) |arg| {
-        try stdout.print("{s}\n", .{arg});
-    }
+    if (args.len < 2) return error.MissingProjectDir;
 
-    var sim = try Digisim.init(allocator);
+    var sim = try Digisim.init(allocator, args[1]);
     defer sim.deinit();
     try sim.runLuaSetup();
     while (true) {

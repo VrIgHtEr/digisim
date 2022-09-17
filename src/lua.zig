@@ -835,7 +835,7 @@ pub const Lua = struct {
             self.pop(2);
         }
     }
-    pub fn setupenv(self: *@This(), root: [:0]const u8) !void {
+    pub fn setupenv(self: *@This(), root: [:0]const u8, projroot: [:0]const u8) !void {
         {
             const len = std.mem.len(root);
             var str = try std.fs.path.join(std.heap.c_allocator, &[_][]const u8{ root[0..len], "?/init.lua" });
@@ -850,5 +850,7 @@ pub const Lua = struct {
         }
         self.pushlstring(root);
         self.setglobal("digisim_path");
+        self.pushlstring(projroot);
+        self.setglobal("project_path");
     }
 };

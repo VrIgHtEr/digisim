@@ -1,6 +1,6 @@
 local digisim = _G['digisim']
 local digisim_path = _G['digisim_path']
-local project_path = digisim_path .. '/proj'
+local project_path = _G['project_path']
 
 local search_paths = { project_path, digisim_path .. '/stdlib' }
 
@@ -19,8 +19,17 @@ local function read_file(file)
     return content
 end
 
+local function search_read_file(file)
+    for _, x in ipairs(search_paths) do
+        local f = read_file(x .. '/' .. file)
+        if f then
+            return f
+        end
+    end
+end
+
 local function mem(file)
-    local c = read_file(digisim_path .. '/' .. file) or ''
+    local c = read_file(project_path .. '/' .. file) or ''
     local ret = {}
     for i = 1, string.len(c) do
         ret[i] = string.byte(string.sub(c, i, i))
@@ -220,13 +229,7 @@ local function create_env(id, opts)
                             end
                             constructor = cache[index]
                         else
-                            local file = nil
-                            for _, x in ipairs(search_paths) do
-                                file = read_file(x .. '/' .. index .. '.lua')
-                                if file then
-                                    break
-                                end
-                            end
+                            local file = search_read_file(index .. '.lua')
                             if file then
                                 local success, compiled = pcall(loadstring, file, index)
                                 if not success or not compiled then
@@ -261,7 +264,7 @@ end
 
 local function compile(opts)
     local stderr = io.stderr
-    local text = read_file(digisim_path .. '/root.lua')
+    local text = search_read_file 'root.lua'
     if text == nil then
         error 'failed to load root component'
     end

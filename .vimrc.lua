@@ -1,5 +1,5 @@
 vim.api.nvim_exec(
-    'nnoremap <silent> <leader><leader><leader> :wa<cr>:!zig build -Drelease-fast=true --prominent-compile-errors && zig-out/bin/digisim<cr>',
+    'nnoremap <silent> <leader><leader><leader> :wa<cr>:!zig build -Drelease-fast=true --prominent-compile-errors && zig-out/bin/digisim core<cr>',
     true
 )
 

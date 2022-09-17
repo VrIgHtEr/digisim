@@ -59,7 +59,7 @@ pub const Digisim = struct {
     compiled: ?*Simulation,
     lua: Lua,
 
-    pub fn init(allocator: Allocator) !*@This() {
+    pub fn init(allocator: Allocator, proj_dir: [:0]const u8) !*@This() {
         var self: *@This() = try allocator.create(@This());
         errdefer allocator.destroy(self);
         self.faulted = false;
@@ -91,7 +91,11 @@ pub const Digisim = struct {
                 const finalLuaPath = stdlib.realpath(@ptrCast([*c]const u8, luapath), 0);
                 if (finalLuaPath) |p| {
                     defer stdlib.free(p);
-                    try self.lua.setupenv(std.mem.span(finalLuaPath));
+                    const finalProjPath = stdlib.realpath(@ptrCast([*c]const u8, proj_dir), 0);
+                    if (finalProjPath) |pp| {
+                        defer stdlib.free(pp);
+                        try self.lua.setupenv(std.mem.span(finalLuaPath), std.mem.span(finalProjPath));
+                    }
                 }
             }
         } else return Error.InitializationFailed;
