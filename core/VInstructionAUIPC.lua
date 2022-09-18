@@ -13,13 +13,13 @@ output '!alu_oe'
 output 'pc_we'
 output '!pc_oe'
 
-X7486 { 'AUIPC', width = 1 }
-wire '!AUIPC/AUIPC.a'
-wire '!LUI/AUIPC.b'
+X7486 { 'valid', width = 1 }
+wire '!AUIPC/valid.a'
+wire '!LUI/valid.b'
 
 X7400 { '!legal', width = 1 }
 wire '!legal.a/ischedule'
-wire '!legal.b/AUIPC.q'
+wire '!legal.b/valid.q'
 --
 X7404 { 'legal', width = 1 }
 wire '!legal.q/legal.a'
