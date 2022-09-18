@@ -16,6 +16,7 @@ output 'pc_count'
 output '!pc_oe'
 output '!alu_oe'
 output '!imm_b'
+output 'mar_in'
 
 X7404 { 'signed', width = 1 }
 wire 'f3[1]/signed.a'
@@ -76,17 +77,18 @@ X7408 { '!jump', width = 1 }
 wire '!c.q/!jump.a'
 wire 'legal.q/!jump.b'
 
-VControlStage { 'control2', width = 5 }
+VControlStage { 'control2', width = 6 }
 wire '!rst/control2.!mr'
 wire 'clk/control2.clk'
 wire 'jump.q/control2.in'
-fan 'VCC/control2.din[0]'
+fan 'VCC/control2.din[0-1]'
 wire 'control2.dout[0]/pc_we'
-fan 'GND/control2.din[1-4]'
-wire 'control2.dout[1]/pc_count'
-wire 'control2.dout[2]/!alu_oe'
-wire 'control2.dout[3]/!imm_b'
-wire 'control2.dout[4]/!pc_oe'
+wire 'control2.dout[0]/mar_in'
+fan 'GND/control2.din[2-5]'
+wire 'control2.dout[2]/pc_count'
+wire 'control2.dout[3]/!alu_oe'
+wire 'control2.dout[4]/!imm_b'
+wire 'control2.dout[5]/!pc_oe'
 
 X7432 { 'complete', width = 1 }
 wire '!jump.q/complete.a'

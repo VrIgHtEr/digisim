@@ -88,6 +88,7 @@ wire 'ctrl.pc_count/IBRANCH.pc_count'
 wire 'ctrl.!pc_oe/IBRANCH.!pc_oe'
 wire 'ctrl.!alu_oe/IBRANCH.!alu_oe'
 wire 'ctrl.!imm_b/IBRANCH.!imm_b'
+wire 'ctrl.mar_in/IBRANCH.mar_in'
 
 VMemoryInterface { 'mem', memory = mem 'rom' }
 wire 'ctrl.clk/mem.clk'
