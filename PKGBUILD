@@ -47,7 +47,6 @@ check() {
 
 package() {
 	cd "$srcdir/${pkgname%-git}"
-    mkdir -p "$pkgdir/usr"
     mv "zig-out" "$pkgdir/usr"
 }
 
