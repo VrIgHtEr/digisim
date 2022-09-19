@@ -15,7 +15,7 @@ replaces=()
 backup=()
 options=()
 install=
-source=('digisim::git+https://github.com/VrIgHtEr/digisim.git')
+source=('digisim::git+https://github.com/VrIgHtEr/digisim.git#tag=1.0')
 noextract=()
 md5sums=('SKIP')
 
