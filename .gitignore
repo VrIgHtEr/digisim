@@ -25,3 +25,4 @@ zig-libc
 zig-out
 display.gtkw
 luajit
+arch/
