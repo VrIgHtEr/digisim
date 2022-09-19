@@ -1,2 +1,0 @@
-#!/bin/sh
-zig build -Drelease-fast=true && strip zig-out/bin/digisim && ls -lh zig-out/bin && echo && time zig-out/bin/digisim core | shmidcat | gtkwave -Iv display.gtkw
