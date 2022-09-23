@@ -2,7 +2,7 @@ vim.api.nvim_exec(
     [[
     nnoremap <silent> <leader><leader><leader> :wa<cr>:!zig-out/bin/digisim core<cr>
     nnoremap <silent> <leader><leader>s :wa<cr>:!./run<cr>
-    nnoremap <silent> <leader><leader>c :wa<cr>:!zig build -Drelease-fast=true --prominent-compile-errors<cr>
+    nnoremap <silent> <leader><leader>c :wa<cr>:!zig build -Drelease-fast=true --prominent-compile-errors && sudo cp zig-out/bin/digisim /usr/bin/digisim<cr>
     ]],
     true
 )

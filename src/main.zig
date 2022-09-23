@@ -49,7 +49,9 @@ fn errmain() !u8 {
     const allocator = gpa.allocator();
     defer _ = gpa.deinit();
 
-    var maxtick: i64 = -1;
+    var maxtick: u64 = 0;
+    var stimeout: u64 = 0;
+    var synchronous = true;
 
     var projdir: [:0]const u8 = local;
     var args = try process.argsAlloc(allocator);
@@ -58,28 +60,55 @@ fn errmain() !u8 {
     while (i < args.len) : (i += 1) {
         const item = args[i];
         if (item.len == 0) return error.InvalidArgument;
-        if (std.mem.eql(u8, item, "-t")) {
-            if (maxtick >= 0) return error.InvalidArgument;
+        if (std.mem.eql(u8, item, "-f")) {
+            if (!synchronous) return error.InvalidArgument;
+            synchronous = false;
+        } else if (std.mem.eql(u8, item, "-s")) {
+            if (stimeout != 0) return error.InvalidArgument;
             i += 1;
             if (i == args.len) return error.InvalidArgument;
-            const arg = parseU64(args[i], 10) catch return error.InvalidArgument;
-            if (arg > std.math.maxInt(i64)) return error.InvalidArgument;
-            maxtick = @bitCast(i64, arg);
+            stimeout = parseU64(args[i], 10) catch return error.InvalidArgument;
+            if (stimeout == 0) return error.InvalidArgument;
+        } else if (std.mem.eql(u8, item, "-t")) {
+            if (maxtick != 0) return error.InvalidArgument;
+            i += 1;
+            if (i == args.len) return error.InvalidArgument;
+            maxtick = parseU64(args[i], 10) catch return error.InvalidArgument;
+            if (maxtick == std.math.maxInt(u64)) return error.InvalidArgument;
+            maxtick += 1;
         } else if (projdir.ptr != local.ptr) {
             return error.InvalidArgument;
         } else {
             projdir = item;
         }
     }
+    if (stimeout == 0) stimeout = 10000;
 
     var sim = try Digisim.init(allocator, projdir);
     defer sim.deinit();
     try sim.runLuaSetup();
+    var stable = true;
+    var scounter: u64 = stimeout;
+    var ticks: u64 = maxtick;
+    var ret: u8 = 0;
     while (true) {
-        _ = try sim.step();
-        if (maxtick >= 0 and sim.compiled.?.timestamp > maxtick) break;
+        stable = try sim.step();
+        if (!synchronous or stable) try sim.trace();
+        if (stable) {
+            scounter = stimeout;
+            if (maxtick != 0) {
+                ticks -= 1;
+                if (ticks == 0) break;
+            }
+        } else {
+            scounter -= 1;
+            if (scounter == 0) {
+                ret = 1;
+                break;
+            }
+        }
     }
-    return 0;
+    return ret;
 }
 
 pub fn main() u8 {

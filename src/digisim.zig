@@ -159,6 +159,13 @@ pub const Digisim = struct {
         return (self.compiled orelse unreachable).step();
     }
 
+    pub fn trace(self: *@This()) !void {
+        errdefer self.faulted = true;
+        try self.checkFaulted();
+        if (!self.locked) try self.compile();
+        try (self.compiled orelse unreachable).trace();
+    }
+
     pub fn addComponent(self: *@This(), name: []const u8) !usize {
         try self.checkFaulted();
         return self.root.addComponent(name);

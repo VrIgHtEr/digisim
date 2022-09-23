@@ -88,6 +88,18 @@ pub const Simulation = struct {
         self.digisim.allocator.destroy(self);
     }
 
+    pub fn trace(self: *@This()) !void {
+        if (self.traceports.count() > 0) {
+            stdout.print("#{d}\n", .{self.timestamp - 1}) catch ({});
+            var j = self.traceports.keyIterator();
+            while (j.next()) |p| {
+                p.*.trace();
+            }
+            try buffer.flush();
+            self.traceports.clearRetainingCapacity();
+        }
+    }
+
     pub fn step(self: *@This()) !bool {
         if (self.dirty.count() == 0) {
             if (self.pq.count() == 0)
@@ -159,21 +171,11 @@ pub const Simulation = struct {
             }
         }
 
-        if (self.traceports.count() > 0) {
-            stdout.print("#{d}\n", .{self.timestamp}) catch ({});
-            var j = self.traceports.keyIterator();
-            while (j.next()) |p| {
-                p.*.trace();
-            }
-            try buffer.flush();
-        }
-
         const t = self.dirty;
         self.dirty = self.nextdirty;
         self.nextdirty = t;
         self.nextdirty.clearRetainingCapacity();
         self.dirtynets.clearRetainingCapacity();
-        self.traceports.clearRetainingCapacity();
         self.timestamp += 1;
         return self.dirty.count() == 0;
     }
