@@ -501,6 +501,7 @@ pub const Digisim = struct {
             cnets[ret].driverlist = null;
             cnets[ret].value = Signal.z;
             cnets[ret].tracevalue = Signal.uninitialized;
+            cnets[ret].ptracevalue = Signal.uninitialized;
             ret += 1;
         }
     }

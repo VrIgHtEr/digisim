@@ -11,6 +11,7 @@ pub const Net = struct {
     driverlist: ?[]*Pin,
     value: Signal,
     tracevalue: Signal,
+    ptracevalue: Signal,
 
     pub fn deinit(self: *@This(), allocator: Allocator) void {
         if (self.sensitivitylist) |x| allocator.free(x);

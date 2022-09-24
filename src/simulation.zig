@@ -97,6 +97,7 @@ pub const Simulation = struct {
             }
             try buffer.flush();
             self.traceports.clearRetainingCapacity();
+            for (self.nets) |*net| net.ptracevalue = net.tracevalue;
         }
     }
 

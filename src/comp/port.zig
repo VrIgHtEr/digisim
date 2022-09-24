@@ -17,6 +17,17 @@ pub const Port = struct {
         if (self.pins.len > 1) {
             stdout.print("b", .{}) catch ({});
             var i = self.pins.len;
+            var changed = false;
+            while (i > 0) {
+                i -= 1;
+                const net = self.pins[i].net;
+                if (net.tracevalue != net.ptracevalue) {
+                    changed = true;
+                    break;
+                }
+            }
+            if (!changed) return;
+            i = self.pins.len;
             while (i > 0) {
                 i -= 1;
                 const value = self.pins[i].net.tracevalue;
@@ -32,7 +43,9 @@ pub const Port = struct {
             }
             stdout.print(" {s}\n", .{self.alias orelse unreachable}) catch ({});
         } else {
-            const value = Signal.tovcd(self.pins[0].net.tracevalue);
+            const net = self.pins[0].net;
+            if (net.tracevalue == net.ptracevalue) return;
+            const value = Signal.tovcd(net.tracevalue);
             if (value == Signal.z) {
                 stdout.print("z{s}\n", .{self.alias orelse unreachable}) catch ({});
             } else if (value == Signal.unknown) {
