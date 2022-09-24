@@ -37,6 +37,12 @@ local function mem(file)
     return ret
 end
 
+local function dbg(str)
+    io.stdout:write(str)
+    io.stdout:write '\n'
+    io.stdout:flush()
+end
+
 local base_env = {
     math = math,
     table = table,
@@ -45,6 +51,7 @@ local base_env = {
     tostring = tostring,
     type = type,
     error = error,
+    debug = dbg,
     bit = bit,
     mem = mem,
     string = setmetatable({}, {
