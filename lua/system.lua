@@ -38,9 +38,9 @@ local function mem(file)
 end
 
 local function dbg(str)
-    io.stdout:write(str)
-    io.stdout:write '\n'
-    io.stdout:flush()
+    io.stderr:write(str)
+    io.stderr:write '\n'
+    io.stderr:flush()
 end
 
 local base_env = {
