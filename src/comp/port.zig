@@ -15,7 +15,6 @@ pub const Port = struct {
 
     pub fn trace(self: *@This()) void {
         if (self.pins.len > 1) {
-            stdout.print("b", .{}) catch ({});
             var i = self.pins.len;
             var changed = false;
             while (i > 0) {
@@ -27,6 +26,7 @@ pub const Port = struct {
                 }
             }
             if (!changed) return;
+            stdout.print("b", .{}) catch ({});
             i = self.pins.len;
             while (i > 0) {
                 i -= 1;
