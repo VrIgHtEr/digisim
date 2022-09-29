@@ -43,6 +43,7 @@ pub const Error = error{
     InvalidRootNode,
     InitializationFailed,
     InvalidFanoutPortWidth,
+    OutputClosed,
 };
 
 pub const Digisim = struct {
@@ -229,9 +230,9 @@ pub const Digisim = struct {
     }
 
     pub fn assignNames(self: *@This()) !void {
-        stdout.print("$timescale 1ps $end\n", .{}) catch ({});
+        stdout.print("$timescale 1ps $end\n", .{}) catch return Error.OutputClosed;
         try self.root.assignNames();
-        stdout.print("$enddefinitions $end\n", .{}) catch ({});
+        stdout.print("$enddefinitions $end\n", .{}) catch return Error.OutputClosed;
     }
 
     pub fn flatten(self: *@This()) !void {

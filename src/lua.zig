@@ -14,7 +14,7 @@ const LuaFunc = *const fn (?State) callconv(.C) c_int;
 const Digisim = @import("digisim.zig").Digisim;
 const Component = @import("tree/component.zig").Component;
 const Components = @import("builtins.zig");
-pub const Error = error{ CannotInitialize, LoadStringFailed, ScriptError };
+pub const Error = error{ CannotInitialize, LoadStringFailed, ScriptError, OutputClosed };
 pub const Lua = struct {
     digisim: *Digisim,
     L: State,
@@ -694,7 +694,7 @@ pub const Lua = struct {
     pub fn loadstring(self: *@This(), string: [:0]const u8) Error!void {
         var status = c.luaL_loadstring(self.L, string.ptr);
         if (status != 0) {
-            stdout.print("Couldn't load string: {s}", .{c.lua_tostring(self.L, -1)}) catch ({});
+            stdout.print("Couldn't load string: {s}", .{c.lua_tostring(self.L, -1)}) catch return Error.OutputClosed;
             c.lua_pop(self.L, -1);
             return Error.LoadStringFailed;
         }
@@ -705,7 +705,7 @@ pub const Lua = struct {
 
         var result = c.lua_pcall(self.L, 0, c.LUA_MULTRET, 0);
         if (result != 0) {
-            stdout.print("Failed to run script: {s}", .{c.lua_tostring(self.L, -1)}) catch ({});
+            stdout.print("Failed to run script: {s}", .{c.lua_tostring(self.L, -1)}) catch return Error.OutputClosed;
             c.lua_pop(self.L, -1);
             return Error.ScriptError;
         }

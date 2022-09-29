@@ -343,7 +343,7 @@ pub const Component = struct {
             const port = self.digisim.ports.getPtr(p.key_ptr.*) orelse unreachable;
             if (port.trace) {
                 port.alias = try self.digisim.idgen.refNewId(self.digisim);
-                stdout.print("$var wire {d} {s} {s} $end\n", .{ port.width(), port.alias orelse unreachable, port.name }) catch ({});
+                stdout.print("$var wire {d} {s} {s} $end\n", .{ port.width(), port.alias orelse unreachable, port.name }) catch return Err.OutputClosed;
             }
         }
         if (!self.isLeaf()) {
@@ -351,9 +351,9 @@ pub const Component = struct {
             while (i.next()) |c| {
                 const comp = self.digisim.components.getPtr(c.key_ptr.*) orelse unreachable;
                 if (comp.childTraces) {
-                    stdout.print("$scope module {s} $end\n", .{comp.name}) catch ({});
+                    stdout.print("$scope module {s} $end\n", .{comp.name}) catch return Err.OutputClosed;
                     try comp.assignNames();
-                    stdout.print("$upscope $end\n", .{}) catch ({});
+                    stdout.print("$upscope $end\n", .{}) catch return Err.OutputClosed;
                 }
             }
         }

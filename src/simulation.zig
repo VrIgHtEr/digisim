@@ -8,6 +8,7 @@ const Pin = @import("comp/pin.zig").Pin;
 const Net = @import("comp/net.zig").Net;
 const Digisim = @import("digisim.zig").Digisim;
 const Signal = @import("signal.zig").Signal;
+const Error = @import("digisim.zig").Error;
 
 const PQEntry = struct {
     timestamp: usize,
@@ -90,12 +91,12 @@ pub const Simulation = struct {
 
     pub fn trace(self: *@This()) !void {
         if (self.traceports.count() > 0) {
-            stdout.print("#{d}\n", .{self.timestamp - 1}) catch ({});
+            stdout.print("#{d}\n", .{self.timestamp - 1}) catch return Error.OutputClosed;
             var j = self.traceports.keyIterator();
             while (j.next()) |p| {
-                p.*.trace();
+                try p.*.trace();
             }
-            try buffer.flush();
+            buffer.flush() catch return Error.OutputClosed;
             self.traceports.clearRetainingCapacity();
             for (self.nets) |*net| net.ptracevalue = net.tracevalue;
         }
