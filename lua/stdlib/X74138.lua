@@ -1,14 +1,15 @@
+local trace = opts.trace and true or false
 local w = math.floor(opts.width or 3)
 if w < 1 then
     error 'invalid width'
 end
 local o = math.pow(2, w)
 
-input('a', w - 1)
-input '!e1'
-input '!e2'
-input 'e3'
-output('!y', o - 1)
+input('a', w - 1, trace)
+input('!e1', trace)
+input('!e2', trace)
+input('e3', trace)
+output('!y', o - 1, trace)
 
 Not { '!!e', width = 2 }
 wire '!e1/!!e.a[0]'

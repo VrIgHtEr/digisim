@@ -1,8 +1,9 @@
-input 'd'
-input 'clk'
-input 'rst'
-output 'q'
-output '!q'
+local trace = opts.trace and true or false
+input('d', trace)
+input('clk', trace)
+input('rst', trace)
+output('q', trace)
+output('!q', trace)
 X7404 { 'r', width = 1 }
 X7404 { 'd', width = 1 }
 X7404 { 'c', width = 1 }

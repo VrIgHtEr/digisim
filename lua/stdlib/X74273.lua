@@ -1,12 +1,13 @@
+local trace = opts.trace and true or false
 local width = math.floor(opts.width or 8)
 if width < 1 then
     error 'invalid width'
 end
 
-input '!mr'
-input 'cp'
-input('d', width - 1)
-output('q', width - 1)
+input('!mr', trace)
+input('cp', trace)
+input('d', width - 1, trace)
+output('q', width - 1, trace)
 
 X7404 { 'mr', width = 1 }
 wire '!mr/mr.a'

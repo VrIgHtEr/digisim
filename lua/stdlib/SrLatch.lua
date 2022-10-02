@@ -1,8 +1,9 @@
-input '!s'
-input '!r'
+local trace = opts.trace and true or false
+input('!s', trace)
+input('!r', trace)
 
-output 'q'
-output '!q'
+output('q', trace)
+output('!q', trace)
 
 Nand 'a'
 wire '!s/a.a[1]'

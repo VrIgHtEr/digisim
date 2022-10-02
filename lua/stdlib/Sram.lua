@@ -1,3 +1,4 @@
+local trace = opts.trace and true or false
 local address_width = 19
 local data_width = 8
 
@@ -18,14 +19,14 @@ do
     memory = mem
 end
 
-input '!rst'
-input '!ce'
-input '!oe'
-input '!we'
-input('a', address_width - 1)
-input('d_in', data_width - 1)
+input('!rst', trace)
+input('!ce', trace)
+input('!oe', trace)
+input('!we', trace)
+input('a', address_width - 1, trace)
+input('d_in', data_width - 1, trace)
 
-output('d', data_width - 1)
+output('d', data_width - 1, trace)
 wire 'd/d_in'
 
 local high = sig.high

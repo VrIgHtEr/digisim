@@ -1,8 +1,10 @@
-input 'a'
-input 'b'
-input 'cin'
-output 's'
-output 'c'
+local trace = opts.trace and true or false
+
+input('a', trace)
+input('b', trace)
+input('cin', trace)
+output('s', trace)
+output('c', trace)
 
 Xor 'x1'
 wire 'a/x1.a[0]'

@@ -1,3 +1,4 @@
+local trace = opts.trace and true or false
 local w = math.floor(opts.width or 1)
 if w < 1 or w % 2 == 0 then
     error 'invalid width'
@@ -5,8 +6,8 @@ end
 
 local falling = opts.falling and true or false
 
-input 'a'
-output 'q'
+input('a', trace)
+output('q', trace)
 
 local prev = 'n0'
 X7404 { prev, width = 1 }

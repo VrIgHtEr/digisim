@@ -1,17 +1,18 @@
+local trace = opts.trace and true or false
 local width = math.floor(opts.width or 4)
 if width < 1 then
     error 'invalid width'
 end
 
-input('a', width - 1)
-input('b', width - 1)
-input 'lt_in'
-input 'eq_in'
-input 'gt_in'
+input('a', width - 1, trace)
+input('b', width - 1, trace)
+input('lt_in', trace)
+input('eq_in', trace)
+input('gt_in', trace)
 
-output 'gt'
-output 'eq'
-output 'lt'
+output('gt', trace)
+output('eq', trace)
+output('lt', trace)
 
 local a = 'a[' .. (width - 1) .. ']'
 local b = 'b[' .. (width - 1) .. ']'

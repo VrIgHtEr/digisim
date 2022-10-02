@@ -1,13 +1,14 @@
+local trace = opts.trace and true or false
 local w = math.floor(opts.width or 4)
 if w < 1 then
     error 'width < 1'
 end
 
-input '!e'
-input 's'
-input('a', w - 1)
-input('b', w - 1)
-output('q', w - 1)
+input('!e', trace)
+input('s', trace)
+input('a', w - 1, trace)
+input('b', w - 1, trace)
+output('q', w - 1, trace)
 
 X7404 { 'ns', width = 1 }
 wire 's/ns.a'

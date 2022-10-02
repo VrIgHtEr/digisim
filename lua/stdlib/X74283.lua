@@ -1,13 +1,14 @@
+local trace = opts.trace and true or false
 local w = math.floor(opts.width or 4)
 if w < 1 then
     error 'width < 1'
 end
 
-input('a', w - 1)
-input('b', w - 1)
-input 'cin'
-output 'c'
-output('s', w - 1)
+input('a', w - 1, trace)
+input('b', w - 1, trace)
+input('cin', trace)
+output('c', trace)
+output('s', w - 1, trace)
 
 local prev = 'cin'
 for i = 0, w - 1 do

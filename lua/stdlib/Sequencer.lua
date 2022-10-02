@@ -1,3 +1,4 @@
+local trace = opts.trace and true or false
 local z = sig.z
 local low = sig.low
 local high = sig.high
@@ -14,14 +15,14 @@ for _, x in ipairs(sequence) do
     if type(x) ~= 'table' or #x < 1 then
         error 'invalid sequence'
     end
-    for i, y in ipairs(x) do
+    for _, y in ipairs(x) do
         if type(y) ~= 'number' or y < 0 or y > 7 then
             error 'invalid sequence'
         end
     end
 end
-input 'clk'
-output('q', w - 1)
+input('clk', trace)
+output('q', w - 1, trace)
 local max_step = #sequence
 local step = 1
 local pclk = low
