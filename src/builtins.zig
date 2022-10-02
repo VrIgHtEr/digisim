@@ -12,7 +12,8 @@ pub const LuaHandlerState = packed struct {
     state_handle: c_int,
 
     pub fn create(d: *Digisim, handler: c_int) !*@This() {
-        const ret = @ptrCast(*LuaHandlerState, d.lua.newuserdata(@sizeOf(LuaHandlerState)) orelse return error.OutOfMemory);
+        var ud: *anyopaque align(8) = d.lua.newuserdata(@sizeOf(LuaHandlerState)) orelse return error.OutOfMemory;
+        const ret = @ptrCast(*LuaHandlerState, @alignCast(@alignOf(*LuaHandlerState), ud));
         ret.d = d;
         ret.state_handle = d.lua.ref();
         ret.handler = handler;

@@ -48,6 +48,7 @@ pub const Error = error{
 
 pub const Digisim = struct {
     allocator: Allocator,
+    trace_all: bool,
     id: usize = 0,
     root: Component,
     strings: stringIntern.StringIntern,
@@ -60,7 +61,7 @@ pub const Digisim = struct {
     compiled: ?*Simulation,
     lua: Lua,
 
-    pub fn init(allocator: Allocator, proj_dir: [:0]const u8) !*@This() {
+    pub fn init(allocator: Allocator, proj_dir: [:0]const u8, trace_all: bool) !*@This() {
         var self: *@This() = try allocator.create(@This());
         errdefer allocator.destroy(self);
         self.faulted = false;
@@ -69,6 +70,7 @@ pub const Digisim = struct {
         self.locked = false;
         self.compiled = null;
         self.strings = stringIntern.StringIntern.init(allocator);
+        self.trace_all = trace_all;
         errdefer self.strings.deinit();
         self.components = HashMap(Component).init(allocator);
         errdefer self.components.deinit();

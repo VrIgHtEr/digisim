@@ -8,7 +8,6 @@ const HashMap = std.AutoArrayHashMap(usize, void);
 const Digisim = digi.Digisim;
 const Err = digi.Error;
 const Handler = @import("../simulation.zig").Handler;
-const config = @import("../config.zig");
 
 pub const Component = struct {
     digisim: *Digisim,
@@ -324,11 +323,11 @@ pub const Component = struct {
             const comp = self.digisim.components.getPtr(k.key_ptr.*) orelse unreachable;
             self.childTraces = comp.checkTraces() or self.childTraces;
         }
-        if (config.trace_all or !self.childTraces) {
+        if (self.digisim.trace_all or !self.childTraces) {
             var pi = self.ports.iterator();
             while (pi.next()) |k| {
                 const port = self.digisim.ports.getPtr(k.key_ptr.*) orelse unreachable;
-                if (config.trace_all) port.trace = true;
+                if (self.digisim.trace_all) port.trace = true;
                 if (port.trace) {
                     self.childTraces = true;
                 }

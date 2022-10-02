@@ -52,6 +52,7 @@ fn errmain() !u8 {
     var maxtick: u64 = 0;
     var stimeout: u64 = 0;
     var synchronous = true;
+    var trace_all = false;
 
     var projdir: [:0]const u8 = local;
     var args = try process.argsAlloc(allocator);
@@ -60,9 +61,12 @@ fn errmain() !u8 {
     while (i < args.len) : (i += 1) {
         const item = args[i];
         if (item.len == 0) return error.InvalidArgument;
-        if (std.mem.eql(u8, item, "-f")) {
+        if (std.mem.eql(u8, item, "-c")) {
             if (!synchronous) return error.InvalidArgument;
             synchronous = false;
+        } else if (std.mem.eql(u8, item, "-f")) {
+            if (trace_all) return error.InvalidArgument;
+            trace_all = true;
         } else if (std.mem.eql(u8, item, "-s")) {
             if (stimeout != 0) return error.InvalidArgument;
             i += 1;
@@ -84,7 +88,7 @@ fn errmain() !u8 {
     }
     if (stimeout == 0) stimeout = 10000;
 
-    var sim = try Digisim.init(allocator, projdir);
+    var sim = try Digisim.init(allocator, projdir, trace_all);
     defer sim.deinit();
     try sim.runLuaSetup();
     var stable = true;
