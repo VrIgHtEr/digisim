@@ -61,10 +61,10 @@ fn errmain() !u8 {
     while (i < args.len) : (i += 1) {
         const item = args[i];
         if (item.len == 0) return error.InvalidArgument;
-        if (std.mem.eql(u8, item, "-c")) {
+        if (std.mem.eql(u8, item, "-f")) {
             if (!synchronous) return error.InvalidArgument;
             synchronous = false;
-        } else if (std.mem.eql(u8, item, "-f")) {
+        } else if (std.mem.eql(u8, item, "-c")) {
             if (trace_all) return error.InvalidArgument;
             trace_all = true;
         } else if (std.mem.eql(u8, item, "-s")) {
