@@ -674,7 +674,7 @@ pub const Digisim = struct {
             while (i.next()) |e| {
                 const cnet = nmap.get(e.key_ptr.*) orelse unreachable;
                 try e.value_ptr.ensureTotalCapacityPrecise(e.value_ptr.items.len);
-                cnet.driverlist = e.value_ptr.toOwnedSlice();
+                cnet.driverlist = try e.value_ptr.toOwnedSlice();
             }
         }
     }
