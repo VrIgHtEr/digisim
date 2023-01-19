@@ -27,14 +27,16 @@ pub fn parseU64(buf: []const u8, radix: u8) !u64 {
         }
 
         // x *= radix
-        if (@mulWithOverflow(u64, x, radix, &x)) {
+        var tresult = @mulWithOverflow(x, radix);
+        if (tresult[1] != 0) {
             return error.Overflow;
         }
+        x = tresult[0];
 
         // x += digit
-        if (@addWithOverflow(u64, x, digit, &x)) {
-            return error.Overflow;
-        }
+        tresult = @addWithOverflow(x, digit);
+        if (tresult[1] != 0) return error.Overflow;
+        x = tresult[0];
     }
 
     return x;
