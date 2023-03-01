@@ -37,7 +37,7 @@ pub fn lua_h(input: []Signal, output: []Signal, data: *usize) usize {
     _ = s.d.lua.checkstack(4);
     s.d.lua.loadref(s.handler);
     s.d.lua.loadref(s.input);
-    for (input) |sig, idx| {
+    for (input, 0..) |sig, idx| {
         s.d.lua.pushnumber(@intToFloat(f64, @enumToInt(sig)));
         s.d.lua.rawseti(-2, @intCast(c_int, idx + 1));
     }
@@ -53,7 +53,7 @@ pub fn lua_h(input: []Signal, output: []Signal, data: *usize) usize {
     if (retf < 0) s.d.lua.err("invalid lua handler return value");
     const ret = @floatToInt(usize, retf);
     s.d.lua.loadref(s.output);
-    for (output) |*sig, idx| {
+    for (output, 0..) |*sig, idx| {
         _ = s.d.lua.rawgeti(-1, @intCast(c_int, idx + 1));
         if (!s.d.lua.isnumber(-1)) {
             sig.* = Signal.unknown;
@@ -116,7 +116,7 @@ pub fn nor_h(input: []Signal, output: []Signal, _: *usize) usize {
 }
 
 pub fn not_h(input: []Signal, output: []Signal, _: *usize) usize {
-    for (input) |x, idx| {
+    for (input, 0..) |x, idx| {
         if (x == Signal.high) {
             output[idx] = Signal.low;
         } else output[idx] = Signal.high;
@@ -172,27 +172,27 @@ pub fn clock_h(_: []Signal, output: []Signal, data: *usize) usize {
 }
 
 pub fn pullup_h(_: []Signal, output: []Signal, _: *usize) usize {
-    for (output) |_, idx| output[idx] = Signal.weakhigh;
+    for (output, 0..) |_, idx| output[idx] = Signal.weakhigh;
     return 0;
 }
 
 pub fn pulldown_h(_: []Signal, output: []Signal, _: *usize) usize {
-    for (output) |_, idx| output[idx] = Signal.weaklow;
+    for (output, 0..) |_, idx| output[idx] = Signal.weaklow;
     return 0;
 }
 
 pub fn high_h(_: []Signal, output: []Signal, _: *usize) usize {
-    for (output) |_, idx| output[idx] = Signal.high;
+    for (output, 0..) |_, idx| output[idx] = Signal.high;
     return 0;
 }
 
 pub fn low_h(_: []Signal, output: []Signal, _: *usize) usize {
-    for (output) |_, idx| output[idx] = Signal.low;
+    for (output, 0..) |_, idx| output[idx] = Signal.low;
     return 0;
 }
 
 pub fn buffer_h(input: []Signal, output: []Signal, _: *usize) usize {
-    for (input) |x, idx| {
+    for (input, 0..) |x, idx| {
         output[idx] = x;
     }
     return 0;

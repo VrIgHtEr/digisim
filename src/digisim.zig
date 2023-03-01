@@ -517,7 +517,7 @@ pub const Digisim = struct {
                 while (j.next()) |e| {
                     const port = self.ports.getPtr(e.key_ptr.*) orelse unreachable;
                     const cport = pmap.get(port.id) orelse unreachable;
-                    for (port.pins) |*pin, idx| {
+                    for (port.pins, 0..) |*pin, idx| {
                         cport.pins[idx].net = nmap.get(pin.net) orelse unreachable;
                         cport.pins[idx].value = Signal.z;
                     }
@@ -528,7 +528,7 @@ pub const Digisim = struct {
                     const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
                     if (port.trace) {
                         const cport = pmap.get(port.id) orelse unreachable;
-                        for (port.pins) |*pin, idx| {
+                        for (port.pins, 0..) |*pin, idx| {
                             cport.pins[idx].net = nmap.get(pin.net) orelse unreachable;
                             cport.pins[idx].value = Signal.z;
                         }
@@ -541,7 +541,7 @@ pub const Digisim = struct {
             const port = self.ports.getPtr(je.key_ptr.*) orelse unreachable;
             if (port.trace) {
                 const cport = pmap.get(port.id) orelse unreachable;
-                for (port.pins) |*pin, idx| {
+                for (port.pins, 0..) |*pin, idx| {
                     cport.pins[idx].net = nmap.get(pin.net) orelse unreachable;
                     cport.pins[idx].value = Signal.z;
                 }
@@ -654,7 +654,7 @@ pub const Digisim = struct {
                         const port = self.ports.getPtr(e.key_ptr.*) orelse unreachable;
                         if (!port.input) {
                             const cport = pmap.get(port.id) orelse unreachable;
-                            for (port.pins) |*pin, idx| {
+                            for (port.pins, 0..) |*pin, idx| {
                                 var map: *std.ArrayList(*CompiledPin) = undefined;
                                 if (driverLists.getPtr(pin.net)) |p| {
                                     map = p;

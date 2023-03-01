@@ -50,7 +50,7 @@ pub const Port = struct {
     }
 
     pub fn deinit(self: *@This()) void {
-        for (self.pins) |_, index| {
+        for (self.pins, 0..) |_, index| {
             self.pins[index].deinit();
         }
         self.digisim.allocator.free(self.pins);
